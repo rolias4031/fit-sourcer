@@ -1,8 +1,8 @@
 import React from 'react';
-import SignupForm from '../components/auth/presentation/SignupForm';
+import SignupContainer from '../components/auth/container/SignupContainer';
 
 export default function Signup() {
   return (
-    <SignupForm />
+    <SignupContainer />
   );
 }
