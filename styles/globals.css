@@ -41,6 +41,10 @@ a {
   @apply bg-blue-800;
 }
 
+.btn-blue:disabled {
+  @apply bg-gray-300;
+}
+
 .page-header-text {
   @apply font-bold text-3xl;
 }
@@ -48,3 +52,4 @@ a {
 .page-header-align {
   @apply text-center my-10;
 }
+

@@ -2,11 +2,7 @@ import React, { useCallback } from 'react';
 import SignupForm from '../presentation/SignupForm';
 
 function SignupContainer() {
-  const signupHandler = useCallback(async (refs) => {
-    const {
-      email, pw, confirm, firstName, lastName,
-    } = refs;
-    console.log(email, pw, confirm, firstName, lastName);
+  const signupHandler = useCallback(async () => {
   });
 
   return <SignupForm signupHandler={signupHandler} />;

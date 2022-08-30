@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SubmitButton({ btnName, style }) {
+function SubmitButton({ title, name, disabled }) {
   return (
-    <input className={`btn btn-blue my-4 ${style}`} type="submit" value={btnName} />
+    <input
+      className="btn btn-blue mt-3 mb-4"
+      type="submit"
+      value={title}
+      name={name}
+      disabled={disabled}
+    />
   );
 }
 
 SubmitButton.propTypes = {
-  btnName: PropTypes.string.isRequired,
-  style: PropTypes.string,
-};
-
-SubmitButton.defaultProps = {
-  style: '',
+  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default SubmitButton;
