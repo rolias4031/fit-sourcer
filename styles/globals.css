@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -23,4 +27,24 @@ a {
     color: white;
     background: black;
   }
+}
+
+.btn {
+  @apply font-semibold py-2 px-3 rounded;
+}
+
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+
+.btn-blue:hover {
+  @apply bg-blue-800;
+}
+
+.page-header-text {
+  @apply font-bold text-3xl;
+}
+
+.page-header-align {
+  @apply text-center my-10;
 }

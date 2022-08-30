@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import TextInputRef from './TextInputRef';
-import BootstrapContainer from '../../structure/BootstrapContainer';
 import SubmitButton from './SubmitButton';
-import Header from '../../display/Header';
+import FlexRow from '../../structure/FlexRow';
 
 function SignupForm({ signupHandler }) {
   const emailRef = useRef();
@@ -24,19 +23,20 @@ function SignupForm({ signupHandler }) {
     signupHandler(refs);
   }
   return (
-    <BootstrapContainer
-      config={{ contClass: 'container', rowClass: 'row', colClass: 'col-12' }}
+    <form
+      onSubmit={handler}
+      className="bg-gray-100 w-8/12 mx-auto my-10 p-10 rounded-md"
+      action=""
     >
-      <Header size={1} title="Signup" />
-      <form onSubmit={handler} className="form-control" action="">
+      <FlexRow>
         <TextInputRef ref={firstNameRef} title="First Name" />
         <TextInputRef ref={lastNameRef} title="LastName" />
-        <TextInputRef ref={emailRef} title="Email" />
-        <TextInputRef ref={pwRef} title="Password" />
-        <TextInputRef ref={confirmRef} title="Confirm Password" />
-        <SubmitButton btnName="Signup" />
-      </form>
-    </BootstrapContainer>
+      </FlexRow>
+      <TextInputRef ref={emailRef} title="Email" />
+      <TextInputRef ref={pwRef} title="Password" />
+      <TextInputRef ref={confirmRef} title="Confirm Password" />
+      <SubmitButton btnName="Signup" />
+    </form>
   );
 }
 

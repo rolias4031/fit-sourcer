@@ -7,12 +7,12 @@ import PropTypes from 'prop-types';
 const TextInputRef = forwardRef(({ title }, ref) => {
   return (
     <>
-      <label className="form-label" htmlFor={title}>
+      <label className=" text-gray-700 text-sm" htmlFor={title}>
         {title}
       </label>
       <input
         ref={ref}
-        className="form-control form-control-sm"
+        className="shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         type="text"
         name={title}
       />
