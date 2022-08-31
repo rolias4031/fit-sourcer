@@ -30,15 +30,17 @@ function SignupForm({ signupHandler }) {
     return passwordsDontMatch(inputs.password, inputs.confirm);
   }
 
-  function handler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
-    signupHandler();
+    // change names to titlecase, valid email format
+    const { confirm, ...inputs } = inputValues;
+    await signupHandler(inputs);
   }
 
   return (
     <form
-      onSubmit={handler}
-      className="bg-gray-100 w-8/12 mx-auto my-10 p-10 rounded-md"
+      onSubmit={submitHandler}
+      className="bg-gray-100 w-8/12 mx-auto mt-10 p-10 rounded-md"
     >
       <FlexRow>
         <TextInputState
