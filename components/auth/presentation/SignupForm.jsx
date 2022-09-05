@@ -3,22 +3,14 @@ import PropTypes from 'prop-types';
 import TextInputState from './TextInputState';
 import SubmitButton from './SubmitButton';
 import FlexRow from '../../structure/FlexRow';
-import PasswordInputs from './PasswordInputs';
 
 function SignupForm({ signupHandler }) {
   const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
-    confirm: '',
   };
   const [inputValues, setInputValues] = useState(initialState);
-
-  function passwordsDontMatch(pw, conf) {
-    if (pw === conf) return false;
-    return true;
-  }
 
   function enableSubmitBtn(inputs) {
     // function returns true to signal error/disabled/invalid
@@ -27,13 +19,12 @@ function SignupForm({ signupHandler }) {
       return true;
     });
     if (inputCheck.includes(false)) return true;
-    return passwordsDontMatch(inputs.password, inputs.confirm);
+    return false;
   }
 
   async function submitHandler(event) {
     event.preventDefault();
-    // change names to titlecase, valid email format
-    const { confirm, ...inputs } = inputValues;
+    const { ...inputs } = inputValues;
     await signupHandler(inputs);
   }
 
@@ -58,13 +49,6 @@ function SignupForm({ signupHandler }) {
         setInputValues={setInputValues}
         id="email"
         title="Email"
-      />
-      <PasswordInputs
-        setInputValues={setInputValues}
-        passwordsDontMatch={passwordsDontMatch(
-          inputValues.password,
-          inputValues.confirm,
-        )}
       />
       <SubmitButton
         title="Signup"

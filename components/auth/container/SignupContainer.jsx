@@ -5,7 +5,7 @@ import { AlertContext } from '../../../context/AlertContext';
 
 function SignupContainer() {
   const alertContext = useContext(AlertContext);
-  const url = 'api/auth/signup';
+  const url = 'api/signup';
   const fetchOptions = {
     method: 'POST',
     headers: {

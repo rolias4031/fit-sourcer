@@ -1,7 +1,7 @@
-import * as bcrypt from 'bcrypt';
+import { titleCase } from 'title-case';
 
-import { prisma } from '../../../lib/db';
-import { userExists } from '../../../lib/util';
+import { prisma } from '../../lib/db';
+import { userExists } from '../../lib/util';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -15,9 +15,9 @@ export default async function handler(req, res) {
       message: 'Email already in use',
     });
   }
-  // hash password before storing
-  const hashedPw = bcrypt.hash(inputs.password, 10);
-  inputs.password = hashedPw;
+  // transform inputs using title-case lib
+  inputs.firstName = titleCase(inputs.firstName);
+  inputs.lastName = titleCase(inputs.lastName);
   // use prisma to create. note: data property is required for prisma.model.create()
   const newUser = await prisma.user.create({
     data: inputs,

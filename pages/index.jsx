@@ -1,16 +1,25 @@
 import React from 'react';
-import Link from 'next/link';
-import Header from '../components/display/Header';
-import NavBar from '../components/structure/NavBar';
+import { useSession } from 'next-auth/react';
+import LandingPage from '../components/index/LandingPage';
+import Redirect from '../components/util/Redirect';
+
+/*
+contains: landing page content -> signup form, navbar with links
+- all redirects get routed here for unauthenticated. don't assume that people want to
+just sign in, but rather also signup. Then they click links for signin, etc.
+- only place where useSession() should be used, I think.
+*/
 
 export default function Home() {
-  return (
-    <>
-      <NavBar />
-      <div className="container mx-auto items-center">
-        <Header size={1} title="Home" />
-        <Link href="/signup">Signup</Link>
-      </div>
-    </>
-  );
+  const { data: session, status } = useSession();
+
+  if (session) {
+    return <Redirect to="/user/home" />;
+  }
+
+  if (status === 'loading') {
+    return <h1>Loading</h1>;
+  }
+
+  return <LandingPage />;
 }
