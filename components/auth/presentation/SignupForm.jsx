@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import TextInputState from './TextInputState';
-import SubmitButton from './SubmitButton';
+import TextInputState from '../../form/TextInputState';
+import SubmitButton from '../../form/SubmitButton';
 import FlexRow from '../../structure/FlexRow';
+
+export function enableSubmitBtn(inputs) {
+  // function returns true to signal error/disabled/invalid
+  const inputCheck = Object.keys(inputs).map((input) => {
+    if (inputs[input].length <= 0 || inputs[input] === false) return false;
+    return true;
+  });
+  if (inputCheck.includes(false)) return true;
+  return false;
+}
 
 function SignupForm({ signupHandler }) {
   const initialState = {
@@ -12,20 +22,9 @@ function SignupForm({ signupHandler }) {
   };
   const [inputValues, setInputValues] = useState(initialState);
 
-  function enableSubmitBtn(inputs) {
-    // function returns true to signal error/disabled/invalid
-    const inputCheck = Object.keys(inputs).map((input) => {
-      if (inputs[input].length <= 0) return false;
-      return true;
-    });
-    if (inputCheck.includes(false)) return true;
-    return false;
-  }
-
   async function submitHandler(event) {
     event.preventDefault();
-    const { ...inputs } = inputValues;
-    await signupHandler(inputs);
+    await signupHandler(inputValues);
   }
 
   return (
@@ -35,24 +34,21 @@ function SignupForm({ signupHandler }) {
     >
       <FlexRow>
         <TextInputState
-          setInputValues={setInputValues}
+          raiseState={setInputValues}
           id="firstName"
           title="First Name"
         />
         <TextInputState
-          setInputValues={setInputValues}
+          raiseState={setInputValues}
           id="lastName"
           title="Last Name"
         />
       </FlexRow>
-      <TextInputState
-        setInputValues={setInputValues}
-        id="email"
-        title="Email"
-      />
+      <TextInputState raiseState={setInputValues} id="email" title="Email" />
       <SubmitButton
         title="Signup"
-        name="signup"
+        id="signup-button"
+        btnStyle="btn-blue"
         disabled={enableSubmitBtn(inputValues)}
       />
     </form>

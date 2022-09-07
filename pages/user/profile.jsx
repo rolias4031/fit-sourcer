@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { unstable_getServerSession } from 'next-auth';
 import React from 'react';
 import ProfileContainer from '../../components/user/container/ProfileContainer';

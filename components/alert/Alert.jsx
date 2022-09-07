@@ -6,17 +6,21 @@ function Alert({ alert }) {
   const alertContext = useContext(AlertContext);
 
   useEffect(() => {
-    const id = setTimeout(alertContext.clearAlert, 5000);
+    const id = setTimeout(alertContext.clearAlert, 7000);
     return () => {
       clearTimeout(id);
     };
   }, [alert.timeStamp]);
 
-  const messageColor = alert.error ? 'text-red-700' : 'text-green-500';
-  const alertClass = `text-sm text-center ${messageColor}`;
+  const messageColor = alert.error ? 'alert-error' : 'alert-success';
+  const alertClass = `alert ${messageColor}`;
+  const backgroundColor = alert.error
+    ? 'alert-container-error'
+    : 'alert-container-success';
+  const divClass = `alert-container ${backgroundColor}`;
 
   return (
-    <div className="my-4 bg-red-100 w-8/12 py-1 mx-auto rounded-md">
+    <div className={divClass}>
       <p className={alertClass}>{alert.message}</p>
     </div>
   );

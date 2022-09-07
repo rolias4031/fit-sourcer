@@ -10,11 +10,11 @@ async function fetchUserProfile() {
     method: 'GET',
   };
   const response = await fetch(url, fetchOptions);
+  const result = await response.json();
   if (!response.ok) {
-    throw new Error('custom');
+    throw new Error(result.message);
   }
-  const data = await response.json();
-  return data.profile;
+  return result.profile;
 }
 
 export const useProfile = () => useQuery(['profile'], fetchUserProfile);

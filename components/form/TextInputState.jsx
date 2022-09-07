@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TextInputState({
-  title, id, setInputValues,
+  title, id, raiseState,
 }) {
   function changeHandler(event) {
     event.preventDefault();
     const { value } = event.target;
-    setInputValues((prevState) => {
+    raiseState((prevState) => {
       const newState = { ...prevState, [id]: value };
       return newState;
     });
@@ -34,7 +34,7 @@ function TextInputState({
 TextInputState.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  setInputValues: PropTypes.func.isRequired,
+  raiseState: PropTypes.func.isRequired,
 };
 
 TextInputState.defaultProps = {
