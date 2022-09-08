@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { ST8_KEYS } from '../../../lib/constants';
 import TextInputState from '../../form/TextInputState';
 import SubmitButton from '../../form/SubmitButton';
 import FlexRow from '../../structure/FlexRow';
@@ -16,9 +17,9 @@ export function enableSubmitBtn(inputs) {
 
 function SignupForm({ signupHandler }) {
   const initialState = {
-    firstName: '',
-    lastName: '',
-    email: '',
+    [ST8_KEYS.firstName]: '',
+    [ST8_KEYS.lastName]: '',
+    [ST8_KEYS.email]: '',
   };
   const [inputValues, setInputValues] = useState(initialState);
 
@@ -35,16 +36,20 @@ function SignupForm({ signupHandler }) {
       <FlexRow>
         <TextInputState
           raiseState={setInputValues}
-          id="firstName"
-          title="First Name"
+          id="signup-first-name"
+          name={ST8_KEYS.firstName}
         />
         <TextInputState
           raiseState={setInputValues}
-          id="lastName"
-          title="Last Name"
+          id="signup-last-name"
+          name={ST8_KEYS.lastName}
         />
       </FlexRow>
-      <TextInputState raiseState={setInputValues} id="email" title="Email" />
+      <TextInputState
+        raiseState={setInputValues}
+        id="signup-email"
+        name={ST8_KEYS.email}
+      />
       <SubmitButton
         title="Signup"
         id="signup-button"

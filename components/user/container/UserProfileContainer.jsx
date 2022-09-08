@@ -3,9 +3,10 @@ import IsError from '../../util/IsError';
 import IsLoading from '../../util/IsLoading';
 import ProfileHeader from '../presentation/ProfileHeader';
 import DeleteUserContainer from './DeleteUserContainer';
+import EditUserContainer from './EditUserContainer';
 import { useProfile } from './UserContainer';
 
-function ProfileContainer() {
+function UserProfileContainer() {
   const { isLoading, isError, data: prof, error } = useProfile();
 
   if (isLoading) {
@@ -19,9 +20,10 @@ function ProfileContainer() {
   return (
     <>
       <ProfileHeader />
+      <EditUserContainer />
       <DeleteUserContainer />
     </>
   );
 }
 
-export default ProfileContainer;
+export default UserProfileContainer;

@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import { unstable_getServerSession } from 'next-auth';
 import React from 'react';
-import ProfileContainer from '../../components/user/container/ProfileContainer';
+import UserProfileContainer from '../../components/user/container/UserProfileContainer';
 import { authOptions } from '../api/auth/[...nextauth]';
 
 function profile({ prop }) {
-  return <ProfileContainer />;
+  return <UserProfileContainer />;
 }
 
 export async function getServerSideProps(context) {
