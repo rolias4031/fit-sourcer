@@ -8,13 +8,23 @@ function UserHome({ profile }) {
   );
 }
 
+const ptsr = PropTypes.string.isRequired
 UserHome.propTypes = {
-  profile: PropTypes.exact({
-    email: PropTypes.string.isRequired,
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    emailVerified: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+  profile: PropTypes.shape({
+    email: ptsr,
+    firstName: ptsr,
+    lastName: ptsr,
+    emailVerified: ptsr,
+    id: ptsr,
+    lowerBody: PropTypes.shape({
+      waist: ptsr,
+      hip: ptsr,
+      seat: ptsr,
+      thigh: ptsr,
+      calf: ptsr,
+      inseam: ptsr,
+      outseam: ptsr,
+    }),
   }).isRequired,
 };
 

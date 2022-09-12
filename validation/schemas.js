@@ -13,3 +13,13 @@ export const deleteUserSchema = z.object({
   lastName: z.string(),
   confirm: z.boolean(),
 });
+
+export const editBodySectionSchema = z.object({
+  waist: z.number().lte(500),
+  hip: z.number().lte(500),
+  seat: z.number().lte(500),
+  thigh: z.number().lte(500),
+  calf: z.number().lte(500),
+  inseam: z.number().lte(500),
+  outseam: z.number().lte(500),
+})

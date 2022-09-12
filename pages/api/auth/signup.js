@@ -27,7 +27,14 @@ export default async function handler(req, res) {
   inputs.email = inputs.email.toLowerCase()
   // use prisma to create. note: data property is required for prisma.model.create()
   const newUser = await prisma.user.create({
-    data: inputs,
+    data: {
+      email: inputs.email,
+      firstName: inputs.firstName,
+      lastName: inputs.lastName,
+      lowerBody: {
+        create: {}
+      }
+    }
   });
   return res.status(200).json({ message: SUCCESS.NEW_USER, newUser });
 }

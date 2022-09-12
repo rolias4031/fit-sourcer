@@ -9,6 +9,9 @@ export default async function handler(req, res) {
     where: {
       email,
     },
+    include: {
+      lowerBody: true,
+    }
   });
   return res.status(200).json({ message: 'success', profile });
 }

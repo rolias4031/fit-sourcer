@@ -7,8 +7,7 @@ import EditUserContainer from './EditUserContainer';
 import { useProfile } from './UserContainer';
 
 function UserProfileContainer() {
-  const { isLoading, isError, data: prof, error } = useProfile();
-
+  const { isLoading, isError, data: profile, error } = useProfile();
   if (isLoading) {
     return <IsLoading />;
   }
@@ -16,14 +15,17 @@ function UserProfileContainer() {
   if (isError) {
     return <IsError messsage={error.message} />;
   }
-  // create a EditUserContainer
-  return (
-    <>
-      <ProfileHeader />
-      <EditUserContainer />
-      <DeleteUserContainer />
-    </>
-  );
+
+  if (profile) {
+    console.log(profile)
+    return (
+      <>
+        <ProfileHeader />
+        <EditUserContainer profile={profile}/>
+        <DeleteUserContainer />
+      </>
+    );
+  }
 }
 
 export default UserProfileContainer;

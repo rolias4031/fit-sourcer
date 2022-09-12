@@ -10,14 +10,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// model User {
+//   id            String    @id @default(cuid())
+//   email         String    @unique
+//   emailVerified DateTime?
+//   firstName     String
+//   lastName      String
+//   accounts      Account[]
+//   sessions      Session[]
+// }
+
+// each User has a LowerBody, Upper Body, Feet, and Head. Start with LowerBody
+
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String     @id @default(cuid())
+  email         String     @unique
   emailVerified DateTime?
   firstName     String
   lastName      String
+  lowerBody     LowerBody?
   accounts      Account[]
   sessions      Session[]
+}
+
+model LowerBody {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userEmail], references: [email])
+  userEmail String  @unique
+  waist     Decimal @default(0)
+  hip       Decimal @default(0)
+  seat      Decimal @default(0)
+  thigh     Decimal @default(0)
+  calf      Decimal @default(0)
+  inseam    Decimal @default(0)
+  outseam   Decimal @default(0)
 }
 
 model Account {

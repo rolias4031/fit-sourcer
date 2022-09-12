@@ -3,7 +3,9 @@ import { useRouter } from 'next/router';
 import SignupForm from '../presentation/SignupForm';
 import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
-import { fetchAndAlert } from '../../../lib/fetch';
+import { requestWithAlert } from '../../../lib/fetch';
+
+const alertLocId = 'ALERT-SIGNUP'
 
 function SignupContainer() {
   const router = useRouter();
@@ -15,14 +17,15 @@ function SignupContainer() {
       inputs: inputValues,
       redirectUrl: '/api/auth/signin',
       timeoutTime: 3000,
+      alertLoc: alertLocId
     }
-    fetchAndAlert(config, alertContext, router)
+    requestWithAlert(config, alertContext, router)
   })
 
   return (
     <>
       <SignupForm signupHandler={signupHandler} />
-      {alertContext.alert.message ? <Alert alert={alertContext.alert} /> : null}
+      {alertContext.alert.loc === alertLocId ? <Alert alert={alertContext.alert} /> : null}
     </>
   );
 };

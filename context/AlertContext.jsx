@@ -11,12 +11,13 @@ function AlertContextProvider({ children }) {
   const initialAlertState = {
     message: '',
     error: false,
+    loc: '',
     timeStamp: 0,
   };
   const [alert, setAlert] = useState(initialAlertState);
-  function updateAlert(message, error) {
+  function updateAlert(message, error, loc) {
     const timeStamp = Date.now();
-    setAlert({ message, error, timeStamp });
+    setAlert({ message, error, loc, timeStamp });
   }
   function clearAlert() {
     setAlert(initialAlertState);

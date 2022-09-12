@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createLabel } from './TextInputState';
 
-function NumberInputState({ id, label }) {
+function NumberInputState({ id, label, name, stateValue, raiseState }) {
+  function changeHandler(event) {
+    console.log(name, event.target.value);
+    raiseState((prevState) => {
+      const { value } = event.target
+      return { ...prevState, [name]: value }
+    })
+  }
   const divClass = 'my-2';
   const labelClass = 'text-gray-700 text-sm block';
   const inputClass =
@@ -9,15 +17,18 @@ function NumberInputState({ id, label }) {
   return (
     <div className={divClass}>
       <label className={labelClass} htmlFor={id}>
-        {label}
+        {createLabel(name, label)}
       </label>
       <input
+        onChange={changeHandler}
         className={inputClass}
-        type="number"
         id={id}
+        name={name}
+        type="number"
         step="0.1"
-        min="1"
+        min="0"
         max="1000"
+        value={stateValue}
       />
     </div>
   );
@@ -25,7 +36,14 @@ function NumberInputState({ id, label }) {
 
 NumberInputState.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  stateValue: PropTypes.string.isRequired,
+  raiseState: PropTypes.func.isRequired,
 };
+
+NumberInputState.defaultProps = {
+  label: '',
+}
 
 export default NumberInputState;

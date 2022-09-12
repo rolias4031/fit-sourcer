@@ -2,6 +2,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+export function createLabel(nameVal, labelVal) {
+  if (labelVal) return labelVal
+  const regex = /[A-Z]/
+  let newLabel = nameVal[0].toUpperCase()
+  for (let i=1; i < nameVal.length; i+=1) {
+    const match = regex.test(nameVal[i])
+    if (match) {
+      newLabel += ` ${nameVal[i]}`
+    } else {
+      newLabel += nameVal[i]
+    }
+  }
+  return newLabel
+}
+
 function TextInputState({
   name, id, label, raiseState,
 }) {
@@ -13,21 +28,6 @@ function TextInputState({
       const newState = { ...prevState, [name]: value };
       return newState;
     });
-  }
-
-  function createLabel(nameVal, labelVal) {
-    if (labelVal) return labelVal
-    const regex = /[A-Z]/
-    let newLabel = nameVal[0].toUpperCase()
-    for (let i=1; i < name.length; i+=1) {
-      const match = regex.test(nameVal[i])
-      if (match) {
-        newLabel += ` ${nameVal[i]}`
-      } else {
-        newLabel += nameVal[i]
-      }
-    }
-    return newLabel
   }
 
   return (

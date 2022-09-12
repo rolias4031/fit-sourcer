@@ -4,10 +4,11 @@ import Header from '../../display/Header';
 import DeleteUserForm from '../presentation/DeleteUserForm';
 import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
-import { fetchAndAlert } from '../../../lib/fetch';
+import { requestWithAlert } from '../../../lib/fetch';
 /*
 - contains all fetch logic for the DeleteUserForm
 */
+const alertLocId = 'ALERT_DELETE_USER_CONTAINER'
 function DeleteUserContainer() {
   const router = useRouter();
   const alertContext = useContext(AlertContext);
@@ -18,14 +19,15 @@ function DeleteUserContainer() {
       inputs: inputValues,
       redirectUrl: '/',
       timeoutTime: 1000,
+      alertLoc: alertLocId
     }
-    fetchAndAlert(config, alertContext, router)
+    requestWithAlert(config, alertContext, router)
   });
   return (
     <>
       <Header title="Delete your profile" />
       <DeleteUserForm deleteHandler={deleteHandler} />
-      {alertContext.alert.message ? <Alert alert={alertContext.alert} /> : null}
+      {alertContext.alert.loc === alertLocId ? <Alert alert={alertContext.alert} /> : null}
     </>
   );
 }
