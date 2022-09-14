@@ -81,6 +81,18 @@ a {
   @apply bg-gray-300;
 }
 
+.btn-gray {
+  @apply bg-gray-500 text-white;
+}
+
+.btn-gray:hover {
+  @apply bg-gray-800;
+}
+
+.btn-gray:disabled {
+  @apply bg-gray-300;
+}
+
 .page-header-text {
   @apply font-bold text-3xl;
 }

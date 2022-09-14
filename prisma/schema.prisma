@@ -10,27 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model User {
-//   id            String    @id @default(cuid())
-//   email         String    @unique
-//   emailVerified DateTime?
-//   firstName     String
-//   lastName      String
-//   accounts      Account[]
-//   sessions      Session[]
-// }
-
 // each User has a LowerBody, Upper Body, Feet, and Head. Start with LowerBody
-
+// take care of cascading delete before migrating. Only want to delete the lowerBody, not the garments in the array
 model User {
-  id            String     @id @default(cuid())
-  email         String     @unique
-  emailVerified DateTime?
-  firstName     String
-  lastName      String
-  lowerBody     LowerBody?
-  accounts      Account[]
-  sessions      Session[]
+  id                String             @id @default(cuid())
+  email             String             @unique
+  emailVerified     DateTime?
+  firstName         String
+  lastName          String
+  lowerBody         LowerBody?
+  lowerBodyGarments LowerBodyGarment[]
+  accounts          Account[]
+  sessions          Session[]
 }
 
 model LowerBody {
@@ -44,6 +35,24 @@ model LowerBody {
   calf      Decimal @default(0)
   inseam    Decimal @default(0)
   outseam   Decimal @default(0)
+}
+
+// eventually connect a vendor relation
+// maybe add a type field that only allows specific strings (pants, shorts, jeans, sweat pants, etc.)
+model LowerBodyGarment {
+  id          String  @id @default(cuid())
+  name        String
+  vendor      String
+  description String
+  type        String
+  waist       Decimal @default(0)
+  hip         Decimal @default(0)
+  seat        Decimal @default(0)
+  thigh       Decimal @default(0)
+  calf        Decimal @default(0)
+  inseam      Decimal @default(0)
+  outseam     Decimal @default(0)
+  users        User[]
 }
 
 model Account {

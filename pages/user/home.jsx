@@ -1,11 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import { useQuery } from 'react-query';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
-import IsLoading from '../../components/util/IsLoading';
-import IsError from '../../components/util/IsError';
 import UserHomeContainer from '../../components/user/container/UserContainer';
 
 /*
