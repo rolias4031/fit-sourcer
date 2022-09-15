@@ -34,17 +34,23 @@ function DeleteUserForm({ deleteHandler }) {
         <TextInputState
           id="delete-first-name"
           name={ST8_KEYS.firstName}
+          inputStyle="text-input-style-basic"
+          labelStyle="input-label-basic"
           raiseState={setDeleteInputs}
         />
         <TextInputState
           id="delete-last-name"
           name={ST8_KEYS.lastName}
+          inputStyle="text-input-style-basic"
+          labelStyle="input-label-basic"
           raiseState={setDeleteInputs}
         />
       </FlexRow>
       <TextInputState
         id="delete-email"
         name={ST8_KEYS.email}
+        inputStyle="text-input-style-basic"
+        labelStyle="input-label-basic"
         raiseState={setDeleteInputs}
       />
       <GeneralCheck

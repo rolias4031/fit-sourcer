@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createLabel } from '../../lib/utilClient';
+import { createLabel } from '../../lib/util-client';
 
 function GeneralButton({ btnStyle, name, onClick }) {
   function clickHandler(event) {

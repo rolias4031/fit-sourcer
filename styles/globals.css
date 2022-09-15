@@ -93,6 +93,26 @@ a {
   @apply bg-gray-300;
 }
 
+.text-input {
+  @apply shadow appearance-none border rounded leading-tight;
+}
+
+.text-input-style-basic {
+  @apply w-full py-2 px-3 text-sm text-gray-700;
+}
+
+.number-input {
+  @apply shadow appearance-none text-sm border rounded leading-tight
+}
+
+.number-input-style-basic {
+  @apply py-2 px-3 text-gray-700
+}
+
+.input-label-basic {
+  @apply text-gray-600 text-sm
+}
+
 .page-header-text {
   @apply font-bold text-3xl;
 }

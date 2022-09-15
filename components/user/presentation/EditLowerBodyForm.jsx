@@ -25,13 +25,16 @@ function EditLowerBodyForm({ contState, raiseState, editBodyHandler }) {
       key={key}
       id={`edit-body-${key}`}
       name={key}
+      labelStyle="input-label-basic block"
+      inputStyle="number-input-style-basic w-20"
+      divStyle="my-2"
       stateValue={contState[key]}
       raiseState={raiseState}
     />
   ));
 
   const formClass = 'mx-auto p-5 rounded-md w-1/2 bg-gray-100';
-  const containerClass = 'flex flex-row flex-wrap gap-4 justify-between';
+  const containerClass = 'flex flex-row flex-wrap gap-4 justify-around';
   return (
     <form onSubmit={submitHandler} className={formClass}>
       <div className={containerClass}>{numberInputElements}</div>

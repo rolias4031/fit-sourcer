@@ -1,50 +1,52 @@
-// built for ref use, not state. Perhaps built another TextInput component for state.
 import React from 'react';
 import PropTypes from 'prop-types';
-
-export function createLabel(nameVal, labelVal) {
-  if (labelVal) return labelVal
-  const regex = /[A-Z]/
-  let newLabel = nameVal[0].toUpperCase()
-  for (let i=1; i < nameVal.length; i+=1) {
-    const match = regex.test(nameVal[i])
-    if (match) {
-      newLabel += ` ${nameVal[i]}`
-    } else {
-      newLabel += nameVal[i]
-    }
-  }
-  return newLabel
-}
+import GeneralLabel from './GeneralLabel';
 
 function TextInputState({
-  name, id, label, raiseState,
+  name,
+  id,
+  label,
+  inputStyle,
+  labelStyle,
+  stateValue,
+  raiseState,
 }) {
-
   function changeHandler(event) {
     event.preventDefault();
-    const { value } = event.target;
-    raiseState((prevState) => {
-      const newState = { ...prevState, [name]: value };
-      return newState;
-    });
+    raiseState((prevState) => ({ ...prevState, [name]: event.target.value }));
+  }
+
+  const labelContent = (
+    <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
+  );
+
+  const inputClass = `${inputStyle} text-input focus:outline-none focus:shadow-outline`;
+  let inputContent = (
+    <input
+      onChange={changeHandler}
+      className={inputClass}
+      type="text"
+      id={id}
+      name={name}
+    />
+  );
+  if (stateValue) {
+    inputContent = (
+      <input
+        onChange={changeHandler}
+        className={inputClass}
+        type="text"
+        id={id}
+        name={name}
+        value={stateValue}
+      />
+    );
   }
 
   return (
     <>
-      <label
-        className=" text-gray-700 text-sm"
-        htmlFor={id}
-      >
-        {createLabel(name, label)}
-      </label>
-      <input
-        onChange={changeHandler}
-        className="shadow appearance-none text-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        type="text"
-        id={id}
-        name={name}
-      />
+      {labelContent}
+      {inputContent}
     </>
   );
 }
@@ -53,11 +55,17 @@ TextInputState.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
+  inputStyle: PropTypes.string,
+  labelStyle: PropTypes.string,
+  stateValue: PropTypes.string,
   raiseState: PropTypes.func.isRequired,
 };
 
 TextInputState.defaultProps = {
-  label: null
+  label: null,
+  inputStyle: null,
+  labelStyle: null,
+  stateValue: null,
 };
 
 export default TextInputState;

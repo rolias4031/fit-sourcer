@@ -38,17 +38,23 @@ function SignupForm({ signupHandler }) {
           raiseState={setInputValues}
           id="signup-first-name"
           name={ST8_KEYS.firstName}
+          inputStyle="text-input-style-basic"
+          labelStyle="input-label-basic"
         />
         <TextInputState
           raiseState={setInputValues}
           id="signup-last-name"
           name={ST8_KEYS.lastName}
+          inputStyle="text-input-style-basic"
+          labelStyle="input-label-basic"
         />
       </FlexRow>
       <TextInputState
         raiseState={setInputValues}
         id="signup-email"
         name={ST8_KEYS.email}
+        inputStyle="text-input-style-basic"
+        labelStyle="input-label-basic"
       />
       <SubmitButton
         title="Signup"
