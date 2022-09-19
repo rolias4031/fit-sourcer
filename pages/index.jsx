@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSession } from 'next-auth/react';
-import LandingPage from '../components/index/LandingPage';
-import Redirect from '../components/util/Redirect';
+import Layout from '../components/util/Layout';
+import SignupContainer from '../components/auth/container/SignupContainer';
 
 /*
 contains: landing page content -> signup form, navbar with links
@@ -11,15 +10,7 @@ just sign in, but rather also signup. Then they click links for signin, etc.
 */
 
 export default function Home() {
-  const { data: session, status } = useSession();
-
-  if (session) {
-    return <Redirect to="/user/home" />;
-  }
-
-  if (status === 'loading') {
-    return <h1>Loading</h1>;
-  }
-
-  return <LandingPage />;
+  return <SignupContainer />;
 }
+
+// ssr would take care of auth troubles with 

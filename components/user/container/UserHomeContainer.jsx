@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { useQuery } from 'react-query';
 import UserHome from '../presentation/UserHome';
 import IsLoading from '../../util/IsLoading';
@@ -17,9 +18,9 @@ async function fetchUserProfile() {
   return result.profile;
 }
 
-export const useProfile = () => useQuery(['profile'], fetchUserProfile);
+export const useProfile = () => useQuery(['fetch-profile'], fetchUserProfile);
 
-function UserHomeContainer() {
+function UserHomeContainer({ info }) {
   const { isLoading, isError, data: profile, error } = useProfile();
 
   if (isLoading) {
@@ -28,7 +29,16 @@ function UserHomeContainer() {
   if (isError) {
     return <IsError message={error.message} />;
   }
-  return <UserHome profile={profile} />;
+  return <UserHome profile={profile} info={info}/>;
+}
+
+UserHomeContainer.propTypes = {
+  info: PropTypes.exact({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    primaryEmail: PropTypes.string,
+    userId: PropTypes.string,
+  }).isRequired
 }
 
 export default UserHomeContainer;

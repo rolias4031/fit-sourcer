@@ -16,23 +16,19 @@ function EditUserContainer({ profile }) {
   );
 }
 
-const ptsr = PropTypes.string.isRequired;
-
 EditUserContainer.propTypes = {
-  profile: PropTypes.shape({
-    email: ptsr,
-    firstName: ptsr,
-    lastName: ptsr,
-    emailVerified: ptsr,
-    id: ptsr,
-    lowerBody: PropTypes.shape({
-      waist: ptsr,
-      hip: ptsr,
-      seat: ptsr,
-      thigh: ptsr,
-      calf: ptsr,
-      inseam: ptsr,
-      outseam: ptsr,
+  profile: PropTypes.exact({
+    id: PropTypes.string.isRequired,
+    lowerBody: PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      userId: PropTypes.string.isRequired,
+      waist: PropTypes.string.isRequired,
+      hip: PropTypes.string.isRequired,
+      seat: PropTypes.string.isRequired,
+      thigh: PropTypes.string.isRequired,
+      calf: PropTypes.string.isRequired,
+      inseam: PropTypes.string.isRequired,
+      outseam: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

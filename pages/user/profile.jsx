@@ -1,29 +1,49 @@
 /* eslint-disable camelcase */
-import { unstable_getServerSession } from 'next-auth';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import UserProfileContainer from '../../components/user/container/UserProfileContainer';
-import { authOptions } from '../api/auth/[...nextauth]';
 
-function profile({ prop }) {
-  return <UserProfileContainer />;
+function profile({ userInfo }) {
+  return <UserProfileContainer info={userInfo}/>;
 }
 
-export async function getServerSideProps(context) {
-  const { req, res } = context;
-  const session = await unstable_getServerSession(req, res, authOptions);
-  if (session) {
+profile.propTypes = {
+  userInfo: PropTypes.exact({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    primaryEmail: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export const getServerSideProps = withServerSideAuth(
+  async ({ req }) => {
+    const { sessionId, userId } = req.auth;
+    if (!sessionId) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
+    const primaryEmail = req.user.emailAddresses.find(
+      (email) => email.id === req.user.primaryEmailAddressId,
+    );
+    const userInfo = {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      primaryEmail: primaryEmail.emailAddress,
+      userId,
+    };
     return {
       props: {
-        prop: 'data',
+        userInfo,
       },
     };
-  }
-  return {
-    redirect: {
-      destination: '/',
-      permanent: false,
-    },
-  };
-}
+  },
+  { loadUser: true },
+);
 
 export default profile;

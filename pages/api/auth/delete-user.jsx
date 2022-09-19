@@ -1,39 +1,47 @@
-import { getSession } from 'next-auth/react';
-import { prisma } from '../../../lib/db';
+import { withAuth } from '@clerk/nextjs/api';
 import { ERRORS, SUCCESS, METHODS } from '../../../lib/constants';
-import { getUserByEmail } from '../../../lib/util';
 
-export default async function handler(req, res) {
+export default withAuth(async (req, res) => {
   // check session
-  const session = await getSession({ req })
-  if (!session) {
-    return res.status(401).json({ message: ERRORS.SIGNED_OUT });
-  }
-  // check method
-  if (req.method !== METHODS.DELETE) {
-    console.log('check0');
-    return res.status(405).json({ message: ERRORS.METHOD_NOT_ALLOWED });
-  }
-  // check if user exists
-  const { inputs } = req.body;
-  const user = await getUserByEmail(inputs.email);
-  if (!user) {
-    return res.status(404).json({
-      message: ERRORS.USER_NOT_FOUND,
+  const { userId, sessionId } = req.auth;
+  if (!sessionId) {
+    return res.status(401).json({
+      message: ERRORS.UNAUTHORIZED,
     });
   }
-  // check if names match for security
-  if (
-    inputs.firstName !== user.firstName ||
-    inputs.lastName !== user.lastName
-  ) {
-    return res.status(405).json({ message: ERRORS.BAD_CREDS });
-  }
-  // delete
-  await prisma.user.delete({
-    where: {
-      email: inputs.email,
+  const url = `https://api.clerk.dev/v1/users/${userId}`;
+  const fetchOptions = {
+    method: METHODS.GET,
+    headers: {
+      Authorization: `Bearer ${process.env.CLERK_API_KEY}`,
     },
-  });
+  };
+  // probably should validate inputs first
+  // get Clerk user info and compare to user inputs for security, return error if fail.
+  const clerkGetResponse = await fetch(url, fetchOptions);
+  const clerkVals = await clerkGetResponse.json();
+  if (!clerkGetResponse.ok) {
+    return res.status(500).json({
+      message: "Something went wrong with Clerk"
+    })
+  }
+  const { firstName, lastName, email } = req.body.inputs;
+  const clerkEmail = clerkVals.email_addresses.find(
+    (address) => address.id === clerkVals.primary_email_address_id,
+  );
+  if (
+    firstName !== clerkVals.first_name ||
+    lastName !== clerkVals.last_name ||
+    email !== clerkEmail.email_address
+  ) {
+    return res.status(400).json({
+      message: "Credentials don't match"
+    })
+  }
+  // make request to delete from Clerk if inputs match Clerk info
+  fetchOptions.method = METHODS.DELETE
+  const response = await fetch(url, fetchOptions);
+  const result = await response.json();
+  console.log(result);
   return res.status(200).json({ message: SUCCESS.DELETE });
-}
+});

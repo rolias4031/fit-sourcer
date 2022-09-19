@@ -1,9 +1,10 @@
 import React, { useState, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import EditLowerBodyForm from '../presentation/EditLowerBodyForm';
-import Alert from '../../alert/Alert'
+import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
-import { requestWithAlert } from '../../../lib/fetch';
+import { useEditBody } from '../../../lib/fetch';
+import { alertLocIds } from '../../../lib/constants';
 
 /*
 * container holds logic for updating, editing, etc for EditLowerBodyForm
@@ -11,10 +12,9 @@ import { requestWithAlert } from '../../../lib/fetch';
 * get the props it displays from the EditUserContainer
 
 */
-const alertLocId = 'ALERT_LOWER_BODY_CONTAINER'
-
 function EditLowerBodyContainer({ lowerBody }) {
   const alertCtx = useContext(AlertContext);
+  const { mutate, isLoading, isError } = useEditBody();
   const initLowerBodyState = {
     waist: lowerBody.waist,
     hip: lowerBody.hip,
@@ -27,26 +27,30 @@ function EditLowerBodyContainer({ lowerBody }) {
   const [lowerBodyState, setLowerBodyState] = useState(initLowerBodyState);
 
   const editBodyHandler = useCallback(async (lowerBodyValues) => {
-    // parseInt for all values before sending
     const config = {
-      fetchUrl: 'http://localhost:3000/api/user/edit/lowerBody',
+      url: 'http://localhost:3000/api/user/edit/lowerBody',
       method: 'PUT',
       inputs: lowerBodyValues,
-      redirectUrl: null,
-      timeoutTime: null,
-      alertLoc: alertLocId
+      alertLocId: alertLocIds.EDIT_LOWER_BODY_CONTAINER,
     };
-    requestWithAlert(config, alertCtx);
-  })
+    mutate(config);
+  });
+
+  if (isLoading) {
+    // make something cool eventually, like a spinning wheel on the form
+    return <h1>Loading</h1>;
+  }
 
   return (
     <>
-    <EditLowerBodyForm
-      contState={lowerBodyState}
-      raiseState={setLowerBodyState}
-      editBodyHandler={editBodyHandler}
-    />
-    {alertCtx.alert.loc === alertLocId ? <Alert alert={alertCtx.alert}/> : null}
+      <EditLowerBodyForm
+        contState={lowerBodyState}
+        raiseState={setLowerBodyState}
+        editBodyHandler={editBodyHandler}
+      />
+      {alertCtx.alert.loc === alertLocIds.EDIT_LOWER_BODY_CONTAINER ? (
+        <Alert alert={alertCtx.alert} />
+      ) : null}
     </>
   );
 }
@@ -54,7 +58,9 @@ function EditLowerBodyContainer({ lowerBody }) {
 const ptsr = PropTypes.string.isRequired;
 
 EditLowerBodyContainer.propTypes = {
-  lowerBody: PropTypes.shape({
+  lowerBody: PropTypes.exact({
+    id: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     waist: ptsr,
     hip: ptsr,
     seat: ptsr,

@@ -1,33 +1,43 @@
 import React, { useCallback, useContext } from 'react';
-import { useRouter } from 'next/router';
 import Header from '../../display/Header';
 import DeleteUserForm from '../presentation/DeleteUserForm';
 import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
-import { requestWithAlert } from '../../../lib/fetch';
+import { useDeleteUser } from '../../../lib/fetch';
+import Redirect from '../../util/Redirect';
+import { alertLocIds } from '../../../lib/constants';
 /*
 - contains all fetch logic for the DeleteUserForm
 */
-const alertLocId = 'ALERT_DELETE_USER_CONTAINER'
+
 function DeleteUserContainer() {
-  const router = useRouter();
   const alertContext = useContext(AlertContext);
-  const deleteHandler = useCallback(async (inputValues) => {
+  const { mutate, isLoading, isSuccess } = useDeleteUser();
+
+  const deleteHandler = useCallback(async (deleteInputs) => {
     const config = {
-      fetchUrl: 'http://localhost:3000/api/auth/delete-user',
+      url: 'http://localhost:3000/api/auth/delete-user',
       method: 'DELETE',
-      inputs: inputValues,
-      redirectUrl: '/',
-      timeoutTime: 1000,
-      alertLoc: alertLocId
-    }
-    requestWithAlert(config, alertContext, router)
+      inputs: deleteInputs,
+      alertLocId: alertLocIds.DELETE_USER_CONTAINER
+    };
+    mutate(config);
   });
+
+  if (isLoading) {
+    return <h1>Deleting</h1>;
+  }
+  if (isSuccess) {
+    return <Redirect to="/deleted" />;
+  }
+
   return (
     <>
       <Header title="Delete your profile" />
       <DeleteUserForm deleteHandler={deleteHandler} />
-      {alertContext.alert.loc === alertLocId ? <Alert alert={alertContext.alert} /> : null}
+      {alertContext.alert.loc === alertLocIds.DELETE_USER_CONTAINER ? (
+        <Alert alert={alertContext.alert} />
+      ) : null}
     </>
   );
 }

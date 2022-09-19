@@ -30,6 +30,7 @@ Alert.propTypes = {
   alert: PropTypes.exact({
     message: PropTypes.string,
     error: PropTypes.bool,
+    loc: PropTypes.string,
     timeStamp: PropTypes.number.isRequired,
   }),
 };
@@ -38,6 +39,7 @@ Alert.defaultProps = {
   alert: {
     message: '',
     error: false,
+    loc: '',
     timeStamp: 0,
   },
 };

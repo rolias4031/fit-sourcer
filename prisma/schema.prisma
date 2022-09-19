@@ -14,27 +14,21 @@ datasource db {
 // take care of cascading delete before migrating. Only want to delete the lowerBody, not the garments in the array
 model User {
   id                String             @id @default(cuid())
-  email             String             @unique
-  emailVerified     DateTime?
-  firstName         String
-  lastName          String
   lowerBody         LowerBody?
   lowerBodyGarments LowerBodyGarment[]
-  accounts          Account[]
-  sessions          Session[]
 }
 
 model LowerBody {
-  id        String  @id @default(cuid())
-  user      User    @relation(fields: [userEmail], references: [email])
-  userEmail String  @unique
-  waist     Decimal @default(0)
-  hip       Decimal @default(0)
-  seat      Decimal @default(0)
-  thigh     Decimal @default(0)
-  calf      Decimal @default(0)
-  inseam    Decimal @default(0)
-  outseam   Decimal @default(0)
+  id      String  @id @default(cuid())
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String? @unique
+  waist   Decimal @default(0)
+  hip     Decimal @default(0)
+  seat    Decimal @default(0)
+  thigh   Decimal @default(0)
+  calf    Decimal @default(0)
+  inseam  Decimal @default(0)
+  outseam Decimal @default(0)
 }
 
 // eventually connect a vendor relation
@@ -52,40 +46,5 @@ model LowerBodyGarment {
   calf        Decimal @default(0)
   inseam      Decimal @default(0)
   outseam     Decimal @default(0)
-  users        User[]
-}
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+  users       User[]
 }

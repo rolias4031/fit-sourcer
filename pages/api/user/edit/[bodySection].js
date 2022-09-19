@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { withAuth } from '@clerk/nextjs/api'
 import { ERRORS, METHODS } from '../../../../lib/constants';
 import { convertBodySectionValuesToNums, editUserBodySection } from '../../../../lib/util';
 import { editBodySectionSchema } from '../../../../validation/schemas';
@@ -8,15 +8,19 @@ import { editBodySectionSchema } from '../../../../validation/schemas';
  * 2. if doesn't exist, connect user to newly created bodySection
  * 3. if does exist, then update the values.
  */
-export default async function handler(req, res) {
+export default withAuth(async (req, res) => {
   // check session
-  const session = await getSession({ req });
-  if (!session) return res.status(401).json({ message: ERRORS.UNAUTHORIZED });
+  const { userId, sessionId } = req.auth;
+  if (!sessionId) {
+    return req.status(401).json({
+      message: ERRORS.UNAUTHORIZED,
+    });
+  }
 
   // check method
-  if (req.method !== METHODS.PUT)
+  if (req.method !== METHODS.PUT) {
     return res.status(405).json({ message: ERRORS.METHOD_NOT_ALLOWED });
-
+  }
   // get bodySection and inputs, also set up validation here and input value conversion -> int/floats
   const { inputs } = req.body
   const convertedInputs = convertBodySectionValuesToNums(inputs)
@@ -28,7 +32,7 @@ export default async function handler(req, res) {
   }
   // make edits and return error if update is empty or failed
   const { bodySection } = req.query
-  const update = await editUserBodySection(session.user.email, bodySection, inputs)
+  const update = await editUserBodySection(userId, bodySection, inputs)
   if (!update) {
     return res.status(404).json({ message: ERRORS.NOT_FOUND })
   }
@@ -36,4 +40,4 @@ export default async function handler(req, res) {
     message: 'Update success',
     update,
   });
-}
+})

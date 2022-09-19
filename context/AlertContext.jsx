@@ -15,7 +15,7 @@ function AlertContextProvider({ children }) {
     timeStamp: 0,
   };
   const [alert, setAlert] = useState(initialAlertState);
-  function updateAlert(message, error, loc) {
+  function updateAlert(message, loc, error = true) {
     const timeStamp = Date.now();
     setAlert({ message, error, loc, timeStamp });
   }

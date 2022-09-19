@@ -1,48 +1,54 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]';
-import UserHomeContainer from '../../components/user/container/UserContainer';
+import PropTypes from 'prop-types';
+import { withServerSideAuth } from '@clerk/nextjs/ssr';
+import UserHomeContainer from '../../components/user/container/UserHomeContainer';
 
 /*
-contains: single container component that handles all fetching, state, props distribution.
-As children to that container, there will be a home comp where users browse, search, and
-do the main services. then there's the profile comp which gets opened with a state toggle,
-which holds all user settings, preferences, profile stuff etc.
+ * this pages needs to buy some time for the webhook to go through. useQuery with an intentional error if the !userExists, then useQuery will retry after 1 second or so. Use that custom error to display a loading page.
+ */
 
-- this should be the only 'nice' redirect in the app. If not auth, should send back to '/',
-every other page should just throw a 505 or 404 from the server side.
-- uses getServerSideProps for the initial fetch, which also validates authentication. If auth,
-uses the user email to fetch all other data and pre-render.
-- how to handle updates? pretty sure each page re render will take care of that, but if
-not then react-query should be able to. the alternative is to just get the email from
-getSSP, then use react-query to get all other information.
-*/
-
-function Home({ userEmail }) {
-  return <UserHomeContainer />;
+function Home({ userInfo }) {
+  return <UserHomeContainer info={userInfo} />;
 }
 
-export async function getServerSideProps(context) {
-  // check session
-  const { req, res } = context;
-  const session = await unstable_getServerSession(req, res, authOptions);
-  if (session) {
-    // fetch all data with session.user.email
+Home.propTypes = {
+  userInfo: PropTypes.exact({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    primaryEmail: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export const getServerSideProps = withServerSideAuth(
+  async ({ req }) => {
+    const { sessionId, userId } = req.auth;
+    if (!sessionId) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
+    const primaryEmail = req.user.emailAddresses.find(
+      (email) => email.id === req.user.primaryEmailAddressId,
+    );
+    const userInfo = {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      primaryEmail: primaryEmail.emailAddress,
+      userId,
+    };
     return {
       props: {
-        userEmail: session.user.email,
+        userInfo,
       },
     };
-  }
-  // if !session, then redirect to index page.
-  return {
-    redirect: {
-      destination: '/',
-      permanent: false,
-    },
-  };
-}
+  },
+  { loadUser: true },
+);
 
 export default Home;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SubmitButton({ title, id, btnStyle, disabled }) {
-  const btnClass = `btn block ${btnStyle}`;
+  const btnClass = `btn ${btnStyle}`;
   return (
     <input
       className={btnClass}
