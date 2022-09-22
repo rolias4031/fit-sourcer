@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ST8_KEYS } from '../../../lib/constants';
 import TextInputState from '../../form/TextInputState';
-import FlexRow from '../../structure/FlexRow';
 import GeneralCheck from '../../form/GeneralCheck';
 import SubmitButton from '../../form/SubmitButton';
 import { enableSubmitBtn } from '../../auth/presentation/SignupForm';
@@ -28,30 +27,36 @@ function DeleteUserForm({ deleteHandler }) {
   return (
     <form
       onSubmit={submitHandler}
-      className="p-5 w-1/2 mx-auto bg-gray-100 rounded-md "
+      className="p-6 form-style-basic min-w-[500px]"
     >
-      <FlexRow>
+      <div className="flex space-x-2 my-2">
         <TextInputState
           id="delete-first-name"
           name={ST8_KEYS.firstName}
-          inputStyle="text-input-style-basic"
+          inputStyle="w-full text-input-style-basic"
           labelStyle="input-label-basic"
+          divStyle="w-1/2"
           raiseState={setDeleteInputs}
+          stateValue={deleteInputs.firstName}
         />
         <TextInputState
           id="delete-last-name"
           name={ST8_KEYS.lastName}
-          inputStyle="text-input-style-basic"
+          inputStyle="w-full text-input-style-basic"
           labelStyle="input-label-basic"
+          divStyle="w-1/2"
           raiseState={setDeleteInputs}
+          stateValue={deleteInputs.lastName}
         />
-      </FlexRow>
+      </div>
       <TextInputState
         id="delete-email"
         name={ST8_KEYS.email}
-        inputStyle="text-input-style-basic"
+        inputStyle="text-input-style-basic w-full"
         labelStyle="input-label-basic"
+        divStyle="w-full my-2"
         raiseState={setDeleteInputs}
+        stateValue={deleteInputs.email}
       />
       <GeneralCheck
         id="delete-confirm"

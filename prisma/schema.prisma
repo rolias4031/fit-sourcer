@@ -16,35 +16,38 @@ model User {
   id                String             @id @default(cuid())
   lowerBody         LowerBody?
   lowerBodyGarments LowerBodyGarment[]
+  updatedAt         DateTime           @updatedAt
 }
 
 model LowerBody {
-  id      String  @id @default(cuid())
-  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String? @unique
-  waist   Decimal @default(0)
-  hip     Decimal @default(0)
-  seat    Decimal @default(0)
-  thigh   Decimal @default(0)
-  calf    Decimal @default(0)
-  inseam  Decimal @default(0)
-  outseam Decimal @default(0)
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?  @unique
+  waist     Decimal  @default(0)
+  hip       Decimal  @default(0)
+  seat      Decimal  @default(0)
+  thigh     Decimal  @default(0)
+  calf      Decimal  @default(0)
+  inseam    Decimal  @default(0)
+  outseam   Decimal  @default(0)
+  updatedAt DateTime @updatedAt
 }
 
 // eventually connect a vendor relation
 // maybe add a type field that only allows specific strings (pants, shorts, jeans, sweat pants, etc.)
 model LowerBodyGarment {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   vendor      String
   description String
   type        String
-  waist       Decimal @default(0)
-  hip         Decimal @default(0)
-  seat        Decimal @default(0)
-  thigh       Decimal @default(0)
-  calf        Decimal @default(0)
-  inseam      Decimal @default(0)
-  outseam     Decimal @default(0)
+  waist       Decimal  @default(0)
+  hip         Decimal  @default(0)
+  seat        Decimal  @default(0)
+  thigh       Decimal  @default(0)
+  calf        Decimal  @default(0)
+  inseam      Decimal  @default(0)
+  outseam     Decimal  @default(0)
   users       User[]
+  updatedAt   DateTime @updatedAt
 }

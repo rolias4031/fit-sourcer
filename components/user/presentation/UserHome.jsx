@@ -10,24 +10,10 @@ function UserHome({ profile, info }) {
 UserHome.propTypes = {
   profile: PropTypes.exact({
     id: PropTypes.string,
-    lowerBody: PropTypes.exact({
-      waist: PropTypes.string,
-      hip: PropTypes.string,
-      seat: PropTypes.string,
-      thigh: PropTypes.string,
-      calf: PropTypes.string,
-      inseam: PropTypes.string,
-      outseam: PropTypes.string,
-      userId: PropTypes.string,
-      id: PropTypes.string,
-    }),
+    updatedAt: PropTypes.string,
+    lowerBody: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
-  info: PropTypes.exact({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    primaryEmail: PropTypes.string,
-    userId: PropTypes.string,
-  }).isRequired,
+  info: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default UserHome;

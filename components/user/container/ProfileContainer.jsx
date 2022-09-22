@@ -1,14 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import IsError from '../../util/IsError';
 import IsLoading from '../../util/IsLoading';
 import ProfileHeader from '../presentation/ProfileHeader';
 import DeleteUserContainer from './DeleteUserContainer';
-import EditUserContainer from './EditUserContainer';
-import { useProfile } from './UserHomeContainer';
+import { useGetUserProfile } from '../../../lib/fetch';
+import EditLowerBodyContainer from './EditLowerBodyContainer';
 
-function UserProfileContainer() {
-  const { isLoading, isError, data: profile, error } = useProfile();
+/*
+* this container does these things:
+1. fetches the user's profile with the useGetProfile hook.
+2. renders the other containers in the profile page & controls their visibility
+3. passes the profile down the tree
+*/
+
+function ProfileContainer() {
+  const { isLoading, isError, data: profile, error } = useGetUserProfile();
   if (isLoading) {
     return <IsLoading />;
   }
@@ -21,20 +28,20 @@ function UserProfileContainer() {
     return (
       <>
         <ProfileHeader />
-        <EditUserContainer profile={profile} />
+        <EditLowerBodyContainer lowerBody={profile.lowerBody}/>
         <DeleteUserContainer />
       </>
     );
   }
 }
 
-UserProfileContainer.propTypes = {
+ProfileContainer.propTypes = {
   info: PropTypes.exact({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     primaryEmail: PropTypes.string,
     userId: PropTypes.string,
   }).isRequired,
-}
+};
 
-export default UserProfileContainer;
+export default ProfileContainer;

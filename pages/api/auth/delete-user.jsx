@@ -22,7 +22,8 @@ export default withAuth(async (req, res) => {
   const clerkVals = await clerkGetResponse.json();
   if (!clerkGetResponse.ok) {
     return res.status(500).json({
-      message: "Something went wrong with Clerk"
+      message: "Something went wrong with Clerk!",
+      errors: "Something went wrong with Clerk!"
     })
   }
   const { firstName, lastName, email } = req.body.inputs;
@@ -35,7 +36,8 @@ export default withAuth(async (req, res) => {
     email !== clerkEmail.email_address
   ) {
     return res.status(400).json({
-      message: "Credentials don't match"
+      message: "Credentials don't match",
+      errors: "Credentials don't match"
     })
   }
   // make request to delete from Clerk if inputs match Clerk info

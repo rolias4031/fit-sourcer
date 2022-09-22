@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import GeneralLabel from './GeneralLabel';
 
 /*
-* can be state controlled or not. If no stateValue is supplied, then it renders without a value attribute and only raises state, without being tied to it. Important when the input needs to start blank.
+* this component is an inpute component. It does these things:
+1. manages a label using the name property, or the given specific label.
+2. raises its value on every click to its form's state. Doesn't contain its own state.
+3. gets updated with the value passed into stateValue.
+4. Is contained in its own div to keep label and input as one unit.
 */
 
 function NumberInputState({
@@ -23,21 +27,10 @@ function NumberInputState({
   const labelContent = (
     <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
   );
-  const inputClass = `${inputStyle} number-input focus:outline-none focus:shadow-outline`;
-  let inputContent = (
-    <input
-      onChange={changeHandler}
-      className={inputClass}
-      id={id}
-      name={name}
-      type="number"
-      step="0.1"
-      min="0"
-      max="1000"
-    />
-  );
-  if (stateValue) {
-    inputContent = (
+  const inputClass = `${inputStyle} focus:outline-none focus:shadow-outline`;
+  return (
+    <div className={divStyle}>
+      {labelContent}
       <input
         onChange={changeHandler}
         className={inputClass}
@@ -49,12 +42,6 @@ function NumberInputState({
         max="1000"
         value={stateValue}
       />
-    );
-  }
-  return (
-    <div className={divStyle}>
-      {labelContent}
-      {inputContent}
     </div>
   );
 }
@@ -66,7 +53,7 @@ NumberInputState.propTypes = {
   inputStyle: PropTypes.string,
   labelStyle: PropTypes.string,
   divStyle: PropTypes.string,
-  stateValue: PropTypes.string,
+  stateValue: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
 };
 
@@ -75,7 +62,6 @@ NumberInputState.defaultProps = {
   inputStyle: null,
   labelStyle: null,
   divStyle: null,
-  stateValue: null,
 };
 
 export default NumberInputState;

@@ -14,12 +14,30 @@ export const deleteUserSchema = z.object({
   confirm: z.boolean(),
 });
 
-export const editBodySectionSchema = z.object({
-  waist: z.number().lte(500),
-  hip: z.number().lte(500),
-  seat: z.number().lte(500),
-  thigh: z.number().lte(500),
-  calf: z.number().lte(500),
-  inseam: z.number().lte(500),
-  outseam: z.number().lte(500),
+const NUM_MAX = 300
+const NUM_MIN = 0
+
+export const lowerBodyNumsSchema = z.object({
+  waist: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  hip: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  seat: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  thigh: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  calf: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  inseam: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  outseam: z.number().gte(NUM_MIN).lte(NUM_MAX),
+}).strict()
+
+export const upperBodyNumsSchema = z.object({
+  //
 })
+
+const GARMENT_TYPES = ['pant', 'short']
+const infoNameMax = 50
+const infoNameMin = 1
+const infoDescMax = 100
+export const garmentInfoSchema = z.object({
+  name: z.string().trim().min(infoNameMin).max(infoNameMax),
+  vendor: z.string().trim().min(infoNameMin).max(infoNameMax),
+  description: z.string().trim().min(infoNameMin).max(infoDescMax),
+  type: z.enum(GARMENT_TYPES) // allow only specific strings from GARMENT_TYPES
+}).strict()

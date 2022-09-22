@@ -1,27 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { useQuery } from 'react-query';
 import UserHome from '../presentation/UserHome';
 import IsLoading from '../../util/IsLoading';
 import IsError from '../../util/IsError';
+import { useGetUserProfile } from '../../../lib/fetch'
 
-async function fetchUserProfile() {
-  const url = 'http://localhost:3000/api/user/profile';
-  const fetchOptions = {
-    method: 'GET',
-  };
-  const response = await fetch(url, fetchOptions);
-  const result = await response.json();
-  if (!response.ok) {
-    throw new Error(result.message);
-  }
-  return result.profile;
-}
-
-export const useProfile = () => useQuery(['fetch-profile'], fetchUserProfile);
+/*
+* this container does these things:
+1. fetch's the user's profile using useGetUserProfile hook
+*/
 
 function UserHomeContainer({ info }) {
-  const { isLoading, isError, data: profile, error } = useProfile();
+  const { isLoading, isError, data: profile, error } = useGetUserProfile();
 
   if (isLoading) {
     return <IsLoading />;

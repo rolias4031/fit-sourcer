@@ -1,10 +1,12 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import EditLowerBodyForm from '../presentation/EditLowerBodyForm';
 import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
 import { useEditBody } from '../../../lib/fetch';
 import { alertLocIds } from '../../../lib/constants';
+import SubHeader from '../../display/SubHeader';
+import SuccessSymbol from '../../util/SuccessSymbol';
 
 /*
 * container holds logic for updating, editing, etc for EditLowerBodyForm
@@ -13,62 +15,39 @@ import { alertLocIds } from '../../../lib/constants';
 
 */
 function EditLowerBodyContainer({ lowerBody }) {
-  const alertCtx = useContext(AlertContext);
-  const { mutate, isLoading, isError } = useEditBody();
-  const initLowerBodyState = {
-    waist: lowerBody.waist,
-    hip: lowerBody.hip,
-    seat: lowerBody.seat,
-    thigh: lowerBody.thigh,
-    calf: lowerBody.calf,
-    inseam: lowerBody.inseam,
-    outseam: lowerBody.outseam,
-  };
-  const [lowerBodyState, setLowerBodyState] = useState(initLowerBodyState);
-
-  const editBodyHandler = useCallback(async (lowerBodyValues) => {
+  const { id, userId, updatedAt, ...nums } = lowerBody;
+  const { alerts } = useContext(AlertContext);
+  const { mutate, isLoading, isSuccess, isError } = useEditBody();
+  const editBodyHandler = useCallback(async (formValues) => {
     const config = {
       url: 'http://localhost:3000/api/user/edit/lowerBody',
       method: 'PUT',
-      inputs: lowerBodyValues,
+      inputs: formValues,
       alertLocId: alertLocIds.EDIT_LOWER_BODY_CONTAINER,
     };
     mutate(config);
   });
 
-  if (isLoading) {
-    // make something cool eventually, like a spinning wheel on the form
-    return <h1>Loading</h1>;
-  }
-
   return (
-    <>
+    <div className='lg:w-1/2 md:w-3/4 w-5/6 mx-auto mb-10'>
+      <div className="flex mx-auto items-center">
+        <SubHeader header="Edit Lower Body" headerStyle="flex-1" />
+        {isSuccess && <SuccessSymbol />}
+      </div>
       <EditLowerBodyForm
-        contState={lowerBodyState}
-        raiseState={setLowerBodyState}
+        key={updatedAt}
+        contValues={nums}
         editBodyHandler={editBodyHandler}
       />
-      {alertCtx.alert.loc === alertLocIds.EDIT_LOWER_BODY_CONTAINER ? (
-        <Alert alert={alertCtx.alert} />
+      {alerts.loc === alertLocIds.EDIT_LOWER_BODY_CONTAINER ? (
+        <Alert alerts={alerts} />
       ) : null}
-    </>
+    </div>
   );
 }
 
-const ptsr = PropTypes.string.isRequired;
-
 EditLowerBodyContainer.propTypes = {
-  lowerBody: PropTypes.exact({
-    id: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
-    waist: ptsr,
-    hip: ptsr,
-    seat: ptsr,
-    thigh: ptsr,
-    calf: ptsr,
-    inseam: ptsr,
-    outseam: ptsr,
-  }).isRequired,
+  lowerBody: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default EditLowerBodyContainer;

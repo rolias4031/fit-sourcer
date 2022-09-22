@@ -1,28 +1,41 @@
 import React, { useState, createContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+/*
+! alert system works as follows:
+* use updateAlerts by giving it an array of error messages and a locId. this will turn those messages into error objects.
+* setAlerts has the form: { arr: [{ message, timeStamp }], loc: locId }
+* check if an alert exists by checking alerts.loc
+*/
+
 export const AlertContext = createContext({
-  alert: '',
-  updateAlert: () => {},
-  clearAlert: () => {},
+  alerts: {
+    arr: [],
+    loc: ''
+  },
+  updateAlerts: () => {},
+  clearAlerts: () => {},
 });
 
 function AlertContextProvider({ children }) {
-  const initialAlertState = {
-    message: '',
-    error: false,
-    loc: '',
-    timeStamp: 0,
-  };
-  const [alert, setAlert] = useState(initialAlertState);
-  function updateAlert(message, loc, error = true) {
-    const timeStamp = Date.now();
-    setAlert({ message, error, loc, timeStamp });
+  const initAlertsState = { arr: [], loc: ''}
+  const [alerts, setAlerts] = useState(initAlertsState)
+
+  function updateAlerts(messages, locId) {
+    // takes an array of messages, maps through them to create an array of alert objects, sets that is alerrts.arr
+    // if messages is a single string (single error), put it into an array
+    const validMessages = Array.isArray(messages) ? messages : [messages]
+    const timeStamp = Date.now()
+    const newAlerts = validMessages.map((message) => (
+      { message, timeStamp, error: true }
+    ))
+    setAlerts({ arr: newAlerts, loc: locId  })
   }
-  function clearAlert() {
-    setAlert(initialAlertState);
+
+  function clearAlerts() {
+    setAlerts(initAlertsState);
   }
-  const value = useMemo(() => ({ alert, updateAlert, clearAlert }));
+  const value = useMemo(() => ({ alerts, updateAlerts, clearAlerts }));
   return (
     <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
   );

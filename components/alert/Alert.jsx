@@ -1,47 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { AlertContext } from '../../context/AlertContext';
+import AlertMessage from './AlertMessage';
 
-function Alert({ alert }) {
-  const alertContext = useContext(AlertContext);
-
-  useEffect(() => {
-    const id = setTimeout(alertContext.clearAlert, 7000);
-    return () => {
-      clearTimeout(id);
-    };
-  }, [alert.timeStamp]);
-
-  const messageColor = alert.error ? 'alert-error' : 'alert-success';
-  const alertClass = `alert ${messageColor}`;
-  const backgroundColor = alert.error
-    ? 'alert-container-error'
-    : 'alert-container-success';
-  const divClass = `alert-container ${backgroundColor}`;
+function Alert({ alerts }) {
+  const alertsContent = alerts.arr.map((alert) => (
+    <AlertMessage key={alert.message} alert={alert} />
+  ))
 
   return (
-    <div className={divClass}>
-      <p className={alertClass}>{alert.message}</p>
+    <div>
+      {alertsContent}
     </div>
   );
 }
 
 Alert.propTypes = {
-  alert: PropTypes.exact({
-    message: PropTypes.string,
-    error: PropTypes.bool,
+  alerts: PropTypes.exact({
+    arr: PropTypes.arrayOf(PropTypes.exact({
+      message: PropTypes.string,
+      error: PropTypes.bool,
+      timeStamp: PropTypes.number,
+    })),
     loc: PropTypes.string,
-    timeStamp: PropTypes.number.isRequired,
-  }),
-};
-
-Alert.defaultProps = {
-  alert: {
-    message: '',
-    error: false,
-    loc: '',
-    timeStamp: 0,
-  },
-};
+  }).isRequired
+}
 
 export default Alert;

@@ -2,19 +2,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withServerSideAuth } from '@clerk/nextjs/ssr';
-import UserProfileContainer from '../../components/user/container/UserProfileContainer';
+import ProfileContainer from '../../components/user/container/ProfileContainer';
+
+/*
+* this container does these things:
+1. performs SSR and protects page with session check
+2. renders the ProfileContainer
+3. passes userInfo props down to tree
+*/
 
 function profile({ userInfo }) {
-  return <UserProfileContainer info={userInfo}/>;
+  return <ProfileContainer info={userInfo} />;
 }
 
 profile.propTypes = {
-  userInfo: PropTypes.exact({
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
-    primaryEmail: PropTypes.string.isRequired,
-  }).isRequired,
+  userInfo: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export const getServerSideProps = withServerSideAuth(

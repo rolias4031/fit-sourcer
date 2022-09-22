@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import NumberInputState from '../../form/NumberInputState';
 import SubmitButton from '../../form/SubmitButton';
+
+/* 
+! this component can probably be abstracted to EditBodyForm, and passed a different set of keys to map through.
+*/
 
 const lowerBodySectionKeys = [
   'waist',
@@ -11,13 +15,15 @@ const lowerBodySectionKeys = [
   'calf',
   'inseam',
   'outseam',
-]
+];
 
-function EditLowerBodyForm({ contState, raiseState, editBodyHandler }) {
+function EditLowerBodyForm({ contValues, editBodyHandler }) {
+  // very important lesson here: props cannot update state by just being passed through the initialState. Use a key (on the parent component) with a unique, changing value, which forces an entire remount, which will re-init this state with current prop values.
+  const [formValues, setFormValues] = useState(contValues);
 
   function submitHandler(event) {
-    event.preventDefault()
-    editBodyHandler(contState)
+    event.preventDefault();
+    editBodyHandler(formValues);
   }
 
   const numberInputElements = lowerBodySectionKeys.map((key) => (
@@ -26,40 +32,30 @@ function EditLowerBodyForm({ contState, raiseState, editBodyHandler }) {
       id={`edit-body-${key}`}
       name={key}
       labelStyle="input-label-basic block"
-      inputStyle="number-input-style-basic w-20"
-      divStyle="my-2"
-      stateValue={contState[key]}
-      raiseState={raiseState}
+      inputStyle="number-input-style-basic w-full"
+      divStyle="my-2 px-2 basis-1/4"
+      stateValue={formValues[key]}
+      raiseState={setFormValues}
     />
   ));
 
-  const formClass = 'mx-auto p-5 rounded-md w-1/2 bg-gray-100';
-  const containerClass = 'flex flex-row flex-wrap gap-4 justify-around';
+  const formClass = 'p-5 form-style-basic min-w-[500px]';
+  const containerClass = 'flex flex-row flex-wrap';
   return (
     <form onSubmit={submitHandler} className={formClass}>
       <div className={containerClass}>{numberInputElements}</div>
       <SubmitButton
         title="Save"
         id="save-changes-btn"
-        btnStyle="btn-blue mt-4 ml-auto"
+        btnStyle="btn-blue mt-4 mr-2 ml-auto block"
         disabled={false}
       />
     </form>
   );
 }
 
-const ptsr = PropTypes.string.isRequired;
 EditLowerBodyForm.propTypes = {
-  contState: PropTypes.shape({
-    waist: ptsr,
-    hip: ptsr,
-    seat: ptsr,
-    thigh: ptsr,
-    calf: ptsr,
-    inseam: ptsr,
-    outseam: ptsr,
-  }).isRequired,
-  raiseState: PropTypes.func.isRequired,
+  contValues: PropTypes.objectOf(PropTypes.string).isRequired,
   editBodyHandler: PropTypes.func.isRequired,
 };
 

@@ -1,7 +1,7 @@
 import { withAuth } from '@clerk/nextjs/api'
 import { ERRORS, METHODS } from '../../../../lib/constants';
-import { convertBodySectionValuesToNums, editUserBodySection } from '../../../../lib/util';
-import { editBodySectionSchema } from '../../../../validation/schemas';
+import { convertStringObjectToNums, editUserBodySection, extractValidationErrors } from '../../../../lib/util';
+import { lowerBodyNumsSchema } from '../../../../validation/schemas';
 
 /*
  * 1. get the link params, check if an id exists on user using a findUnique()
@@ -23,11 +23,13 @@ export default withAuth(async (req, res) => {
   }
   // get bodySection and inputs, also set up validation here and input value conversion -> int/floats
   const { inputs } = req.body
-  const convertedInputs = convertBodySectionValuesToNums(inputs)
-  const val = editBodySectionSchema.safeParse(convertedInputs)
+  const convertedInputs = convertStringObjectToNums(inputs)
+  const val = lowerBodyNumsSchema.safeParse(convertedInputs)
   if (!val.success) {
+    const errors = extractValidationErrors(val.error.issues)
     return res.status(400).json({
-      message: `${ERRORS.VALIDATION_FAILED} - ${val.error.issues[0].message}`
+      message: `${ERRORS.VALIDATION_FAILED}`,
+      errors,
     })
   }
   // make edits and return error if update is empty or failed

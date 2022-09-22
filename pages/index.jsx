@@ -1,6 +1,4 @@
 import React from 'react';
-import Layout from '../components/util/Layout';
-import SignupContainer from '../components/auth/container/SignupContainer';
 
 /*
 contains: landing page content -> signup form, navbar with links
@@ -10,7 +8,9 @@ just sign in, but rather also signup. Then they click links for signin, etc.
 */
 
 export default function Home() {
-  return <SignupContainer />;
+  return (
+    <div>HELLO LANDING PAGE</div>
+  );
 }
 
 // ssr would take care of auth troubles with 

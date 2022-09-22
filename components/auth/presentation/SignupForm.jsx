@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { ST8_KEYS } from '../../../lib/constants';
 import TextInputState from '../../form/TextInputState';
 import SubmitButton from '../../form/SubmitButton';
-import FlexRow from '../../structure/FlexRow';
 
 export function enableSubmitBtn(inputs) {
   // function returns true to signal error/disabled/invalid
@@ -33,22 +32,20 @@ function SignupForm({ signupHandler }) {
       onSubmit={submitHandler}
       className="bg-gray-100 w-8/12 mx-auto mt-10 p-10 rounded-md"
     >
-      <FlexRow>
-        <TextInputState
-          raiseState={setInputValues}
-          id="signup-first-name"
-          name={ST8_KEYS.firstName}
-          inputStyle="text-input-style-basic"
-          labelStyle="input-label-basic"
-        />
-        <TextInputState
-          raiseState={setInputValues}
-          id="signup-last-name"
-          name={ST8_KEYS.lastName}
-          inputStyle="text-input-style-basic"
-          labelStyle="input-label-basic"
-        />
-      </FlexRow>
+      <TextInputState
+        raiseState={setInputValues}
+        id="signup-first-name"
+        name={ST8_KEYS.firstName}
+        inputStyle="text-input-style-basic"
+        labelStyle="input-label-basic"
+      />
+      <TextInputState
+        raiseState={setInputValues}
+        id="signup-last-name"
+        name={ST8_KEYS.lastName}
+        inputStyle="text-input-style-basic"
+        labelStyle="input-label-basic"
+      />
       <TextInputState
         raiseState={setInputValues}
         id="signup-email"

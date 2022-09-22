@@ -14,12 +14,7 @@ function Home({ userInfo }) {
 }
 
 Home.propTypes = {
-  userInfo: PropTypes.exact({
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
-    primaryEmail: PropTypes.string.isRequired,
-  }).isRequired,
+  userInfo: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export const getServerSideProps = withServerSideAuth(

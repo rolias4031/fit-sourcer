@@ -29,95 +29,109 @@ a {
   }
 }
 
-.alert {
-  @apply text-sm text-center;
+@layer components {
+  .alert {
+    @apply text-sm text-center;
+  }
+  
+  .alert-error {
+    @apply text-red-700;
+  }
+  
+  .alert-success {
+    @apply text-green-700;
+  }
+  
+  .alert-container {
+    @apply my-4 w-8/12 py-1 mx-auto rounded-md;
+  }
+  
+  .alert-container-error {
+    @apply bg-red-100;
+  }
+  
+  .alert-container-success {
+    @apply bg-green-100;
+  }
+  
+  .btn {
+    @apply font-semibold text-sm py-2 px-3 rounded;
+  }
+  
+  .btn-blue {
+    @apply bg-blue-500 text-white;
+  }
+  
+  .btn-blue:hover {
+    @apply bg-blue-800;
+  }
+  
+  .btn-blue:disabled {
+    @apply bg-gray-300;
+  }
+  
+  .btn-red {
+    @apply bg-red-500 text-white;
+  }
+  
+  .btn-red:hover {
+    @apply bg-red-800;
+  }
+  
+  .btn-red:disabled {
+    @apply bg-gray-300;
+  }
+  
+  .btn-gray {
+    @apply bg-gray-500 text-white;
+  }
+  
+  .btn-gray:hover {
+    @apply bg-gray-800;
+  }
+  
+  .btn-gray:disabled {
+    @apply bg-gray-300;
+  }
+  
+  .text-input {
+    @apply appearance-none border rounded leading-tight;
+  }
+  
+  .text-input-style-basic {
+    @apply appearance-none border rounded leading-tight py-2 px-3 text-sm text-gray-700;
+  }
+  
+  .number-input-style-basic {
+    @apply py-2 px-3 text-gray-700 appearance-none border rounded leading-tight text-sm;
+  }
+  
+  .select-input-style-basic {
+    @apply p-2 text-sm bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
+  }
+  
+  .input-label-basic {
+    @apply text-gray-600 text-sm;
+  }
+  .form-style-basic {
+    @apply rounded-md border border-gray-200 bg-gray-50;
+  }
+  
+  .main-header-text {
+    @apply font-bold text-3xl;
+  }
+
+  .sub-header-text {
+    @apply text-xl font-semibold text-gray-800;
+  }
+
+  .success-symbol {
+    @apply h-6 w-6 text-green-500
+  }
+  
+  .page-header-align {
+    @apply text-center my-10;
+  } 
 }
 
-.alert-error {
-  @apply text-red-700;
-}
-
-.alert-success {
-  @apply text-green-700;
-}
-
-.alert-container {
-  @apply my-4 w-8/12 py-1 mx-auto rounded-md;
-}
-
-.alert-container-error {
-  @apply bg-red-100;
-}
-
-.alert-container-success {
-  @apply bg-green-100;
-}
-
-.btn {
-  @apply font-semibold text-sm py-2 px-3 rounded;
-}
-
-.btn-blue {
-  @apply bg-blue-500 text-white;
-}
-
-.btn-blue:hover {
-  @apply bg-blue-800;
-}
-
-.btn-blue:disabled {
-  @apply bg-gray-300;
-}
-
-.btn-red {
-  @apply bg-red-500 text-white;
-}
-
-.btn-red:hover {
-  @apply bg-red-800;
-}
-
-.btn-red:disabled {
-  @apply bg-gray-300;
-}
-
-.btn-gray {
-  @apply bg-gray-500 text-white;
-}
-
-.btn-gray:hover {
-  @apply bg-gray-800;
-}
-
-.btn-gray:disabled {
-  @apply bg-gray-300;
-}
-
-.text-input {
-  @apply shadow appearance-none border rounded leading-tight;
-}
-
-.text-input-style-basic {
-  @apply w-full py-2 px-3 text-sm text-gray-700;
-}
-
-.number-input {
-  @apply shadow appearance-none text-sm border rounded leading-tight
-}
-
-.number-input-style-basic {
-  @apply py-2 px-3 text-gray-700
-}
-
-.input-label-basic {
-  @apply text-gray-600 text-sm
-}
-
-.page-header-text {
-  @apply font-bold text-3xl;
-}
-
-.page-header-align {
-  @apply text-center my-10;
-}
 
