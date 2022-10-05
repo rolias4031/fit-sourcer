@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import UserHome from '../presentation/UserHome';
+import UserHome from './UserHome';
 import IsLoading from '../../util/IsLoading';
 import IsError from '../../util/IsError';
-import { useGetUserProfile } from '../../../lib/fetch'
+import { useGetUserProfile } from '../../../lib/queries'
 
 /*
 * this container does these things:

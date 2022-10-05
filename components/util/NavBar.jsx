@@ -1,13 +1,12 @@
 import React from 'react';
 import { useAuth, SignInButton, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 function NavBar() {
-  const { isLoaded, userId, sessionId } = useAuth();
+  const { userId } = useAuth();
   const auth = userId !== null;
   return (
-    <div className="flex flex-wrap">
+    <div className="flex items-center py-2 bg-gray-600 text-white">
       <div className="mx-5 flex-auto">
         <Link href="/">FitSourcer.com</Link>
       </div>

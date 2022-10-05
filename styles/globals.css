@@ -111,7 +111,7 @@ a {
   }
   
   .input-label-basic {
-    @apply text-gray-600 text-sm;
+    @apply text-gray-800 text-sm;
   }
   .form-style-basic {
     @apply rounded-md border border-gray-200 bg-gray-50;
@@ -126,7 +126,7 @@ a {
   }
 
   .success-symbol {
-    @apply h-6 w-6 text-green-500
+    @apply h-5 w-5 text-green-500
   }
   
   .page-header-align {

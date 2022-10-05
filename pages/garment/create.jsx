@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateGarmentContainer from '../../components/garment/container/CreateGarmentContainer'
+import CreateGarmentContainer from '../../components/garment/create/CreateGarmentContainer'
 
 /*
 * contains a container that initiates a create garment flow.

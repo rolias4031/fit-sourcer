@@ -2,6 +2,10 @@ import { Webhook } from 'svix';
 import { buffer } from 'micro';
 import { prisma } from '../../../lib/db';
 
+/*  
+* this route handles all clerk webhooks. Right now just created and deleted.
+*/
+
 export const config = {
   api: {
     bodyParser: false,
@@ -24,6 +28,7 @@ export default async function handler(req, res) {
     });
   }
 
+  // * creating a new user after clerk sign up
   console.log(msg);
   if (msg.type === 'user.created') {
     // msg.data.id
@@ -41,6 +46,8 @@ export default async function handler(req, res) {
       message: 'running webhook',
       newUser,
     });
+
+  // * deleting a user after clerk deletion
   } else if (msg.type === 'user.deleted') {
     // make sure userExists
     const deletedUser = await prisma.user.delete({

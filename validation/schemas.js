@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { z } from 'zod';
+import { BODY_MODELS_OBJ } from '../lib/constants';
 
 export const createUserSchema = z.object({
   email: z.string().trim().email(),
@@ -17,7 +18,7 @@ export const deleteUserSchema = z.object({
 const NUM_MAX = 300
 const NUM_MIN = 0
 
-export const lowerBodyNumsSchema = z.object({
+export const lowerBodySchema = z.object({
   waist: z.number().gte(NUM_MIN).lte(NUM_MAX),
   hip: z.number().gte(NUM_MIN).lte(NUM_MAX),
   seat: z.number().gte(NUM_MIN).lte(NUM_MAX),
@@ -27,9 +28,23 @@ export const lowerBodyNumsSchema = z.object({
   outseam: z.number().gte(NUM_MIN).lte(NUM_MAX),
 }).strict()
 
-export const upperBodyNumsSchema = z.object({
-  //
-})
+export const upperBodySchema = z.object({
+  neck: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  shoulder: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  chest: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  stomach: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  bicep: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  forearm: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  arm: z.number().gte(NUM_MIN).lte(NUM_MAX),
+  torso: z.number().gte(NUM_MIN).lte(NUM_MAX),
+}).strict()
+
+export const bodyModelSchemaMap = new Map([
+  [BODY_MODELS_OBJ.lowerBody, lowerBodySchema],
+  [BODY_MODELS_OBJ.upperBody, upperBodySchema]
+])
+
+export const modelSchema = z.enum(Object.keys(BODY_MODELS_OBJ))
 
 const GARMENT_TYPES = ['pant', 'short']
 const infoNameMax = 50

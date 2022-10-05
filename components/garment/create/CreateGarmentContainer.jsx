@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react';
-import CreateGarmentForm from '../presentation/CreateGarmentForm';
+import CreateGarmentForm from './CreateGarmentForm';
 import Alert from '../../alert/Alert'
-import { useCreateGarment } from '../../../lib/fetch';
+import { useCreateGarment } from '../../../lib/mutations';
 import { alertLocIds } from '../../../lib/constants';
 import { AlertContext } from '../../../context/AlertContext';
 

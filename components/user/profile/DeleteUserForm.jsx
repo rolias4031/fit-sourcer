@@ -4,7 +4,7 @@ import { ST8_KEYS } from '../../../lib/constants';
 import TextInputState from '../../form/TextInputState';
 import GeneralCheck from '../../form/GeneralCheck';
 import SubmitButton from '../../form/SubmitButton';
-import { enableSubmitBtn } from '../../auth/presentation/SignupForm';
+import { disableButton } from '../../../lib/util-client';
 
 /*
 deleting a user requires email, first, and lastname to match. Also typing a confirmation phrase.
@@ -68,7 +68,7 @@ function DeleteUserForm({ deleteHandler }) {
         title="Delete"
         id="delete-submit-button"
         btnStyle="btn-red mt-4 ml-auto"
-        disabled={enableSubmitBtn(deleteInputs)}
+        disabled={disableButton(deleteInputs)}
       />
     </form>
   );

@@ -2,12 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 // each User has a LowerBody, Upper Body, Feet, and Head. Start with LowerBody
@@ -17,6 +19,7 @@ model User {
   lowerBody         LowerBody?
   lowerBodyGarments LowerBodyGarment[]
   updatedAt         DateTime           @updatedAt
+  upperBody         UpperBody?
 }
 
 model LowerBody {
@@ -30,6 +33,21 @@ model LowerBody {
   calf      Decimal  @default(0)
   inseam    Decimal  @default(0)
   outseam   Decimal  @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model UpperBody {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?  @unique
+  neck      Decimal  @default(0)
+  shoulder  Decimal  @default(0)
+  chest     Decimal  @default(0)
+  stomach   Decimal  @default(0)
+  bicep     Decimal  @default(0)
+  forearm   Decimal  @default(0)
+  arm       Decimal  @default(0)
+  torso     Decimal  @default(0)
   updatedAt DateTime @updatedAt
 }
 

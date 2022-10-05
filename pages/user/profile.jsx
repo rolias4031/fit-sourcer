@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withServerSideAuth } from '@clerk/nextjs/ssr';
-import ProfileContainer from '../../components/user/container/ProfileContainer';
+import ProfileContainer from '../../components/user/profile/ProfileContainer';
 
 /*
 * this container does these things:

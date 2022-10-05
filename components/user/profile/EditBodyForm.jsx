@@ -7,17 +7,9 @@ import SubmitButton from '../../form/SubmitButton';
 ! this component can probably be abstracted to EditBodyForm, and passed a different set of keys to map through.
 */
 
-const lowerBodySectionKeys = [
-  'waist',
-  'hip',
-  'seat',
-  'thigh',
-  'calf',
-  'inseam',
-  'outseam',
-];
 
-function EditLowerBodyForm({ contValues, editBodyHandler }) {
+
+function EditBodyForm({ contValues, editBodyHandler, children }) {
   // very important lesson here: props cannot update state by just being passed through the initialState. Use a key (on the parent component) with a unique, changing value, which forces an entire remount, which will re-init this state with current prop values.
   const [formValues, setFormValues] = useState(contValues);
 
@@ -26,7 +18,7 @@ function EditLowerBodyForm({ contValues, editBodyHandler }) {
     editBodyHandler(formValues);
   }
 
-  const numberInputElements = lowerBodySectionKeys.map((key) => (
+  const numberInputElements = Object.keys(contValues).map((key) => (
     <NumberInputState
       key={key}
       id={`edit-body-${key}`}
@@ -43,20 +35,26 @@ function EditLowerBodyForm({ contValues, editBodyHandler }) {
   const containerClass = 'flex flex-row flex-wrap';
   return (
     <form onSubmit={submitHandler} className={formClass}>
+      {children}
       <div className={containerClass}>{numberInputElements}</div>
       <SubmitButton
         title="Save"
         id="save-changes-btn"
-        btnStyle="btn-blue mt-4 mr-2 ml-auto block"
+        btnStyle="btn-blue mt-3 mr-2 ml-auto block"
         disabled={false}
       />
     </form>
   );
 }
 
-EditLowerBodyForm.propTypes = {
+EditBodyForm.propTypes = {
   contValues: PropTypes.objectOf(PropTypes.string).isRequired,
   editBodyHandler: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
-export default EditLowerBodyForm;
+EditBodyForm.defaultProps = {
+  children: null
+}
+
+export default EditBodyForm;
