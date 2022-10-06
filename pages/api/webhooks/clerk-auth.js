@@ -38,6 +38,9 @@ export default async function handler(req, res) {
         lowerBody: {
           create: {}
         },
+        upperBody: {
+          create: {}
+        }
       },
     });
 

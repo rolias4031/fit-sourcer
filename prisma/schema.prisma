@@ -12,20 +12,21 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-// each User has a LowerBody, Upper Body, Feet, and Head. Start with LowerBody
-// take care of cascading delete before migrating. Only want to delete the lowerBody, not the garments in the array
+// id = Clerk id
+// User 1-1 relations: LowerBody, UpperBody
+// User n-n relations: LowerBodyGarments, UpperBodyGarments
 model User {
   id                String             @id @default(cuid())
   lowerBody         LowerBody?
+  upperBody         UpperBody?
   lowerBodyGarments LowerBodyGarment[]
   updatedAt         DateTime           @updatedAt
-  upperBody         UpperBody?
 }
 
 model LowerBody {
   id        String   @id @default(cuid())
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  @unique
   waist     Decimal  @default(0)
   hip       Decimal  @default(0)
   seat      Decimal  @default(0)
@@ -38,8 +39,8 @@ model LowerBody {
 
 model UpperBody {
   id        String   @id @default(cuid())
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  @unique
   neck      Decimal  @default(0)
   shoulder  Decimal  @default(0)
   chest     Decimal  @default(0)
@@ -51,12 +52,24 @@ model UpperBody {
   updatedAt DateTime @updatedAt
 }
 
-// eventually connect a vendor relation
-// maybe add a type field that only allows specific strings (pants, shorts, jeans, sweat pants, etc.)
+// id = Clerk id
+// Vendor 1-1 relations: None
+// Vendor 1-n relations: LowerBodyGarments, UpperBodyGarments
+model Vendor {
+  id                String             @id @default(cuid())
+  LowerBodyGarments LowerBodyGarment[]
+  description       String
+  updatedAt         DateTime           @updatedAt
+}
+
+// LowerBodyGarment 1-1 relations: Vendor
+// LowerBodyGarment n-n relations: User
 model LowerBodyGarment {
   id          String   @id @default(cuid())
+  vendor      Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId    String   @unique
+  users       User[]
   name        String
-  vendor      String
   description String
   type        String
   waist       Decimal  @default(0)
@@ -66,6 +79,5 @@ model LowerBodyGarment {
   calf        Decimal  @default(0)
   inseam      Decimal  @default(0)
   outseam     Decimal  @default(0)
-  users       User[]
   updatedAt   DateTime @updatedAt
 }
