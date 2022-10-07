@@ -17,16 +17,28 @@ datasource db {
 // User n-n relations: LowerBodyGarments, UpperBodyGarments
 model User {
   id                String             @id @default(cuid())
+  email             String
   lowerBody         LowerBody?
   upperBody         UpperBody?
   lowerBodyGarments LowerBodyGarment[]
+  role              Role               @default(USER)
+  vendorProfile     VendorProfile?
+  updatedAt         DateTime           @updatedAt
+}
+
+model VendorProfile {
+  id                String             @id @default(cuid())
+  user              User               @relation(fields: [userId], references: [id])
+  userId            String             @unique
+  LowerBodyGarments LowerBodyGarment[]
+  description       String
   updatedAt         DateTime           @updatedAt
 }
 
 model LowerBody {
   id        String   @id @default(cuid())
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String  @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
   waist     Decimal  @default(0)
   hip       Decimal  @default(0)
   seat      Decimal  @default(0)
@@ -39,8 +51,8 @@ model LowerBody {
 
 model UpperBody {
   id        String   @id @default(cuid())
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String  @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
   neck      Decimal  @default(0)
   shoulder  Decimal  @default(0)
   chest     Decimal  @default(0)
@@ -55,29 +67,28 @@ model UpperBody {
 // id = Clerk id
 // Vendor 1-1 relations: None
 // Vendor 1-n relations: LowerBodyGarments, UpperBodyGarments
-model Vendor {
-  id                String             @id @default(cuid())
-  LowerBodyGarments LowerBodyGarment[]
-  description       String
-  updatedAt         DateTime           @updatedAt
-}
 
 // LowerBodyGarment 1-1 relations: Vendor
 // LowerBodyGarment n-n relations: User
 model LowerBodyGarment {
-  id          String   @id @default(cuid())
-  vendor      Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId    String   @unique
+  id          String        @id @default(cuid())
+  vendor      VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId    String        @unique
   users       User[]
   name        String
   description String
   type        String
-  waist       Decimal  @default(0)
-  hip         Decimal  @default(0)
-  seat        Decimal  @default(0)
-  thigh       Decimal  @default(0)
-  calf        Decimal  @default(0)
-  inseam      Decimal  @default(0)
-  outseam     Decimal  @default(0)
-  updatedAt   DateTime @updatedAt
+  waist       Decimal       @default(0)
+  hip         Decimal       @default(0)
+  seat        Decimal       @default(0)
+  thigh       Decimal       @default(0)
+  calf        Decimal       @default(0)
+  inseam      Decimal       @default(0)
+  outseam     Decimal       @default(0)
+  updatedAt   DateTime      @updatedAt
+}
+
+enum Role {
+  USER
+  VENDOR
 }

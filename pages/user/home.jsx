@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withServerSideAuth } from '@clerk/nextjs/ssr';
-import UserHomeContainer from '../../components/user/container/UserHomeContainer';
+import UserHomeContainer from '../../components/user/home/UserHomeContainer';
 
 /*
  * this pages needs to buy some time for the webhook to go through. useQuery with an intentional error if the !userExists, then useQuery will retry after 1 second or so. Use that custom error to display a loading page.
