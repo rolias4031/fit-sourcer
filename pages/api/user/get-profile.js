@@ -1,10 +1,10 @@
-import { withAuth } from '@clerk/nextjs/api';
+import { getAuth } from '@clerk/nextjs/server';
 import { ERRORS, BODY_MODELS_ARR } from '../../../lib/constants';
 import { prisma } from '../../../lib/db';
 
-export default withAuth(async (req, res) => {
+export default async function handler(req, res) {
   // check session
-  const { userId, sessionId } = req.auth;
+  const { userId, sessionId } = getAuth(req);
   if (!sessionId) {
     return req.status(401).json({
       message: ERRORS.UNAUTHORIZED,
@@ -22,16 +22,17 @@ export default withAuth(async (req, res) => {
     },
   });
 
-  // * incase the user logs in before account gets created at api/webhooks/clerk-atuh
+  // * incase the user logs in before account gets created at api/webhooks/clerk-auth
   if (!profile) {
     return res.status(404).json({
       message: 'user not created yet',
+      errors: 'User does not exist'
     });
   }
 
   console.log(profile.lowerBody, profile.upperBody);
 
-  // * now we need to check if user has all models -- if not, create them.
+  // * now we need to check if user has all models -- if not, create them. this exists to update existing profiles when a new model is created.
   BODY_MODELS_ARR.forEach(async (model) => {
     if (profile[model]) return;
     console.log('api/user/profile', `${model} missing - creating new.`);
@@ -49,4 +50,4 @@ export default withAuth(async (req, res) => {
   });
 
   return res.status(200).json({ message: 'success', profile });
-});
+}

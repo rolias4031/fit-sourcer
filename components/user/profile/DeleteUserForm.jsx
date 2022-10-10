@@ -27,7 +27,7 @@ function DeleteUserForm({ deleteHandler }) {
   return (
     <form
       onSubmit={submitHandler}
-      className="p-6 form-style-basic min-w-[500px]"
+      className="p-5 form-style-basic min-w-[500px]"
     >
       <div className="flex space-x-2 my-2">
         <TextInputState
@@ -67,7 +67,7 @@ function DeleteUserForm({ deleteHandler }) {
       <SubmitButton
         title="Delete"
         id="delete-submit-button"
-        btnStyle="btn-red mt-4 ml-auto"
+        btnStyle="btn-red block mt-4 ml-auto"
         disabled={disableButton(deleteInputs)}
       />
     </form>

@@ -16,6 +16,7 @@ function TextInputState({
   name,
   id,
   label,
+  placeholder,
   inputStyle,
   labelStyle,
   divStyle,
@@ -42,6 +43,7 @@ function TextInputState({
           id={id}
           name={name}
           value={stateValue}
+          placeholder={placeholder}
         />
     </div>
   );
@@ -51,6 +53,7 @@ TextInputState.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
   inputStyle: PropTypes.string,
   labelStyle: PropTypes.string,
   divStyle: PropTypes.string,
@@ -60,6 +63,7 @@ TextInputState.propTypes = {
 
 TextInputState.defaultProps = {
   label: null,
+  placeholder: null,
   inputStyle: null,
   labelStyle: null,
   divStyle: null

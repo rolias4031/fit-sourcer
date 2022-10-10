@@ -7,6 +7,7 @@ import DeleteUserContainer from './DeleteUserContainer';
 import { useGetUserProfile } from '../../../lib/queries';
 import EditBodyContainer from './EditBodyContainer';
 import { useFilterProfile } from '../../../lib/hooks';
+import VendorAppContainer from './VendorAppContainer';
 
 /*
 * this container does these things:
@@ -28,9 +29,8 @@ function ProfileContainer() {
   }
 
   if (profile) {
-    
     // filter profile into a map to EditBodyContainer dynamic
-    const bodyMap = useFilterProfile(profile)
+    const bodyMap = useFilterProfile(profile);
     return (
       <div className="m-5">
         <ProfileHeader />
@@ -39,6 +39,9 @@ function ProfileContainer() {
         </div>
         <div className="lg:w-1/2 md:w-3/4 w-5/6 mx-auto mb-10">
           <DeleteUserContainer />
+        </div>
+        <div className="lg:w-1/2 md:w-3/4 w-5/6 mx-auto mb-10">
+          <VendorAppContainer />
         </div>
       </div>
     );

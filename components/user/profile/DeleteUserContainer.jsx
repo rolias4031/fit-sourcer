@@ -5,7 +5,7 @@ import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
 import { useDeleteUser } from '../../../lib/mutations';
 import Redirect from '../../util/Redirect';
-import { alertLocIds } from '../../../lib/constants';
+import { alertLocIds, ALERT_LOC_IDS } from '../../../lib/constants';
 /*
 - contains all fetch logic for the DeleteUserForm
 */
@@ -19,7 +19,7 @@ function DeleteUserContainer() {
       url: 'http://localhost:3000/api/auth/delete-user',
       method: 'DELETE',
       inputs: deleteInputs,
-      alertLocId: alertLocIds.DELETE_USER_CONTAINER,
+      alertLocId: ALERT_LOC_IDS.DELETE_USER_CONTAINER,
     };
     mutate(config);
   });
@@ -30,13 +30,9 @@ function DeleteUserContainer() {
 
   return (
     <>
-      <div className="flex mx-auto my-1 items-center">
-        <SubHeader header="Delete Your Profile" headerStyle="" />
-      </div>
+      <SubHeader header="Delete Your Profile" headerStyle="my-1" />
       <DeleteUserForm deleteHandler={deleteHandler} />
-      {alerts.loc === alertLocIds.DELETE_USER_CONTAINER ? (
-        <Alert alerts={alerts} />
-      ) : null}
+      <Alert locId={ALERT_LOC_IDS.DELETE_USER_CONTAINER} />
     </>
   );
 }

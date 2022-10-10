@@ -1,28 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import AlertMessage from './AlertMessage';
+import { AlertContext } from '../../context/AlertContext';
 
-function Alert({ alerts }) {
-  const alertsContent = alerts.arr.map((alert) => (
-    <AlertMessage key={alert.message} alert={alert} />
-  ))
+function Alert({ locId }) {
+  const alertCtx = useContext(AlertContext);
+  const { alerts } = alertCtx;
+  let alertsContent = null;
+  if (alerts.arr.length > 0 && locId === alerts.loc) {
+    const alertMessages = alertCtx.alerts.arr.map((alert) => (
+      <AlertMessage key={`${alert.message}-${alert.timeStamp}`} alert={alert} />
+    ));
+    alertsContent = <div>{alertMessages}</div>;
+  }
 
-  return (
-    <div>
-      {alertsContent}
-    </div>
-  );
-}
-
-Alert.propTypes = {
-  alerts: PropTypes.exact({
-    arr: PropTypes.arrayOf(PropTypes.exact({
-      message: PropTypes.string,
-      error: PropTypes.bool,
-      timeStamp: PropTypes.number,
-    })),
-    loc: PropTypes.string,
-  }).isRequired
+  return alertsContent;
 }
 
 export default Alert;

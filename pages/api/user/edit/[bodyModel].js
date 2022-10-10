@@ -1,4 +1,4 @@
-import { withAuth } from '@clerk/nextjs/api';
+import { getAuth } from '@clerk/nextjs/server';
 import { prisma } from '../../../../lib/db';
 import { ERRORS, METHODS } from '../../../../lib/constants';
 import {
@@ -14,9 +14,9 @@ import {
  * dynamic route to edit a user's body model. Accepts either lowerBody or upperBody.
  * uses these terms in the query param to get the correct schema.
  */
-export default withAuth(async (req, res) => {
+export default async function handler(req, res) {
   // * route validation
-  const { userId, sessionId } = req.auth;
+  const { userId, sessionId } = getAuth(req);
   if (!sessionId) {
     return req.status(401).json({
       message: ERRORS.UNAUTHORIZED,
@@ -68,4 +68,4 @@ export default withAuth(async (req, res) => {
     message: 'Update success',
     update,
   });
-});
+}

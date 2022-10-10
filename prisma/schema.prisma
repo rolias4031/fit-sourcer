@@ -30,6 +30,7 @@ model VendorProfile {
   id                String             @id @default(cuid())
   user              User               @relation(fields: [userId], references: [id])
   userId            String             @unique
+  name              String             @unique
   LowerBodyGarments LowerBodyGarment[]
   description       String
   updatedAt         DateTime           @updatedAt

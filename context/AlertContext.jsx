@@ -21,13 +21,13 @@ function AlertContextProvider({ children }) {
   const initAlertsState = { arr: [], loc: ''}
   const [alerts, setAlerts] = useState(initAlertsState)
 
-  function updateAlerts(messages, locId) {
+  function updateAlerts({ messages, locId, error = true }) {
     // takes an array of messages, maps through them to create an array of alert objects, sets that is alerrts.arr
     // if messages is a single string (single error), put it into an array
     const validMessages = Array.isArray(messages) ? messages : [messages]
     const timeStamp = Date.now()
     const newAlerts = validMessages.map((message) => (
-      { message, timeStamp, error: true }
+      { message, timeStamp, error, }
     ))
     setAlerts({ arr: newAlerts, loc: locId  })
   }

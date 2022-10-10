@@ -4,7 +4,7 @@ import EditBodyForm from './EditBodyForm';
 import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
 import { useEditBody } from '../../../lib/mutations';
-import { alertLocIds } from '../../../lib/constants';
+import { alertLocIds, ALERT_LOC_IDS } from '../../../lib/constants';
 import SubHeader from '../../display/SubHeader';
 import ToggleBodyForm from './ToggleBodyForm';
 import SuccessSymbol from '../../util/SuccessSymbol';
@@ -29,7 +29,7 @@ function EditBodyContainer({ map }) {
       url: `http://localhost:3000/api/user/edit/${map.get(model).param}`,
       method: 'PUT',
       inputs: formValues,
-      alertLocId: alertLocIds.EDIT_BODY_CONTAINER,
+      alertLocId: ALERT_LOC_IDS.EDIT_BODY_CONTAINER,
     };
     mutate(config);
   });
@@ -56,9 +56,7 @@ function EditBodyContainer({ map }) {
         contValues={map.get(model).nums}
         editBodyHandler={editBodyHandler}
       />
-      {alerts.loc === alertLocIds.EDIT_BODY_CONTAINER ? (
-        <Alert alerts={alerts} />
-      ) : null}
+      <Alert locId={ALERT_LOC_IDS.EDIT_BODY_CONTAINER} />
     </>
   );
 }

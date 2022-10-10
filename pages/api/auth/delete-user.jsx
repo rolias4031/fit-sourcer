@@ -1,9 +1,9 @@
-import { withAuth } from '@clerk/nextjs/api';
+import { getAuth } from '@clerk/nextjs/server';
 import { ERRORS, SUCCESS, METHODS } from '../../../lib/constants';
 
-export default withAuth(async (req, res) => {
+export default async function handler(req, res) {
   // check session
-  const { userId, sessionId } = req.auth;
+  const { userId, sessionId } = getAuth(req);
   if (!sessionId) {
     return res.status(401).json({
       message: ERRORS.UNAUTHORIZED,
@@ -22,9 +22,9 @@ export default withAuth(async (req, res) => {
   const clerkVals = await clerkGetResponse.json();
   if (!clerkGetResponse.ok) {
     return res.status(500).json({
-      message: "Something went wrong with Clerk!",
-      errors: "Something went wrong with Clerk!"
-    })
+      message: 'Something went wrong with Clerk!',
+      errors: 'Something went wrong with Clerk!',
+    });
   }
   const { firstName, lastName, email } = req.body.inputs;
   const clerkEmail = clerkVals.email_addresses.find(
@@ -37,13 +37,13 @@ export default withAuth(async (req, res) => {
   ) {
     return res.status(400).json({
       message: "Credentials don't match",
-      errors: "Credentials don't match"
-    })
+      errors: "Credentials don't match",
+    });
   }
   // make request to delete from Clerk if inputs match Clerk info
-  fetchOptions.method = METHODS.DELETE
+  fetchOptions.method = METHODS.DELETE;
   const response = await fetch(url, fetchOptions);
   const result = await response.json();
   console.log(result);
   return res.status(200).json({ message: SUCCESS.DELETE });
-});
+}

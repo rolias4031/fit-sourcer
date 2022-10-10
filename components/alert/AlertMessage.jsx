@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { AlertContext } from '../../context/AlertContext';
 
 function AlertMessage({ alert }) {
-  const alertContext = useContext(AlertContext);
+  const alertCtx = useContext(AlertContext);
 
   useEffect(() => {
-    const id = setTimeout(alertContext.clearAlerts, 7000);
+    const id = setTimeout(alertCtx.clearAlerts, 7000);
     return () => {
       clearTimeout(id);
     };

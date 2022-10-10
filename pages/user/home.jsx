@@ -1,49 +1,27 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withServerSideAuth } from '@clerk/nextjs/ssr';
+import { getAuth, buildClerkProps, clerkClient } from '@clerk/nextjs/server';
 import UserHomeContainer from '../../components/user/home/UserHomeContainer';
 
 /*
  * this pages needs to buy some time for the webhook to go through. useQuery with an intentional error if the !userExists, then useQuery will retry after 1 second or so. Use that custom error to display a loading page.
  */
 
-function Home({ userInfo }) {
-  return <UserHomeContainer info={userInfo} />;
+function Home({ __clerk_ssr_state }) {
+  return <UserHomeContainer info={__clerk_ssr_state.userInfo} />;
 }
 
-Home.propTypes = {
-  userInfo: PropTypes.objectOf(PropTypes.string).isRequired,
-};
-
-export const getServerSideProps = withServerSideAuth(
-  async ({ req }) => {
-    const { sessionId, userId } = req.auth;
-    if (!sessionId) {
-      return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      };
-    }
-    const primaryEmail = req.user.emailAddresses.find(
-      (email) => email.id === req.user.primaryEmailAddressId,
-    );
-    const userInfo = {
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      primaryEmail: primaryEmail.emailAddress,
-      userId,
-    };
-    return {
-      props: {
-        userInfo,
-      },
-    };
-  },
-  { loadUser: true },
-);
+export async function getServerSideProps({ req }) {
+  const { userId } = getAuth(req);
+  const user = userId ? await clerkClient.users.getUser(userId) : null;
+  const userInfo = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    userId,
+  };
+  return { props: { ...buildClerkProps(req, { userInfo }) } };
+}
 
 export default Home;
