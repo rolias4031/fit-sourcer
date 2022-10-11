@@ -29,6 +29,7 @@ function AlertMessage({ alert }) {
 AlertMessage.propTypes = {
   alert: PropTypes.exact({
     message: PropTypes.string,
+    locId: PropTypes.string,
     error: PropTypes.bool,
     timeStamp: PropTypes.number.isRequired,
   }),
@@ -37,6 +38,7 @@ AlertMessage.propTypes = {
 AlertMessage.defaultProps = {
   alert: {
     message: '',
+    locId: '',
     error: false,
     timeStamp: 0,
   },

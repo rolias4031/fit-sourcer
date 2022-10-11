@@ -21,7 +21,7 @@ function DeleteUserContainer() {
       inputs: deleteInputs,
       alertLocId: ALERT_LOC_IDS.DELETE_USER_CONTAINER,
     };
-    mutate(config);
+    mutate(config)
   });
 
   if (isSuccess) {

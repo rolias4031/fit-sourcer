@@ -25,19 +25,13 @@ function VendorAppContainer() {
       inputs: values,
     };
     mutate(config, {
-      onError: (data) => {
+      onSettled: (data, error) => {
+        console.log({ data, error });
         alertCtx.updateAlerts({
-          messages: data.errors,
+          messages: error ? error.errors : data.display,
           locId: ALERT_LOC_IDS.VENDOR_APP_CONTAINER,
-        });
-      },
-      onSuccess: (data) => {
-        alertCtx.updateAlerts({
-          messages: data.message,
-          locId: ALERT_LOC_IDS.VENDOR_APP_CONTAINER,
-          error: false,
-        }
-        );
+          error: error && true
+        })
       },
     });
   });

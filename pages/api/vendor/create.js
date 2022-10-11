@@ -81,6 +81,7 @@ export default async function handler(req, res) {
 
   return res.status(201).json({
     message: 'Vendor profile created',
+    display: "Thanks for your application! Expect to hear from us in 1-2 days.",
     updatedUser,
   });
 }

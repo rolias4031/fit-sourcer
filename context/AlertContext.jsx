@@ -11,14 +11,14 @@ import PropTypes from 'prop-types';
 export const AlertContext = createContext({
   alerts: {
     arr: [],
-    loc: ''
+    locId: ''
   },
   updateAlerts: () => {},
   clearAlerts: () => {},
 });
 
 function AlertContextProvider({ children }) {
-  const initAlertsState = { arr: [], loc: ''}
+  const initAlertsState = { arr: [], locId: ''}
   const [alerts, setAlerts] = useState(initAlertsState)
 
   function updateAlerts({ messages, locId, error = true }) {
@@ -29,7 +29,7 @@ function AlertContextProvider({ children }) {
     const newAlerts = validMessages.map((message) => (
       { message, timeStamp, error, }
     ))
-    setAlerts({ arr: newAlerts, loc: locId  })
+    setAlerts({ arr: newAlerts, locId  })
   }
 
   function clearAlerts() {

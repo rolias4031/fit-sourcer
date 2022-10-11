@@ -17,7 +17,7 @@ datasource db {
 // User n-n relations: LowerBodyGarments, UpperBodyGarments
 model User {
   id                String             @id @default(cuid())
-  email             String
+  email             String             @unique
   lowerBody         LowerBody?
   upperBody         UpperBody?
   lowerBodyGarments LowerBodyGarment[]
@@ -92,4 +92,5 @@ model LowerBodyGarment {
 enum Role {
   USER
   VENDOR
+  ADMIN
 }
