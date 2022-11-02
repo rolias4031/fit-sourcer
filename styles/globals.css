@@ -19,16 +19,6 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
-
 @layer components {
   .alert {
     @apply text-sm text-center;
@@ -56,6 +46,10 @@ a {
   
   .btn {
     @apply font-semibold text-sm py-2 px-3 rounded;
+  }
+
+  .btn-sm {
+    @apply font-semibold text-xs px-2 py-1 rounded
   }
   
   .btn-blue {

@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createLabel } from '../../lib/util-client';
 
+/*
+* button for general situations. see SubmitButton for submit needs.
+*/
+
 function GeneralButton({ btnStyle, name, onClick }) {
   function clickHandler(event) {
     onClick(event.target.name)

@@ -5,7 +5,7 @@ import { getUserByEmail } from '../../../lib/util';
 
 export default async function handler(req, res) {
   // check session
-  const { sessionId, userId } = getAuth(req);
+  const { sessionId } = getAuth(req);
   if (!sessionId) {
     return res.status(401).json({
       message: ERRORS.UNAUTHORIZED,
