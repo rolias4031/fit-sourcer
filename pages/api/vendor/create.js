@@ -44,8 +44,8 @@ export default async function handler(req, res) {
   console.log({ thisUser });
   if (thisUser.vendorProfile) {
     return res.status(400).json({
-      message: "You're already a vendor!",
-      errors: "You're already a vendor!",
+      message: "You're already a vendor or have an application pending!",
+      errors: "You're already a vendor or have an application pending!",
     });
   }
 
@@ -61,27 +61,8 @@ export default async function handler(req, res) {
       },
     },
   });
-
-  // * update user role to vendor -- exists for easy check
-  const updatedUser = await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      role: {
-        set: 'VENDOR',
-      },
-    },
-    include: {
-      vendorProfile: true,
-    },
-  });
-
-  console.log({ updatedUser });
-
   return res.status(201).json({
     message: 'Vendor profile created',
-    display: "Thanks for your application! Expect to hear from us in 1-2 days.",
-    updatedUser,
+    display: 'Thanks for your application! Expect to hear from us in 1-2 days.',
   });
 }

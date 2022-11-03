@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import SubmitButton from '../form/SubmitButton';
 import GeneralButton from '../form/GeneralButton';
 
-function AppCard({ app, onClick }) {
+function AppCard({ app, onSubmit }) {
   console.log('AppCard', app);
-  function clickHandler(event) {
-    event.preventDefault();
-    onClick(app.vendorProfile.id);
-  }
+  const manageHandler = useCallback((event) => {
+    console.log('manageHandler', app.vendorProfile.id, event);
+    onSubmit({ appId: app.vendorProfile.id, action: event.target.name });
+  });
   return (
-    <div className="flex border p-2 bg-gray-50 rounded-md">
+    <div
+      onSubmit={manageHandler}
+      className="flex border p-2 bg-gray-50 rounded-md"
+    >
       <div className="flex flex-col flex-1">
         <p className="font-bold">{app.vendorProfile.name}</p>
         <p className="text-sm">{app.vendorProfile.description}</p>
@@ -18,12 +20,16 @@ function AppCard({ app, onClick }) {
         <p className="text-sm text-gray-600">{app.email}</p>
       </div>
       <div className="flex flex-col space-y-2 my-auto">
-        <SubmitButton
-          title="Approve"
-          id="vendor-apps-submit-btn"
+        <GeneralButton
           btnStyle="btn-sm btn-blue"
+          name="approve"
+          onClick={manageHandler}
         />
-        <GeneralButton btnStyle="btn-sm btn-red" name="deny"/>
+        <GeneralButton
+          btnStyle="btn-sm btn-red"
+          name="deny"
+          onClick={manageHandler}
+        />
       </div>
     </div>
   );
@@ -37,6 +43,7 @@ AppCard.propTypes = {
     updatedAt: PropTypes.string,
     vendorProfile: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default AppCard;

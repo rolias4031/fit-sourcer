@@ -8,7 +8,7 @@ import { createLabel } from '../../lib/util-client';
 
 function GeneralButton({ btnStyle, name, onClick }) {
   function clickHandler(event) {
-    onClick(event.target.name)
+    onClick(event)
   }
 
   const btnClass = `btn ${btnStyle}`;
