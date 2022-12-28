@@ -107,6 +107,7 @@ a {
   .input-label-basic {
     @apply text-gray-800 text-sm;
   }
+  
   .form-style-basic {
     @apply rounded-md border border-gray-200 bg-gray-50;
   }

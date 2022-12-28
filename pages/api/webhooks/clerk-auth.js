@@ -18,6 +18,8 @@ export default async function handler(req, res) {
   const payload = (await buffer(req)).toString();
   const { headers } = req;
 
+  console.log({payload, headers})
+
   const wh = new Webhook(secret);
   let msg;
   try {

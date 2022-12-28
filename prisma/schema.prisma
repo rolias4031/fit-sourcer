@@ -2,39 +2,38 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 // id = Clerk id
 // User 1-1 relations: LowerBody, UpperBody
 // User n-n relations: LowerBodyGarments, UpperBodyGarments
 model User {
-  id                String             @id @default(cuid())
-  email             String             @unique
-  lowerBody         LowerBody?
-  upperBody         UpperBody?
-  lowerBodyGarments LowerBodyGarment[]
-  role              Role               @default(USER)
-  vendorProfile     VendorProfile?
-  updatedAt         DateTime           @updatedAt
+  id            String         @id @default(cuid())
+  email         String         @unique
+  lowerBody     LowerBody?
+  upperBody     UpperBody?
+  garments      Garment[]
+  role          Role           @default(user)
+  vendorProfile VendorProfile?
+  updatedAt     DateTime       @updatedAt
 }
 
 model VendorProfile {
-  id                String             @id @default(cuid())
-  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            String             @unique
-  name              String             @unique
-  status            Status             @default(PENDING)
-  LowerBodyGarments LowerBodyGarment[]
-  description       String
-  updatedAt         DateTime           @updatedAt
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String    @unique
+  name        String    @unique
+  status      Status    @default(pending)
+  garments    Garment[]
+  description String
+  updatedAt   DateTime  @updatedAt
 }
 
 model LowerBody {
@@ -72,31 +71,60 @@ model UpperBody {
 
 // LowerBodyGarment 1-1 relations: Vendor
 // LowerBodyGarment n-n relations: User
-model LowerBodyGarment {
-  id          String        @id @default(cuid())
-  vendor      VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId    String        @unique
-  users       User[]
-  name        String
-  description String
-  type        String
-  waist       Decimal       @default(0)
-  hip         Decimal       @default(0)
-  seat        Decimal       @default(0)
-  thigh       Decimal       @default(0)
-  calf        Decimal       @default(0)
-  inseam      Decimal       @default(0)
-  outseam     Decimal       @default(0)
-  updatedAt   DateTime      @updatedAt
+model Garment {
+  id                           String                        @id @default(cuid())
+  vendor                       VendorProfile                 @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId                     String
+  users                        User[]
+  name                         String                        @unique
+  description                  String                        @db.Text()
+  modelNumber                  String
+  images                       GarmentImage[]
+  garmentType                  GarmentType
+  sex                          GarmentSex                    @default(unisex)
+  updatedAt                    DateTime                      @updatedAt
+  lowerBodyGarmentMeasurements LowerBodyGarmentMeasurements?
+}
+
+model LowerBodyGarmentMeasurements {
+  id         String  @id @default(cuid())
+  garment    Garment @relation(fields: [garmentId], references: [id], onDelete: Cascade)
+  garmentId  String  @unique
+  waist      Decimal @default(0)
+  hip        Decimal @default(0)
+  seat       Decimal @default(0)
+  thigh      Decimal @default(0)
+  calf       Decimal @default(0)
+  inseam     Decimal @default(0)
+  outseam    Decimal @default(0)
+  legOpening Decimal @default(0)
+}
+
+model GarmentImage {
+  id        String  @id @default(cuid())
+  garment   Garment @relation(fields: [garmentId], references: [id], onDelete: Cascade)
+  garmentId String
+  url       String  @db.Text()
+}
+
+enum GarmentSex {
+  men
+  women
+  unisex
+}
+
+enum GarmentType {
+  pant
+  short
 }
 
 enum Role {
-  USER
-  VENDOR
-  ADMIN
+  user
+  vendor
+  admin
 }
 
 enum Status {
-  APPROVED
-  PENDING
+  approved
+  pending
 }
