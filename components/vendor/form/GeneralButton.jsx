@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createLabel } from '../../lib/util-client';
+import { createLabel } from '../../../lib/util-client';
 
 /*
 * button for general situations. see SubmitButton for submit needs.

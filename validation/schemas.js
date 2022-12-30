@@ -2,6 +2,8 @@
 import { z } from 'zod';
 import { BODY_MODELS_OBJ } from '../lib/constants';
 
+export const imageUrlSchema = z.string().url().array()
+
 export const createUserSchema = z.object({
   email: z.string().trim().email(),
   firstName: z.string().trim().min(1),
