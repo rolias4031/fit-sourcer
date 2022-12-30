@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import AppCard from './AppCard';
 import SubHeader from '../display/SubHeader';
 import { useSimpleMutation } from '../../lib/mutations';
-import StatusSymbols from '../util/StatusSymbols';
 
 function ManageAppsPanel({ vendorApps }) {
   console.log(vendorApps);

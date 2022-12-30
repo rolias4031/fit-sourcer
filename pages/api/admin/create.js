@@ -1,6 +1,6 @@
 import { getAuth } from '@clerk/nextjs/server';
 import { prisma } from '../../../lib/db';
-import { ERRORS } from '../../../lib/constants';
+import { ERRORS, USER_ROLES } from '../../../lib/constants';
 import { getUserByEmail } from '../../../lib/util';
 
 export default async function handler(req, res) {
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       errors: "That User doesn't exist",
     });
   }
-  if (user.role === 'ADMIN') {
+  if (user.role === USER_ROLES.admin) {
     return res.status(400).json({
       message: 'That User is already an Admin',
       errors: 'That User is already an Admin',

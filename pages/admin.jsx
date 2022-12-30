@@ -2,6 +2,7 @@ import { getAuth, buildClerkProps } from '@clerk/nextjs/server';
 import React from 'react';
 import { prisma } from '../lib/db';
 import AdminDock from '../components/admin/AdminDock';
+import { USER_ROLES } from '../lib/constants';
 
 function admin() {
   return <AdminDock />;
@@ -15,7 +16,7 @@ export async function getServerSideProps({ req }) {
       id: userId,
     },
   });
-  if (thisUser.role !== 'ADMIN') {
+  if (thisUser.role !== USER_ROLES.admin) {
     return {
       redirect: {
         destination: '/',

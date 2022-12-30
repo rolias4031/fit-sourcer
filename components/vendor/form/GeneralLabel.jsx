@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { createLabel } from '../../lib/util-client'
+import PropTypes from 'prop-types'
+import { createLabel } from '../../../lib/util-client'
 
 function GeneralLabel({ id, name, label, labelStyle }) {
   return (
@@ -15,11 +15,11 @@ GeneralLabel.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   labelStyle: PropTypes.string,
-};
+}
 
 GeneralLabel.defaultProps = {
   label: null,
-  labelStyle: null,
-};
+  labelStyle: null
+}
 
 export default GeneralLabel;

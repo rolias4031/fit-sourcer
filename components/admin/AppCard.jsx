@@ -6,11 +6,10 @@ function AppCard({ app, onSubmit }) {
   console.log('AppCard', app);
   const manageHandler = useCallback((event) => {
     console.log('manageHandler', app.vendorProfile.id, event);
-    onSubmit({ appId: app.vendorProfile.id, action: event.target.name });
+    onSubmit({ appId: app.vendorProfile.id, applyingUserId: app.id, action: event.target.name });
   });
   return (
     <div
-      onSubmit={manageHandler}
       className="flex border p-2 bg-gray-50 rounded-md"
     >
       <div className="flex flex-col flex-1">

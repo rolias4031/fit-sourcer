@@ -11,12 +11,12 @@ export default async function handler(req, res) {
     });
   }
 
-  // * get list of all vendor apps where vendorProfile.status ===  PENDING
+  // * get list of all vendor apps where vendorProfile.status ===  pending
   const usersWithVendorApps = await prisma.user.findMany({
     where: {
       vendorProfile: {
         is: {
-          status: 'PENDING'
+          status: 'pending'
         }
       }
     }, 

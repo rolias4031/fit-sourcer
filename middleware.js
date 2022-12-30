@@ -2,7 +2,7 @@
 import { withClerkMiddleware, getAuth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-const publicPaths = ['/', '/api/webhooks/clerk-auth']
+const publicPaths = ['/', '/vendor/signin', '/api/vendor/vendor-check', '/api/webhooks/clerk-auth']
 const isPublic = path => {
   return publicPaths.find(x =>
     path.match(new RegExp(`^${x}$`.replace('*$', '($|/)')))

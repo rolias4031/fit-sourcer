@@ -1,6 +1,6 @@
 import { getAuth } from '@clerk/nextjs/server';
 import { prisma } from '../../../lib/db';
-import { ERRORS } from '../../../lib/constants';
+import { ERRORS, USER_ROLES, VENDOR_PROFILE_STATUSES } from '../../../lib/constants';
 import { getUserById } from '../../../lib/util';
 
 export default async function handler(req, res) {
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   // * check if user is type admin
 
   const thisUser = await getUserById(userId);
-  if (thisUser.role !== 'ADMIN') {
+  if (thisUser.role !== USER_ROLES.admin) {
     return res.status(400).json({
       message: 'NOT AN ADMIN',
       errors: 'NOT AN ADMIN',
@@ -26,21 +26,21 @@ export default async function handler(req, res) {
   console.log(userId);
 
   // * check type of action - then either change status or delete the application
-  const { action } = req.body.inputs;
-  const { appId } = req.body.inputs;
+  const { action, appId, applyingUserId } = req.body.inputs;
   if (action === 'approve') {
+
     const updatedUser = await prisma.user.update({
       where: {
-        id: userId,
+        id: applyingUserId,
       },
       data: {
         role: {
-          set: 'VENDOR',
+          set: USER_ROLES.vendor,
         },
         vendorProfile: {
           update: {
             status: {
-              set: 'APPROVED',
+              set: VENDOR_PROFILE_STATUSES.approved,
             },
           },
         },
