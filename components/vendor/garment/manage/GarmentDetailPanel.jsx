@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useGetGarmentDetail } from '../../../lib/queries';
-import IsLoading from '../../util/IsLoading';
-import IsError from '../../util/IsError';
+import { useGetGarmentDetail } from '../../../../lib/vendor/queries';
+import IsLoading from '../../../util/IsLoading';
+import IsError from '../../../util/IsError';
 import GarmentDetailCard from './GarmentDetailCard';
 import GarmentDetailButtons from './GarmentDetailButtons';
 

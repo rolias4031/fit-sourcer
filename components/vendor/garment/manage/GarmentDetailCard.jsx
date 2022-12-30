@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fullLowerBodyGarment } from '../../../lib/types';
-import { GARMENT_TYPES } from '../../../lib/constants'
+import { fullLowerBodyGarment } from '../../../../lib/types'
+import { GARMENT_TYPES } from '../../../../lib/constants'
 import GarmentNumTag from './GarmentNumTag';
 import NumberInputState from '../../form/NumberInputState';
 

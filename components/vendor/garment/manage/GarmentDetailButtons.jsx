@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import GeneralButton from '../../form/GeneralButton';
-import { PAGE_URLS } from '../../../lib/constants';
+import { APP_URLS } from '../../../../lib/constants';
 
 function GarmentDetailButtons({ editMode, setEditMode }) {
   const router = useRouter();
@@ -46,7 +46,7 @@ function GarmentDetailButtons({ editMode, setEditMode }) {
         icon={<ChevronRightIcon className="icon-sm" />}
         id="close-garment-detail-panel"
         onClick={() =>
-          router.push(PAGE_URLS.MANAGE_HOME, undefined, { shallow: true })
+          router.push(APP_URLS.vendorManage, undefined, { shallow: true })
         }
       />
     </>
