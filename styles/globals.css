@@ -43,13 +43,21 @@ a {
   .alert-container-success {
     @apply bg-green-100;
   }
-  
+
   .btn {
     @apply font-semibold text-sm py-2 px-3 rounded;
   }
-
+  
+  .btn:disabled {
+    @apply bg-gray-300;
+  }
+  
   .btn-sm {
-    @apply font-semibold text-xs px-2 py-1 rounded
+    @apply text-xs px-2 py-1 rounded;
+  }
+  
+  .btn-sm:disabled {
+    @apply bg-gray-300;
   }
   
   .btn-blue {
@@ -60,20 +68,12 @@ a {
     @apply bg-blue-800;
   }
   
-  .btn-blue:disabled {
-    @apply bg-gray-300;
-  }
-  
   .btn-red {
     @apply bg-red-500 text-white;
   }
   
   .btn-red:hover {
     @apply bg-red-800;
-  }
-  
-  .btn-red:disabled {
-    @apply bg-gray-300;
   }
   
   .btn-gray {
@@ -83,33 +83,85 @@ a {
   .btn-gray:hover {
     @apply bg-gray-800;
   }
-  
-  .btn-gray:disabled {
-    @apply bg-gray-300;
+
+  .btn-light {
+    @apply bg-gray-200 text-white;
+  }
+
+  .btn-image-upload {
+    @apply bg-gray-400 text-white;
+  }
+
+  .btn-image-upload:hover {
+    @apply bg-gray-600
+  }
+
+  .icon-sm {
+    @apply w-4 h-4
+  }
+
+  .icon {
+    @apply w-5 h-5
   }
   
-  .text-input {
-    @apply appearance-none border rounded leading-tight;
+  .hover-parent:hover .hover-child {
+    @apply transition ease-in-out opacity-100 visible
+  }
+
+  .hover-child {
+    @apply opacity-0
+  }
+
+  .input {
+    @apply py-2 px-3;
+  }
+
+  .input-sm {
+    @apply py-1 px-2 text-xs;
+  }
+
+  .input-lg {
+    @apply text-xl py-2 px-3;
   }
   
-  .text-input-style-basic {
-    @apply appearance-none border rounded leading-tight py-2 px-3 text-sm text-gray-700;
+  .input-base {
+    @apply text-gray-700 appearance-none border rounded leading-tight;
   }
   
   .number-input-style-basic {
     @apply py-2 px-3 text-gray-700 appearance-none border rounded leading-tight text-sm;
   }
-  
-  .select-input-style-basic {
+
+  .label {
+    @apply text-sm
+  }
+
+  .label-sm {
+    @apply text-xs;
+  }
+
+  .label-base {
+    @apply text-gray-800;
+  }
+
+  .select-input-sm {
+    @apply p-1 text-xs
+  }
+
+  .select-input-base {
+    @apply bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
+  }
+
+  .select-input-basic {
     @apply p-2 text-sm bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
   }
-  
-  .input-label-basic {
-    @apply text-gray-800 text-sm;
-  }
-  
+
   .form-style-basic {
     @apply rounded-md border border-gray-200 bg-gray-50;
+  }
+
+  .form-tight {
+    @apply p-2 space-x-2
   }
   
   .main-header-text {
@@ -121,7 +173,7 @@ a {
   }
 
   .success-symbol {
-    @apply h-5 w-5 text-green-500
+    @apply h-5 w-5 text-green-500;
   }
   
   .page-header-align {
