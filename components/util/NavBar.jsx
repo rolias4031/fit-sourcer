@@ -1,7 +1,7 @@
 import React from 'react';
 import { SignInButton, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
-import { USER_ROLES } from '../../lib/constants';
+import { USER_ROLES, APP_URLS, baseUrl } from '../../lib/constants';
 
 const navbarRoleMap = new Map([
   [
@@ -38,9 +38,9 @@ function NavBar({ userRole }) {
       {userRole && <div className="flex space-x-4">{navContent}</div>}
       <div className="mx-5">
         {!userRole ? (
-          <SignInButton redirectUrl="http://localhost:3000/user/home" />
+          <SignInButton redirectUrl={APP_URLS.userHome} />
         ) : (
-          <UserButton afterSignOutUrl="http://localhost:3000" />
+          <UserButton afterSignOutUrl={baseUrl} />
         )}
       </div>
     </div>
