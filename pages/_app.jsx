@@ -8,6 +8,7 @@ import AlertContextProvider from '../context/AlertContext';
 import Layout from '../components/util/Layout';
 import '../styles/globals.css';
 
+
 const queryClient = new QueryClient();
 
 // eslint-disable-next-line react/prop-types
@@ -22,7 +23,7 @@ function MyApp({ Component, pageProps }) {
               content="width=device-width, initial-scale=1"
             />
           </Head>
-          <Layout>
+          <Layout >
             <Component {...pageProps} />
           </Layout>
         </AlertContextProvider>

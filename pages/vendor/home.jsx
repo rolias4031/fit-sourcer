@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getAuth, buildClerkProps, clerkClient } from '@clerk/nextjs/server';
 import PageHeader from '../../components/vendor/display/PageHeader'
 import { getUserRole } from '../../lib/util';
-import { COMMON_URLS, USER_ROLES } from '../../lib/constants';
+import { APP_URLS, COMMON_URLS, USER_ROLES } from '../../lib/constants';
 
 /*
  * this page should have a custom signin page bc it needs to check for admin status.
@@ -36,7 +36,7 @@ export async function getServerSideProps({ req }) {
   if (thisUser.role !== USER_ROLES.vendor) {
     return {
       redirect: {
-        destination: COMMON_URLS.vendorSignout,
+        destination: APP_URLS.vendorSignout,
         permanent: false,
       }
     };
