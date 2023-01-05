@@ -4,11 +4,9 @@ import EditBodyForm from './EditBodyForm';
 import Alert from '../../alert/Alert';
 import { AlertContext } from '../../../context/AlertContext';
 import { useEditBody } from '../../../lib/mutations';
-import { alertLocIds, ALERT_LOC_IDS } from '../../../lib/constants';
+import { ALERT_LOC_IDS } from '../../../lib/constants';
 import SubHeader from '../../display/SubHeader';
 import ToggleBodyForm from './ToggleBodyForm';
-import SuccessSymbol from '../../util/SuccessSymbol';
-import LoadingSymbol from '../../util/LoadingSymbol';
 import StatusSymbols from '../../util/StatusSymbols';
 
 /*
