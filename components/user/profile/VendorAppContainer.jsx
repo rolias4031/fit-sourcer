@@ -1,10 +1,10 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { useSimpleMutation } from '../../../lib/mutations';
-import { ALERT_LOC_IDS } from '../../../lib/constants';
 import VendorAppForm from './VendorAppForm';
 import SubHeader from '../../display/SubHeader';
 import Alert from '../../alert/Alert';
 import { useAlerts } from '../../../lib/hooks';
+import { baseUrl } from '../../../lib/constants';
 
 /*
 * DOES:
@@ -21,7 +21,7 @@ function VendorAppContainer() {
     // takes formValues from VendorAppForm
     const config = {
       method: 'POST',
-      url: 'http://localhost:3000/api/vendor/create',
+      url: `${baseUrl}/api/vendor/create`,
       inputs: values,
     };
     mutate(config, {
