@@ -1,10 +1,9 @@
-import React, { useContext, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditBodyForm from './EditBodyForm';
+import { useAlerts } from '../../../lib/hooks';
 import Alert from '../../alert/Alert';
-import { AlertContext } from '../../../context/AlertContext';
 import { useEditBody } from '../../../lib/mutations';
-import { ALERT_LOC_IDS } from '../../../lib/constants';
 import SubHeader from '../../display/SubHeader';
 import ToggleBodyForm from './ToggleBodyForm';
 import StatusSymbols from '../../util/StatusSymbols';
@@ -17,9 +16,11 @@ import StatusSymbols from '../../util/StatusSymbols';
 
 function EditBodyContainer({ map }) {
   // component hooks
+  const { alerts, resetAlerts, createAlerts } = useAlerts();
   const [model, setModel] = useState([...map.keys()][0]);
-  const { alerts } = useContext(AlertContext);
   const { mutate, isLoading, isSuccess, isError } = useEditBody();
+
+  console.log({alerts});
 
   // request handler function
   const editBodyHandler = useCallback(async (formValues) => {
@@ -27,9 +28,12 @@ function EditBodyContainer({ map }) {
       url: `http://localhost:3000/api/user/edit/${map.get(model).param}`,
       method: 'PUT',
       inputs: formValues,
-      alertLocId: ALERT_LOC_IDS.EDIT_BODY_CONTAINER,
     };
-    mutate(config);
+    mutate(config, {
+      onError: (data) => {
+        createAlerts(data.errors);
+      },
+    });
   });
 
   return (
@@ -54,7 +58,7 @@ function EditBodyContainer({ map }) {
         contValues={map.get(model).nums}
         editBodyHandler={editBodyHandler}
       />
-      <Alert locId={ALERT_LOC_IDS.EDIT_BODY_CONTAINER} />
+      <Alert alerts={alerts} onReset={resetAlerts} />
     </>
   );
 }

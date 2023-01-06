@@ -3,8 +3,8 @@ import { useSimpleMutation } from '../../../lib/mutations';
 import { ALERT_LOC_IDS } from '../../../lib/constants';
 import VendorAppForm from './VendorAppForm';
 import SubHeader from '../../display/SubHeader';
-import { AlertContext } from '../../../context/AlertContext';
 import Alert from '../../alert/Alert';
+import { useAlerts } from '../../../lib/hooks';
 
 /*
 * DOES:
@@ -14,7 +14,7 @@ import Alert from '../../alert/Alert';
 
 function VendorAppContainer() {
   // comp hooks
-  const alertCtx = useContext(AlertContext);
+  const { alerts, createAlerts, resetAlerts } = useAlerts()
   const { mutate, isLoading, isSuccess, isError } = useSimpleMutation();
   // comp functions
   const vendorAppHandler = useCallback((values) => {
@@ -27,11 +27,7 @@ function VendorAppContainer() {
     mutate(config, {
       onSettled: (data, error) => {
         console.log({ data, error });
-        alertCtx.updateAlerts({
-          messages: error ? error.errors : data.display,
-          locId: ALERT_LOC_IDS.VENDOR_APP_CONTAINER,
-          error: error && true
-        })
+        createAlerts(data.errors)
       },
     });
   });
@@ -39,7 +35,7 @@ function VendorAppContainer() {
     <div>
       <SubHeader header="Apply for Vendorship" headerStyle="my-1" />
       <VendorAppForm onSubmit={vendorAppHandler} />
-      <Alert locId={ALERT_LOC_IDS.VENDOR_APP_CONTAINER} />
+      <Alert alerts={alerts} onReset={resetAlerts} />
     </div>
   );
 }

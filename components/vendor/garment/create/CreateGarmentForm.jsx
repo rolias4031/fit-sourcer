@@ -4,17 +4,17 @@ import {
   baseUrl,
   GARMENT_SEX_TYPES,
   GARMENT_TYPES_KEYS,
-} from '../../../../lib/constants'
+} from '../../../../lib/constants';
 import GarmentInfoInput from './GarmentInfoInput';
 import GarmentNumsInput from './GarmentNumsInput';
 import SelectInput from './SelectInput';
 import GeneralButton from '../../form/GeneralButton';
-import Alert from '../../alert/Alert';
+import Alert from '../../../alert/Alert';
 import {
-  useAlerts,
   useFullGarmentDetails,
   useUploadGarmentImage,
 } from '../../../../lib/vendor/hooks';
+import { useAlerts } from '../../../../lib/hooks';
 import { useSimpleMutation } from '../../../../lib/vendor/mutations';
 import StatusSymbols from '../../../util/StatusSymbols';
 import ImageUpload from '../../form/ImageUpload';
@@ -43,7 +43,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     setImages,
     setGarmentType,
     setGarmentSex,
-    garmentDetailsIncomplete
+    garmentDetailsIncomplete,
   } = useFullGarmentDetails();
 
   const renderUploadedImageTags = () =>
@@ -86,7 +86,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
         });
       },
       onError: () => {
-        handleForeignAlert('Could not upload image - unknown error')
+        handleForeignAlert('Could not upload image - unknown error');
       },
     });
   });
@@ -121,7 +121,9 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
                 <GeneralButton
                   name={!isSuccess ? 'Save' : 'Saved!'}
                   id="save-garment-btn"
-                  btnStyle={`btn-sm hover-child ${!isSuccess ? 'btn-blue' : 'btn-gray'}`}
+                  btnStyle={`btn-sm hover-child ${
+                    !isSuccess ? 'btn-blue' : 'btn-gray'
+                  }`}
                   onClick={saveHandler}
                   disabled={garmentDetailsIncomplete()}
                 />

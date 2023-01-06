@@ -1,20 +1,17 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { AlertContext } from '../../context/AlertContext';
 
-function AlertMessage({ alert }) {
-  const alertCtx = useContext(AlertContext);
-
+function AlertMessage({ alert, onReset }) {
   useEffect(() => {
-    const id = setTimeout(alertCtx.clearAlerts, 7000);
+    const id = setTimeout(onReset, 7000);
     return () => {
       clearTimeout(id);
     };
   }, [alert.timeStamp]);
 
-  const messageColor = alert.error ? 'alert-error' : 'alert-success';
+  const messageColor = alert.isError ? 'alert-error' : 'alert-success';
   const alertClass = `alert ${messageColor}`;
-  const backgroundColor = alert.error
+  const backgroundColor = alert.isError
     ? 'alert-container-error'
     : 'alert-container-success';
   const divClass = `alert-container ${backgroundColor}`;
@@ -29,17 +26,16 @@ function AlertMessage({ alert }) {
 AlertMessage.propTypes = {
   alert: PropTypes.exact({
     message: PropTypes.string,
-    locId: PropTypes.string,
-    error: PropTypes.bool,
-    timeStamp: PropTypes.number.isRequired,
+    isError: PropTypes.bool,
+    timeStamp: PropTypes.number,
   }),
+  onReset: PropTypes.func.isRequired,
 };
 
 AlertMessage.defaultProps = {
   alert: {
     message: '',
-    locId: '',
-    error: false,
+    isError: false,
     timeStamp: 0,
   },
 };
