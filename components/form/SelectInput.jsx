@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createLabel, genId } from '../../../../lib/util-client';
-import GeneralLabel from '../../form/GeneralLabel';
+import { createLabel, genId } from '../../lib/util-client'
+import GeneralLabel from './GeneralLabel';
 
 function SelectInput({
   id,

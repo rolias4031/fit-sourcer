@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GeneralLabel from './GeneralLabel';
+import GeneralLabel from './GeneralLabel'
 
 function RadioInput({
   name,

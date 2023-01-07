@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/20/solid';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import GeneralButton from '../../form/GeneralButton';
+import GeneralButton from '../../../form/GeneralButton'
 import { APP_URLS } from '../../../../lib/constants';
 
 function GarmentDetailButtons({ editMode, setEditMode }) {

@@ -7,8 +7,8 @@ import {
 } from '../../../../lib/constants';
 import GarmentInfoInput from './GarmentInfoInput';
 import GarmentNumsInput from './GarmentNumsInput';
-import SelectInput from './SelectInput';
-import GeneralButton from '../../form/GeneralButton';
+import SelectInput from '../../../form/SelectInput'
+import GeneralButton from '../../../form/GeneralButton'
 import Alert from '../../../alert/Alert';
 import {
   useFullGarmentDetails,
@@ -17,16 +17,8 @@ import {
 import { useAlerts } from '../../../../lib/hooks';
 import { useSimpleMutation } from '../../../../lib/vendor/mutations';
 import StatusSymbols from '../../../util/StatusSymbols';
-import ImageUpload from '../../form/ImageUpload';
+import ImageUpload from '../../../form/ImageUpload'
 import UploadedImageTag from './UploadedImageTag';
-
-/*
- * DOES: dynamically renders input fields based on the selected garment type
-
- * get garmentTypes from lib/constants, or make this fetch the garment types so that it stays up to date with models. <-
-
- ! Next Steps - create the GarmentFormButtons to save, clear, and remove a GarmentForm
- */
 
 function CreateGarmentForm({ id, formClass, onRemove }) {
   const { mutate: saveGarment, isLoading, isSuccess } = useSimpleMutation();

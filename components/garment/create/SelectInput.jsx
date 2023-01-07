@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createLabel } from '../../../lib/util-client';
-import GeneralLabel from '../../form/GeneralLabel';
+import GeneralLabel from '../../form/GeneralLabel'
 
 function SelectInput({
   id,

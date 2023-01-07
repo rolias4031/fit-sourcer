@@ -3,11 +3,11 @@ import { useSignIn } from '@clerk/nextjs';
 import { useRouter } from 'next/router';
 import { useSimpleMutation } from '../../../lib/vendor/mutations';
 import { baseUrl } from '../../../lib/constants';
-import SignInForm from './SignInForm';
+import VendorSignInForm from './VendorSignInForm';
 import EmailCodeInput from './EmailCodeInput';
 import StatusSymbols from '../../util/StatusSymbols';
-import { useAlerts } from '../../../lib/vendor/hooks';
-import Alert from '../alert/Alert';
+import { useAlerts } from '../../../lib/hooks'
+import Alert from '../../alert/Alert'
 
 function SignInDock() {
   const [renderCodeInput, setRenderCodeInput] = useState(false);
@@ -77,7 +77,7 @@ function SignInDock() {
       {renderCodeInput ? (
         <EmailCodeInput onAuth={authHandler} onResend={sendCodeHandler} />
       ) : (
-        <SignInForm
+        <VendorSignInForm
           onSubmit={sendCodeHandler}
           contState={formValues}
           raiseState={setFormValues}

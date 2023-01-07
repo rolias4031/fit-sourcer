@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { useCallback, useState } from 'react';
-import GeneralButton from '../../form/GeneralButton';
+import GeneralButton from '../../../form/GeneralButton'
 import CreateGarmentForm from './CreateGarmentForm';
 import { genId } from '../../../../lib/util-client';
 

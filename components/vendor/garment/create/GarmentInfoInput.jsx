@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextInputState from '../../form/TextInputState';
+import TextInputState from '../../../form/TextInputState';
 
 /* stores name, vendor, description */
 

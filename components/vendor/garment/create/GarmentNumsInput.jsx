@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NumberInputState from '../../form/NumberInputState';
+import NumberInputState from '../../../form/NumberInputState'
 
 function GarmentNumsInput({ stateValues, raiseState, contStyle }) {
   const formInputElements = Object.keys(stateValues).map((key) => (

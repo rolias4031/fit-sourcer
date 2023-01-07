@@ -1,8 +1,8 @@
 import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { CloudArrowUpIcon } from '@heroicons/react/20/solid';
-import GeneralLabel from './GeneralLabel';
-import GeneralButton from './GeneralButton';
+import GeneralLabel from './GeneralLabel'
+import GeneralButton from './GeneralButton'
 
 function ImageUpload({
   name,

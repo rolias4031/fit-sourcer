@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextInputState from '../form/TextInputState';
-import SubmitButton from '../form/SubmitButton';
+import TextInputState from '../../form/TextInputState'
+import SubmitButton from '../../form/SubmitButton'
 import { disableButton } from '../../../lib/util-client';
 
 // * a sign in form for the index page. custom sign in flow from Clerk's useSignIn().

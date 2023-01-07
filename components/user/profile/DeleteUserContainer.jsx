@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import SubHeader from '../../display/SubHeader';
 import DeleteUserForm from './DeleteUserForm';
 import Alert from '../../alert/Alert';
@@ -10,8 +10,8 @@ import { useAlerts } from '../../../lib/hooks';
 */
 
 function DeleteUserContainer() {
-  const { alerts, createAlerts, resetAlerts } = useAlerts()
-  const { mutate, isLoading, isSuccess } = useDeleteUser();
+  const { alerts, createAlerts, resetAlerts } = useAlerts();
+  const { mutate, isSuccess } = useDeleteUser();
 
   const deleteHandler = useCallback(async (deleteInputs) => {
     const config = {
@@ -20,10 +20,11 @@ function DeleteUserContainer() {
       inputs: deleteInputs,
     };
     mutate(config, {
-      onError: (data) => {
-        createAlerts(data.errors)
-      }
-    })
+      onError: (data, error) => {
+        console.log({ data, error });
+        createAlerts(data.errors);
+      },
+    });
   });
 
   if (isSuccess) {
@@ -34,7 +35,7 @@ function DeleteUserContainer() {
     <>
       <SubHeader header="Delete Your Profile" headerStyle="my-1" />
       <DeleteUserForm deleteHandler={deleteHandler} />
-      <Alert alerts={alerts} onReset={resetAlerts}/>
+      <Alert alerts={alerts} onReset={resetAlerts} />
     </>
   );
 }

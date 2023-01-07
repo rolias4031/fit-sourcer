@@ -1,5 +1,5 @@
 import React from 'react'
-import RadioInput from '../../form/RadioInput'
+import RadioInput from '../../../form/RadioInput'
 
 function GarmentSexInput() {
   return (

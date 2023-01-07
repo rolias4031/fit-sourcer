@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GeneralLabel from './GeneralLabel';
+import GeneralLabel from './GeneralLabel'
 
 /*
 * this component is an inpute component. It does these things:
@@ -19,18 +19,15 @@ function NumberInputState({
   divStyle,
   stateValue,
   raiseState,
+  disabled,
 }) {
   function changeHandler(event) {
     raiseState((prevState) => ({ ...prevState, [name]: event.target.value }));
   }
-
-  const labelContent = (
-    <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
-  );
   const inputClass = `${inputStyle} focus:outline-none focus:shadow-outline`;
   return (
     <div className={divStyle}>
-      {labelContent}
+      <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
       <input
         onChange={changeHandler}
         className={inputClass}
@@ -41,6 +38,7 @@ function NumberInputState({
         min="0"
         max="1000"
         value={stateValue}
+        disabled={disabled}
       />
     </div>
   );
@@ -55,6 +53,7 @@ NumberInputState.propTypes = {
   divStyle: PropTypes.string,
   stateValue: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 NumberInputState.defaultProps = {
@@ -62,6 +61,7 @@ NumberInputState.defaultProps = {
   inputStyle: null,
   labelStyle: null,
   divStyle: null,
+  disabled: false
 };
 
 export default NumberInputState;

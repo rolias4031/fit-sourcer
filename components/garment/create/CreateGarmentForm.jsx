@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SelectInput from './SelectInput';
 import GarmentNumsInput from './GarmentNumsInput';
 import GeneralButton from '../../form/GeneralButton';
-import SubmitButton from '../../form/SubmitButton';
+import SubmitButton from '../../form/SubmitButton'
 import GarmentInfoInput from './GarmentInfoInput';
 
 const GARMENT_TYPES = {

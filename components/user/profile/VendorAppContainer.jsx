@@ -27,7 +27,7 @@ function VendorAppContainer() {
     mutate(config, {
       onSettled: (data, error) => {
         console.log({ data, error });
-        createAlerts(data.errors)
+        createAlerts(error.errors)
       },
     });
   });
