@@ -4,12 +4,12 @@ import LoadingSymbol from './LoadingSymbol';
 import SuccessSymbol from './SuccessSymbol';
 import ErrorSymbol from './ErrorSymbol';
 
-function StatusSymbols({ loading, success, error }) {
+function StatusSymbols({ loading, success, error, status }) {
   return (
     <>
-      {loading && <LoadingSymbol />}
-      {success && <SuccessSymbol />}
-      {error && <ErrorSymbol />}
+      {(status === 'loading' || loading) && <LoadingSymbol />}
+      {(status === 'success' || success) && <SuccessSymbol />}
+      {(status === 'error' || error) && <ErrorSymbol />}
     </>
   );
 }
@@ -23,9 +23,7 @@ StatusSymbols.propTypes = {
 StatusSymbols.defaultProps = {
   loading: false,
   success: false,
-  error: false
-}
-
-
+  error: false,
+};
 
 export default StatusSymbols;

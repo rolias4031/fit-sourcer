@@ -2,51 +2,56 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import IsError from '../../util/IsError';
 import IsLoading from '../../util/IsLoading';
-import ProfileHeader from './ProfileHeader';
-import ToggleProfilePage from './ToggleProfilePage';
-import DeleteUserContainer from './DeleteUserContainer';
+import ProfileTabs from './ProfileTabs';
 import { useGetUserProfile } from '../../../lib/queries';
 import EditBodyContainer from './EditBodyContainer';
-import { useFilterProfile } from '../../../lib/hooks';
+import { useFilterProfileMeasurements } from '../../../lib/hooks';
 import VendorAppContainer from './VendorAppContainer';
+import DeleteUserContainer from './DeleteUserContainer';
 
 const tabs = ['measurements', 'manage'];
 
-function ProfileContainer() {
+function ProfileDock() {
   const [curTab, setCurTab] = useState(tabs[0]);
-  const { isLoading, isError, data: profile, error } = useGetUserProfile();
+  const { data: profile, status, error } = useGetUserProfile();
 
-  if (profile) {
+  if (status === 'success') {
     // filter profile into a map to EditBodyContainer dynamic
-    const bodyMap = useFilterProfile(profile);
+    const userMsmntMap = useFilterProfileMeasurements(profile);
+
     return (
-      <div className="m-5">
-        <ToggleProfilePage
-          stateValue={curTab}
-          raiseState={setCurTab}
-          tabOptions={tabs}
-        />
-        <div>
+      <>
+        <div className="flex justify-end space-x-3 my-2 border-b">
+          <ProfileTabs
+            stateValue={curTab}
+            raiseState={setCurTab}
+            tabOptions={tabs}
+          />
+        </div>
+        <div className="">
           {curTab === 'measurements' ? (
-            <EditBodyContainer map={bodyMap} />
+            <EditBodyContainer userMsmntMap={userMsmntMap} />
           ) : curTab === 'manage' ? (
-            <div>hi</div>
+            <>
+              <VendorAppContainer />
+              <DeleteUserContainer />
+            </>
           ) : null}
         </div>
-      </div>
+      </>
     );
   }
 
-  if (isLoading) {
+  if (status === 'loading') {
     return <IsLoading />;
   }
 
-  if (isError) {
+  if (status === 'error') {
     return <IsError messsage={error.message} />;
   }
 }
 
-ProfileContainer.propTypes = {
+ProfileDock.propTypes = {
   info: PropTypes.exact({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
@@ -55,4 +60,4 @@ ProfileContainer.propTypes = {
   }).isRequired,
 };
 
-export default ProfileContainer;
+export default ProfileDock;

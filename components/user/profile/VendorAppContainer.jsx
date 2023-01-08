@@ -32,11 +32,11 @@ function VendorAppContainer() {
     });
   });
   return (
-    <div>
+    <>
       <SubHeader header="Apply for Vendorship" headerStyle="my-1" />
       <VendorAppForm onSubmit={vendorAppHandler} />
       <Alert alerts={alerts} onReset={resetAlerts} />
-    </div>
+    </>
   );
 }
 

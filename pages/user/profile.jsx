@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { getAuth, buildClerkProps, clerkClient } from '@clerk/nextjs/server';
-import ProfileContainer from '../../components/user/profile/ProfileContainer';
+import ProfileDock from '../../components/user/profile/ProfileDock';
+import PageContainer from '../../components/structure/PageContainer';
 
 /*
 * this container does these things:
@@ -11,7 +12,11 @@ import ProfileContainer from '../../components/user/profile/ProfileContainer';
 */
 
 function profile({ __clerk_ssr_state }) {
-  return <ProfileContainer info={__clerk_ssr_state.userInfo} />;
+  return (
+    <PageContainer>
+      <ProfileDock info={__clerk_ssr_state.userInfo} />
+    </PageContainer>
+  );
 }
 
 export async function getServerSideProps({ req }) {

@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fullLowerBodyGarment } from '../../../../lib/types'
-import { GARMENT_TYPES } from '../../../../lib/constants'
+import { fullLowerBodyGarment } from '../../../../lib/types';
+import { GARMENT_TYPES } from '../../../../lib/constants';
 import GarmentNumTag from './GarmentNumTag';
-import NumberInputState from '../../form/NumberInputState';
+import NumberInputState from '../../../form/NumberInputState';
 
 // press an edit button and inputs take place of displays.
 
 function GarmentDetailCard({ garment, styles, editMode }) {
-
-  const { garmentType } = garment
-  const garmentMeta = GARMENT_TYPES.get(garmentType)
+  const { garmentType } = garment;
+  const garmentMeta = GARMENT_TYPES.get(garmentType);
 
   // const garmentNums = Object.keys(garment[garmentMeta.numsModel]).map((msmnt) => {
   //   console.log(msmnt)
@@ -25,7 +24,7 @@ function GarmentDetailCard({ garment, styles, editMode }) {
       <p>{garment.name}</p>
       <p>{garment.description}</p>
       <p>{garment.modelNumber}</p>
-      <input className='border p-1 disabled:bg-white' type="number" rounded/>
+      <input className="border p-1 disabled:bg-white" type="number" />
     </div>
   );
 }

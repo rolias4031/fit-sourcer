@@ -14,23 +14,18 @@ import StatusSymbols from '../../util/StatusSymbols';
 * get the props it displays from the EditUserContainer
 */
 
-const MyComp = ({ func }) => {
-  useEffect(() => {
-    console.log('HII');
-  }, [func])
-  return <p>hi</p>
-}
-
-function EditBodyContainer({ map }) {
+function EditBodyContainer({ userMsmntMap }) {
   // component hooks
   const { alerts, resetAlerts, createAlerts } = useAlerts();
-  const [model, setModel] = useState([...map.keys()][0]);
-  const { mutate, isLoading, isSuccess, isError } = useEditBody();
+  const [model, setModel] = useState([...userMsmntMap.keys()][0]);
+  const { mutate, status } = useEditBody();
 
   // request handler function
   const editBodyHandler = async (formValues) => {
     const config = {
-      url: `http://localhost:3000/api/user/edit/${map.get(model).param}`,
+      url: `http://localhost:3000/api/user/edit/${
+        userMsmntMap.get(model).param
+      }`,
       method: 'PUT',
       inputs: formValues,
     };
@@ -43,34 +38,29 @@ function EditBodyContainer({ map }) {
 
   return (
     <>
-      <div className="flex my-1 mx-auto items-center space-x-3">
-        <div className="flex flex-1 items-center">
-          <SubHeader header="Edit Body" headerStyle="mr-3" />
-          <StatusSymbols
-            loading={isLoading}
-            success={isSuccess}
-            error={isError}
-          />
+      <div className="flex my-1 items-center space-x-3">
+        <div className="flex basis-full items-center">
+          <SubHeader header="Edit Measurements" headerStyle="mr-3" />
+          <StatusSymbols status={status} />
         </div>
         <ToggleBodyFormButtons
           currentSection={model}
-          buttonKeys={[...map.keys()]}
+          buttonKeys={[...userMsmntMap.keys()]}
           raiseState={setModel}
         />
       </div>
       <EditBodyForm
-        key={`${map.get(model).updatedAt}-${model}`}
-        contValues={map.get(model).nums}
-        editBodyHandler={editBodyHandler}
+        key={`${userMsmntMap.get(model).updatedAt}-${model}`}
+        contValues={userMsmntMap.get(model).nums}
+        onSubmit={editBodyHandler}
       />
       <Alert alerts={alerts} onReset={resetAlerts} />
-      <MyComp func={editBodyHandler} />
     </>
   );
 }
 
 EditBodyContainer.propTypes = {
-  map: PropTypes.object.isRequired,
+  userMsmntMap: PropTypes.object.isRequired,
 };
 
 export default EditBodyContainer;

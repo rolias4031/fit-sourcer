@@ -175,6 +175,10 @@ a {
   .success-symbol {
     @apply h-5 w-5 text-green-500;
   }
+
+  .tab {
+    @apply font-bold text-sm
+  }
   
   .page-header-align {
     @apply text-center my-10;
