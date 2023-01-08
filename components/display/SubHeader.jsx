@@ -2,18 +2,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SubHeader({ header, headerStyle }) {
-  console.log('subheader', header)
-  return <p className={`sub-header-text ${headerStyle}`}>{header}</p>;
+function SubHeader({ header, style }) {
+  return <p className={`subheader ${style}`}>{header}</p>;
 }
 
 SubHeader.propTypes = {
   header: PropTypes.string.isRequired,
-  headerStyle: PropTypes.string,
+  style: PropTypes.string,
 };
 
 SubHeader.defaultProps = {
-  headerStyle: null,
+  style: null,
 };
 
 export default React.memo(SubHeader);

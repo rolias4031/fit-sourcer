@@ -168,8 +168,8 @@ a {
     @apply font-bold text-3xl;
   }
 
-  .sub-header-text {
-    @apply text-xl font-semibold text-gray-800;
+  .subheader {
+    @apply text-lg font-semibold text-gray-800;
   }
 
   .success-symbol {

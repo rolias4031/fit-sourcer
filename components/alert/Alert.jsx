@@ -32,4 +32,4 @@ Alert.defaultProps = {
   alerts: [],
 };
 
-export default Alert;
+export default React.memo(Alert);

@@ -33,7 +33,7 @@ function VendorAppDock() {
   });
   return (
     <>
-      <SubHeader header="Apply for Vendorship" headerStyle="my-1" />
+      <SubHeader header="Apply for Vendorship" style="my-1" />
       <VendorAppForm onSubmit={vendorAppHandler} />
       <Alert alerts={alerts} onReset={resetAlerts} />
     </>

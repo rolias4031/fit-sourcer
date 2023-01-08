@@ -21,7 +21,7 @@ function ProfileDock() {
 
     return (
       <>
-        <div className="flex justify-end space-x-3 my-2 border-b">
+        <div className="flex justify-end space-x-3 my-5 border-b">
           <ProfileTabs
             stateValue={curTab}
             raiseState={setCurTab}
