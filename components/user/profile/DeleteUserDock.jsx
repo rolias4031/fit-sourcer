@@ -9,7 +9,7 @@ import { useAlerts } from '../../../lib/hooks';
 - contains all fetch logic for the DeleteUserForm
 */
 
-function DeleteUserContainer() {
+function DeleteUserDock() {
   const { alerts, createAlerts, resetAlerts } = useAlerts();
   const { mutate, isSuccess } = useDeleteUser();
 
@@ -40,4 +40,4 @@ function DeleteUserContainer() {
   );
 }
 
-export default DeleteUserContainer;
+export default DeleteUserDock;

@@ -14,7 +14,7 @@ import StatusSymbols from '../../util/StatusSymbols';
 * get the props it displays from the EditUserContainer
 */
 
-function EditBodyContainer({ userMsmntMap }) {
+function EditBodyDock({ userMsmntMap }) {
   // component hooks
   const { alerts, resetAlerts, createAlerts } = useAlerts();
   const [model, setModel] = useState([...userMsmntMap.keys()][0]);
@@ -59,8 +59,8 @@ function EditBodyContainer({ userMsmntMap }) {
   );
 }
 
-EditBodyContainer.propTypes = {
+EditBodyDock.propTypes = {
   userMsmntMap: PropTypes.object.isRequired,
 };
 
-export default EditBodyContainer;
+export default EditBodyDock;

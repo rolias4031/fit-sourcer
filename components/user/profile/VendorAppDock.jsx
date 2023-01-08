@@ -12,7 +12,7 @@ import { baseUrl } from '../../../lib/constants';
 - renders the VendorAppForm
 */
 
-function VendorAppContainer() {
+function VendorAppDock() {
   // comp hooks
   const { alerts, createAlerts, resetAlerts } = useAlerts()
   const { mutate, isLoading, isSuccess, isError } = useSimpleMutation();
@@ -40,4 +40,4 @@ function VendorAppContainer() {
   );
 }
 
-export default VendorAppContainer;
+export default VendorAppDock;

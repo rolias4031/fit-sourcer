@@ -4,10 +4,10 @@ import IsError from '../../util/IsError';
 import IsLoading from '../../util/IsLoading';
 import ProfileTabs from './ProfileTabs';
 import { useGetUserProfile } from '../../../lib/queries';
-import EditBodyContainer from './EditBodyContainer';
+import EditBodyDock from './EditBodyDock';
 import { useFilterProfileMeasurements } from '../../../lib/hooks';
-import VendorAppContainer from './VendorAppContainer';
-import DeleteUserContainer from './DeleteUserContainer';
+import VendorAppDock from './VendorAppDock';
+import DeleteUserDock from './DeleteUserDock';
 
 const tabs = ['measurements', 'manage'];
 
@@ -16,7 +16,7 @@ function ProfileDock() {
   const { data: profile, status, error } = useGetUserProfile();
 
   if (status === 'success') {
-    // filter profile into a map to EditBodyContainer dynamic
+    // filter profile into a map to EditBodyDock dynamic
     const userMsmntMap = useFilterProfileMeasurements(profile);
 
     return (
@@ -30,11 +30,15 @@ function ProfileDock() {
         </div>
         <div className="">
           {curTab === 'measurements' ? (
-            <EditBodyContainer userMsmntMap={userMsmntMap} />
+            <EditBodyDock userMsmntMap={userMsmntMap} />
           ) : curTab === 'manage' ? (
             <>
-              <VendorAppContainer />
-              <DeleteUserContainer />
+              <div className='my-5'>
+                <VendorAppDock />
+              </div>
+              <div className='my-5'>
+                <DeleteUserDock />
+              </div>
             </>
           ) : null}
         </div>
