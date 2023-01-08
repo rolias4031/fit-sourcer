@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createLabel } from '../../../lib/util-client';
 
-function ToggleBodyForm({ raiseState, buttonKeys, currentSection }) {
+function ToggleBodyFormButtons({ raiseState, buttonKeys, currentSection }) {
   function clickHandler(event) {
     raiseState(event.target.name);
   }
@@ -17,10 +17,10 @@ function ToggleBodyForm({ raiseState, buttonKeys, currentSection }) {
   return buttons;
 }
 
-ToggleBodyForm.propTypes = {
+ToggleBodyFormButtons.propTypes = {
   raiseState: PropTypes.func.isRequired,
   buttonKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentSection: PropTypes.string.isRequired,
 };
 
-export default ToggleBodyForm;
+export default ToggleBodyFormButtons;

@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import AlertMessage from './AlertMessage';
 
 function Alert({ alerts, onReset }) {
-  console.log({alerts})
-  useEffect(() => {
-    console.log('re rendered effect')
-  }, [])
   let alertsContent = <div>hi</div>;
   if (alerts.length > 0) {
     const alertMessages = alerts.map((alert) => (

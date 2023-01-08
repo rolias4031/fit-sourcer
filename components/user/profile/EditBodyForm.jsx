@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import NumberInputState from '../../form/NumberInputState';
 import SubmitButton from '../../form/SubmitButton';
@@ -9,9 +9,13 @@ import SubmitButton from '../../form/SubmitButton';
 
 
 
-function EditBodyForm({ contValues, editBodyHandler, children }) {
+function EditBodyForm({ contValues, editBodyHandler }) {
   // very important lesson here: props cannot update state by just being passed through the initialState. Use a key (on the parent component) with a unique, changing value, which forces an entire remount, which will re-init this state with current prop values.
   const [formValues, setFormValues] = useState(contValues);
+
+  useEffect(() => {
+    console.log('rendered')
+  }, [editBodyHandler])
 
   function submitHandler(event) {
     event.preventDefault();
@@ -35,7 +39,6 @@ function EditBodyForm({ contValues, editBodyHandler, children }) {
   const containerClass = 'flex flex-row flex-wrap';
   return (
     <form onSubmit={submitHandler} className={formClass}>
-      {children}
       <div className={containerClass}>{numberInputElements}</div>
       <SubmitButton
         title="Save"

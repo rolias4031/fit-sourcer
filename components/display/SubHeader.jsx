@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SubHeader({ header, headerStyle }) {
+  console.log('subheader', header)
   return <p className={`sub-header-text ${headerStyle}`}>{header}</p>;
 }
 
@@ -15,4 +16,4 @@ SubHeader.defaultProps = {
   headerStyle: null,
 };
 
-export default SubHeader;
+export default React.memo(SubHeader);

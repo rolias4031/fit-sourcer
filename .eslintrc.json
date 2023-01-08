@@ -18,6 +18,7 @@
         "react"
     ],
     "rules": {
-        "object-curly-newline": "off"
+        "object-curly-newline": "off",
+        "exhaustive-deps": "on"
     }
 }

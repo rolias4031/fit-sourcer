@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditBodyForm from './EditBodyForm';
 import { useAlerts } from '../../../lib/hooks';
 import Alert from '../../alert/Alert';
 import { useEditBody } from '../../../lib/mutations';
 import SubHeader from '../../display/SubHeader';
-import ToggleBodyForm from './ToggleBodyForm';
+import ToggleBodyFormButtons from './ToggleBodyFormButtons';
 import StatusSymbols from '../../util/StatusSymbols';
 
 /*
@@ -14,16 +14,21 @@ import StatusSymbols from '../../util/StatusSymbols';
 * get the props it displays from the EditUserContainer
 */
 
+const MyComp = ({ func }) => {
+  useEffect(() => {
+    console.log('HII');
+  }, [func])
+  return <p>hi</p>
+}
+
 function EditBodyContainer({ map }) {
   // component hooks
   const { alerts, resetAlerts, createAlerts } = useAlerts();
   const [model, setModel] = useState([...map.keys()][0]);
   const { mutate, isLoading, isSuccess, isError } = useEditBody();
 
-  console.log({alerts});
-
   // request handler function
-  const editBodyHandler = useCallback(async (formValues) => {
+  const editBodyHandler = async (formValues) => {
     const config = {
       url: `http://localhost:3000/api/user/edit/${map.get(model).param}`,
       method: 'PUT',
@@ -34,7 +39,7 @@ function EditBodyContainer({ map }) {
         createAlerts(data.errors);
       },
     });
-  });
+  };
 
   return (
     <>
@@ -47,7 +52,7 @@ function EditBodyContainer({ map }) {
             error={isError}
           />
         </div>
-        <ToggleBodyForm
+        <ToggleBodyFormButtons
           currentSection={model}
           buttonKeys={[...map.keys()]}
           raiseState={setModel}
@@ -59,6 +64,7 @@ function EditBodyContainer({ map }) {
         editBodyHandler={editBodyHandler}
       />
       <Alert alerts={alerts} onReset={resetAlerts} />
+      <MyComp func={editBodyHandler} />
     </>
   );
 }
