@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GeneralLabel from './GeneralLabel'
+import GeneralLabel from './GeneralLabel';
 
 /*
 * this component is an inpute component. It does these things:
@@ -14,20 +14,23 @@ function NumberInputState({
   id,
   label,
   name,
-  inputStyle,
-  labelStyle,
-  divStyle,
-  stateValue,
+  styles,
+  curState,
   raiseState,
   disabled,
 }) {
   function changeHandler(event) {
     raiseState((prevState) => ({ ...prevState, [name]: event.target.value }));
   }
-  const inputClass = `${inputStyle} focus:outline-none focus:shadow-outline`;
+  const inputClass = `${styles.input} focus:outline-none focus:shadow-outline`;
   return (
-    <div className={divStyle}>
-      <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
+    <div className={styles.div}>
+      <GeneralLabel
+        id={id}
+        name={name}
+        label={label}
+        style={styles.label}
+      />
       <input
         onChange={changeHandler}
         className={inputClass}
@@ -37,7 +40,7 @@ function NumberInputState({
         step="0.1"
         min="0"
         max="1000"
-        value={stateValue}
+        value={curState}
         disabled={disabled}
       />
     </div>
@@ -48,20 +51,16 @@ NumberInputState.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
-  inputStyle: PropTypes.string,
-  labelStyle: PropTypes.string,
-  divStyle: PropTypes.string,
-  stateValue: PropTypes.string.isRequired,
+  styles: PropTypes.objectOf(PropTypes.string),
+  curState: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
 };
 
 NumberInputState.defaultProps = {
-  label: '',
-  inputStyle: null,
-  labelStyle: null,
-  divStyle: null,
-  disabled: false
+  label: null,
+  styles: { div: null, label: null, input: null },
+  disabled: false,
 };
 
 export default NumberInputState;

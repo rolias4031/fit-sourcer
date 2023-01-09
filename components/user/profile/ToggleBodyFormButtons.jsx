@@ -2,25 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createLabel } from '../../../lib/util-client';
 
-function ToggleBodyFormButtons({ raiseState, buttonKeys, currentSection }) {
+function ToggleBodyFormButtons({ curModel, raiseModel, buttonKeys }) {
   function clickHandler(event) {
-    raiseState(event.target.name);
+    raiseModel(event.target.name);
   }
   const buttons = buttonKeys.map((key) => {
-    const btnStyle = currentSection === key ? 'text-gray-800' : 'text-gray-400';
+    const btnStyle = curModel === key ? 'text-gray-800' : 'text-gray-400';
     return (
       <button key={key} type="button" className={`text-sm font-semibold ${btnStyle}`} name={key} onClick={clickHandler}>
         {createLabel(key)}
       </button>
     );
   });
+  
   return buttons;
 }
 
 ToggleBodyFormButtons.propTypes = {
-  raiseState: PropTypes.func.isRequired,
+  raiseModel: PropTypes.func.isRequired,
   buttonKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  currentSection: PropTypes.string.isRequired,
+  curModel: PropTypes.string.isRequired,
 };
 
 export default ToggleBodyFormButtons;

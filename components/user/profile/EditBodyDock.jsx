@@ -40,13 +40,13 @@ function EditBodyDock({ userMsmntMap }) {
     <>
       <div className="flex my-1 items-center space-x-3">
         <div className="flex basis-full items-center">
-          <SubHeader header="Edit Measurements" headerStyle="mr-3" />
+          <SubHeader header="Edit Measurements" style="mr-3" />
           <StatusSymbols status={status} />
         </div>
         <ToggleBodyFormButtons
-          currentSection={model}
+          curModel={model}
           buttonKeys={[...userMsmntMap.keys()]}
-          raiseState={setModel}
+          raiseModel={setModel}
         />
       </div>
       <EditBodyForm

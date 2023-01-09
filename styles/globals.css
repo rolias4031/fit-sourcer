@@ -127,10 +127,6 @@ a {
   .input-base {
     @apply text-gray-700 appearance-none border rounded leading-tight;
   }
-  
-  .number-input-style-basic {
-    @apply py-2 px-3 text-gray-700 appearance-none border rounded leading-tight text-sm;
-  }
 
   .label {
     @apply text-sm
@@ -142,6 +138,10 @@ a {
 
   .label-base {
     @apply text-gray-800;
+  }
+  
+  .number-input-style-basic {
+    @apply py-2 px-3 text-gray-700 appearance-none border rounded leading-tight text-sm;
   }
 
   .select-input-sm {

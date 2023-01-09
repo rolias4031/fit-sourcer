@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function PageContainer({ style, children }) {
-  return <div className={`m-5 ${style}`}>{children}</div>;
+  return <div className={`mx-auto m-5 xl:w-1/2 lg:w-3/4 md:w-5/6 ${style}`}>{children}</div>;
 }
 
 PageContainer.propTypes = {

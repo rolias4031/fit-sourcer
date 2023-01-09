@@ -3,14 +3,8 @@ import PropTypes from 'prop-types';
 import NumberInputState from '../../form/NumberInputState';
 import SubmitButton from '../../form/SubmitButton';
 
-/* 
-! this component can probably be abstracted to EditBodyForm, and passed a different set of keys to map through.
-*/
-
-
-
 function EditBodyForm({ contValues, onSubmit }) {
-  // very important lesson here: props cannot update state by just being passed through the initialState. Use a key (on the parent component) with a unique, changing value, which forces an entire remount, which will re-init this state with current prop values.
+
   const [formValues, setFormValues] = useState(contValues);
 
   function submitHandler(event) {
@@ -23,10 +17,12 @@ function EditBodyForm({ contValues, onSubmit }) {
       key={key}
       id={`edit-body-${key}`}
       name={key}
-      labelStyle="input-label-basic block"
-      inputStyle="number-input-style-basic w-full"
-      divStyle="my-2 px-2 basis-1/4"
-      stateValue={formValues[key]}
+      styles={{
+        label: 'label-sm label-base block',
+        input: 'input-sm input-base',
+        div: 'my-2 px-2 basis-1/6',
+      }}
+      curState={formValues[key]}
       raiseState={setFormValues}
     />
   ));
@@ -39,7 +35,7 @@ function EditBodyForm({ contValues, onSubmit }) {
       <SubmitButton
         title="Save"
         id="save-changes-btn"
-        btnStyle="btn-blue mt-3 mr-2 ml-auto block"
+        style="btn btn-blue mt-3 mr-2 ml-auto block"
         disabled={false}
       />
     </form>
