@@ -21,26 +21,30 @@ function ProfileDock() {
 
     return (
       <>
-        <div className="flex justify-end space-x-3 my-5 border-b">
-          <ProfileTabs
-            stateValue={curTab}
-            raiseState={setCurTab}
-            tabOptions={tabs}
-          />
-        </div>
-        <div className="">
-          {curTab === 'measurements' ? (
-            <EditBodyDock userMsmntMap={userMsmntMap} />
-          ) : curTab === 'manage' ? (
-            <>
-              <div className='my-5'>
-                <VendorAppDock />
+        <div className="flex">
+          <div className="flex flex-col basis-1/4 h-screen p-3 place-items-end border-r">
+            <ProfileTabs
+              stateValue={curTab}
+              raiseState={setCurTab}
+              tabOptions={tabs}
+            />
+          </div>
+          <div className="basis-full px-10 py-5">
+            {curTab === 'measurements' ? (
+              <div className='flex flex-col gap-3 w-min'>
+                <EditBodyDock userMsmntMap={userMsmntMap} />
               </div>
-              <div className='my-5'>
-                <DeleteUserDock />
-              </div>
-            </>
-          ) : null}
+            ) : curTab === 'manage' ? (
+              <>
+                <div className="my-5">
+                  <VendorAppDock />
+                </div>
+                <div className="my-5">
+                  <DeleteUserDock />
+                </div>
+              </>
+            ) : null}
+          </div>
         </div>
       </>
     );

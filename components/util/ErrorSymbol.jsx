@@ -1,8 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
-function ErrorSymbol() {
-  return <XMarkIcon className='w-5 h-5 text-red-600'/>;
+function ErrorSymbol({ style }) {
+  return <XMarkIcon className={style ? style : 'w-6 h-6 text-red-500'} />;
 }
+
+ErrorSymbol.propTypes = {
+  style: PropTypes.string,
+};
+
+ErrorSymbol.defaultProps = {
+  style: null,
+};
 
 export default ErrorSymbol;

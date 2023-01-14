@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/router';
 import PageHeader from '../../components/vendor/display/PageHeader';
-import SignInDock from '../../components/vendor/signin/SignInDock';
+import VendorSignInDock from '../../components/vendor/signin/VendorSignInDock';
 
 /*
  * this page should have a custom signin page bc it needs to check for admin status.
@@ -16,9 +16,9 @@ function SignIn() {
 
   useEffect(() => {
     if (userId) {
-      router.push('/vendor/home')
+      router.push('/vendor/home');
     }
-  })
+  });
 
   return (
     <>
@@ -26,7 +26,7 @@ function SignIn() {
         <PageHeader text="Vendor Sign In" />
       </div>
       <div className="lg:w-1/3 md:w-1/2 mx-auto my-5">
-        <SignInDock />
+        <VendorSignInDock />
       </div>
     </>
   );

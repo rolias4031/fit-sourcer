@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import NumberInputState from '../../form/NumberInputState';
 import SubmitButton from '../../form/SubmitButton';
 
-function EditBodyForm({ contValues, onSubmit }) {
+function EditBodyForm({ dbModel, contValues, onSubmit }) {
 
   const [formValues, setFormValues] = useState(contValues);
 
   function submitHandler(event) {
     event.preventDefault();
-    onSubmit(formValues);
+    onSubmit(formValues, dbModel);
   }
 
   const numberInputElements = Object.keys(contValues).map((key) => (
@@ -18,24 +18,23 @@ function EditBodyForm({ contValues, onSubmit }) {
       id={`edit-body-${key}`}
       name={key}
       styles={{
-        label: 'label-sm label-base block',
+        label: 'label label-base block',
         input: 'input-sm input-base',
-        div: 'my-2 px-2 basis-1/6',
+        div: 'flex my-1 items-center justify-between space-x-3',
       }}
       curState={formValues[key]}
       raiseState={setFormValues}
     />
   ));
 
-  const formClass = 'p-5 form-style-basic min-w-[500px]';
-  const containerClass = 'flex flex-row flex-wrap';
   return (
-    <form onSubmit={submitHandler} className={formClass}>
-      <div className={containerClass}>{numberInputElements}</div>
+    <form onSubmit={submitHandler} className="">
+      <div className="flex flex-col">{numberInputElements}</div>
       <SubmitButton
         title="Save"
+        name="save"
         id="save-changes-btn"
-        style="btn btn-blue mt-3 mr-2 ml-auto block"
+        style="btn-sm btn-blue mt-3 float-right"
         disabled={false}
       />
     </form>

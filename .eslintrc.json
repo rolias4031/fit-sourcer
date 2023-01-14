@@ -19,6 +19,5 @@
     ],
     "rules": {
         "object-curly-newline": "off",
-        "exhaustive-deps": "on"
     }
 }

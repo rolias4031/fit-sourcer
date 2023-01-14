@@ -7,6 +7,8 @@ import { useEditBody } from '../../../lib/mutations';
 import SubHeader from '../../display/SubHeader';
 import ToggleBodyFormButtons from './ToggleBodyFormButtons';
 import StatusSymbols from '../../util/StatusSymbols';
+import BodyFormLabel from './BodyFormLabel';
+import { baseUrl } from '../../../lib/constants';
 
 /*
 * container holds logic for updating, editing, etc for EditLowerBodyForm
@@ -21,11 +23,9 @@ function EditBodyDock({ userMsmntMap }) {
   const { mutate, status } = useEditBody();
 
   // request handler function
-  const editBodyHandler = async (formValues) => {
+  const editBodyHandler = async (formValues, model) => {
     const config = {
-      url: `http://localhost:3000/api/user/edit/${
-        userMsmntMap.get(model).param
-      }`,
+      url: `${baseUrl}/api/user/edit/${model}`,
       method: 'PUT',
       inputs: formValues,
     };
@@ -33,28 +33,31 @@ function EditBodyDock({ userMsmntMap }) {
       onError: (data) => {
         createAlerts(data.errors);
       },
+      // onSuccess: (data) => {
+      //   createAlerts(data.message, false);
+      // },
     });
   };
 
-  return (
-    <>
-      <div className="flex my-1 items-center space-x-3">
-        <div className="flex basis-full items-center">
-          <SubHeader header="Edit Measurements" style="mr-3" />
-          <StatusSymbols status={status} />
-        </div>
-        <ToggleBodyFormButtons
-          curModel={model}
-          buttonKeys={[...userMsmntMap.keys()]}
-          raiseModel={setModel}
-        />
-      </div>
+  const bodyForms = Array.from(userMsmntMap).map(([bodyPart, values]) => (
+    <div
+      key={`${values.updatedAt}-${values.param}`}
+      className="bg-gray-50 border border-gray-200 rounded-sm p-3"
+    >
+      <BodyFormLabel label={bodyPart} style="text-lg font-bold mb-2" />
       <EditBodyForm
-        key={`${userMsmntMap.get(model).updatedAt}-${model}`}
-        contValues={userMsmntMap.get(model).nums}
+        dbModel={values.param}
+        contValues={values.nums}
         onSubmit={editBodyHandler}
       />
-      <Alert alerts={alerts} onReset={resetAlerts} />
+    </div>
+  ));
+
+  return (
+    <>
+      {bodyForms}
+      <StatusSymbols status={status} />
+      <Alert alerts={alerts} onReset={resetAlerts} isModal />
     </>
   );
 }

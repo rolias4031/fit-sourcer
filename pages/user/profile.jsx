@@ -13,7 +13,7 @@ import PageContainer from '../../components/structure/PageContainer';
 
 function profile({ __clerk_ssr_state }) {
   return (
-    <PageContainer>
+    <PageContainer style="border">
       <ProfileDock info={__clerk_ssr_state.userInfo} />
     </PageContainer>
   );

@@ -20,12 +20,13 @@ SubmitButton.propTypes = {
   id: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   style: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
 };
 
 SubmitButton.defaultProps = {
   disabled: false,
   style: null,
+  name: null,
 };
 
 export default SubmitButton;
