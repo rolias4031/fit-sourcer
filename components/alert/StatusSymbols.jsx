@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import LoadingSymbol from './LoadingSymbol';
-import SuccessSymbol from './SuccessSymbol';
-import ErrorSymbol from './ErrorSymbol';
+import LoadingSymbol from '../util/LoadingSymbol';
+import SuccessSymbol from '../util/SuccessSymbol';
+import ErrorSymbol from '../util/ErrorSymbol';
 
 const symbolMap = new Map([
   ['loading', <LoadingSymbol />],
@@ -10,7 +10,7 @@ const symbolMap = new Map([
   ['error', <ErrorSymbol />],
 ]);
 
-function StatusSymbolsModal({ status }) {
+function StatusSymbols({ status }) {
   const [alive, setAlive] = useState(false);
 
   console.log({ status, alive });
@@ -20,7 +20,7 @@ function StatusSymbolsModal({ status }) {
       setAlive(false);
     } else if (status === 'loading') {
       setAlive(true)
-    } else {
+    } else if (status === 'success') {
       setAlive(true);
       const id = setTimeout(() => {
         setAlive(false);
@@ -32,7 +32,7 @@ function StatusSymbolsModal({ status }) {
   const symbol = alive && (
     <div
       className={
-        'fixed bg-white rounded-full drop-shadow bottom-0 right-0 m-3 p-2'
+        'fixed bg-white rounded-full shadow-md shadow-gray-500 bottom-0 right-0 m-3 p-2'
       }
     >
       {symbolMap.get(status)}
@@ -42,12 +42,12 @@ function StatusSymbolsModal({ status }) {
   return symbol;
 }
 
-StatusSymbolsModal.propTypes = {
+StatusSymbols.propTypes = {
   status: PropTypes.string.isRequired,
 };
 
-StatusSymbolsModal.defaultProps = {
+StatusSymbols.defaultProps = {
   status: 'idle',
 };
 
-export default StatusSymbolsModal;
+export default StatusSymbols;

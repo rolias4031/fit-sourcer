@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AlertMessage from './AlertMessage';
+import StatusSymbols from './StatusSymbols';
 
-function Alert({ alerts, onReset, isModal }) {
-  let alertsContent = <div>HI</div>;
+function Alert({ status, alerts, onReset, isModal }) {
+  let alertContent = null
   if (alerts.length > 0) {
-    const alertMessages = alerts.map((alert) => (
+    console.log({alerts});
+    alertContent = alerts.map((alert) => (
       <AlertMessage
         key={`${alert.message}-${alert.timeStamp}`}
         alert={alert}
@@ -13,10 +15,9 @@ function Alert({ alerts, onReset, isModal }) {
         isModal={isModal}
       />
     ));
-    alertsContent = <>{alertMessages}</>
   }
 
-  return alertsContent;
+  return alertContent;
 }
 
 Alert.propTypes = {
