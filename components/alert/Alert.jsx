@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AlertMessage from './AlertMessage';
-import StatusSymbols from './StatusSymbols';
 
 function Alert({ status, alerts, onReset, isModal }) {
   let alertContent = null
@@ -17,7 +16,7 @@ function Alert({ status, alerts, onReset, isModal }) {
     ));
   }
 
-  return alertContent;
+  return <div className='fixed mx-auto bottom-0 left-0 right-0'>{alertContent}</div>;
 }
 
 Alert.propTypes = {

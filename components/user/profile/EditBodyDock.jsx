@@ -51,7 +51,7 @@ function EditBodyDock({ userMsmntMap }) {
     <>
       {bodyForms}
       <StatusSymbols status={status} />
-      <Alert status={status} alerts={alerts} onReset={resetAlerts} isModal />
+      <Alert alerts={alerts} onReset={resetAlerts} isModal />
     </>
   );
 }

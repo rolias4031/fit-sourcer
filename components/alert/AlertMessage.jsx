@@ -15,7 +15,7 @@ function AlertMessage({ alert, onReset, isModal, lifespanInMs }) {
     ? 'bg-red-400'
     : 'bg-emerald-400';
   const divClass = isModal
-    ? `fixed w-1/3 rounded drop-shadow mx-auto bottom-0 left-0 right-0 m-3 p-1 ${backgroundColor}`
+    ? `w-1/3 rounded shadow-md shadow-gray-300 mx-auto m-3 p-1 ${backgroundColor}`
     : `alert-container ${backgroundColor}`;
 
   return (
