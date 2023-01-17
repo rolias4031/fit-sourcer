@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SubmitButton({ title, name, id, style, disabled }) {
-  const btnClass = `btn ${style}`;
   return (
     <input
-      className={btnClass}
+      className={style}
       type="submit"
       value={title}
       name={name}

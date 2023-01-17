@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GeneralLabel from './GeneralLabel';
 
-
-
 /*
 * this component is an inpute component. It does these things:
 1. manages a label using the name property, or the given specific label.
@@ -17,9 +15,7 @@ function TextInputState({
   id,
   label,
   placeholder,
-  inputStyle,
-  labelStyle,
-  divStyle,
+  styles,
   stateValue,
   raiseState,
 }) {
@@ -28,23 +24,18 @@ function TextInputState({
     raiseState((prevState) => ({ ...prevState, [name]: event.target.value }));
   }
 
-  const labelContent = (
-    <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
-  );
-
-  const inputClass = `${inputStyle} focus:outline-none focus:shadow-outline`;
   return (
-    <div className={divStyle}>
-      {labelContent}
-      <input
-          onChange={changeHandler}
-          className={inputClass}
-          type="text"
-          id={id}
-          name={name}
-          value={stateValue}
-          placeholder={placeholder}
-        />
+    <div className={styles.div}>
+    <GeneralLabel id={id} name={name} label={label} style={styles.label} />
+    <input
+        onChange={changeHandler}
+        className={`${styles.input} focus:outline-none focus:shadow-outline`}
+        type="text"
+        id={id}
+        name={name}
+        value={stateValue}
+        placeholder={placeholder}
+      />
     </div>
   );
 }
@@ -53,10 +44,11 @@ TextInputState.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
-  inputStyle: PropTypes.string,
-  labelStyle: PropTypes.string,
-  divStyle: PropTypes.string,
+  styles: PropTypes.exact({
+    div: PropTypes.string,
+    input: PropTypes.string,
+    label: PropTypes.string,
+  }),
   stateValue: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
 };
@@ -66,7 +58,7 @@ TextInputState.defaultProps = {
   placeholder: null,
   inputStyle: null,
   labelStyle: null,
-  divStyle: null
+  divStyle: null,
 };
 
 export default TextInputState;

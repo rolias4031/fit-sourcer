@@ -15,7 +15,7 @@ import { baseUrl } from '../../../lib/constants';
 function VendorAppDock() {
   // comp hooks
   const { alerts, createAlerts, resetAlerts } = useAlerts()
-  const { mutate, isLoading, isSuccess, isError } = useSimpleMutation();
+  const { mutate } = useSimpleMutation();
   // comp functions
   const vendorAppHandler = useCallback((values) => {
     // takes formValues from VendorAppForm

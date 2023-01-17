@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ST8_KEYS } from '../../../lib/constants';
 import TextInputState from '../../form/TextInputState';
-import GeneralCheck from '../../form/GeneralCheck';
+import GeneralCheckbox from '../../form/GeneralCheckbox';
 import SubmitButton from '../../form/SubmitButton';
 import { disableButton } from '../../../lib/util-client';
 
@@ -27,24 +27,28 @@ function DeleteUserForm({ deleteHandler }) {
   return (
     <form
       onSubmit={submitHandler}
-      className="p-5 form-style-basic min-w-[500px]"
+      className="p-3 form-base min-w-[500px]"
     >
-      <div className="flex space-x-2 my-2">
+      <div className="flex space-x-2 mb-2">
         <TextInputState
           id="delete-first-name"
           name={ST8_KEYS.firstName}
-          inputStyle="w-full text-input-style-basic"
-          labelStyle="input-label-basic"
-          divStyle="w-1/2"
+          styles={{
+            input: 'input input-base w-full',
+            div: 'w-full',
+            label: 'label label-base',
+          }}
           raiseState={setDeleteInputs}
           stateValue={deleteInputs.firstName}
         />
         <TextInputState
           id="delete-last-name"
           name={ST8_KEYS.lastName}
-          inputStyle="w-full text-input-style-basic"
-          labelStyle="input-label-basic"
-          divStyle="w-1/2"
+          styles={{
+            input: 'input input-base w-full',
+            div: 'w-full',
+            label: 'label label-base',
+          }}
           raiseState={setDeleteInputs}
           stateValue={deleteInputs.lastName}
         />
@@ -52,22 +56,29 @@ function DeleteUserForm({ deleteHandler }) {
       <TextInputState
         id="delete-email"
         name={ST8_KEYS.email}
-        inputStyle="text-input-style-basic w-full"
-        labelStyle="input-label-basic"
-        divStyle="w-full my-2"
+        styles={{
+          input: 'input input-base w-full',
+          div: 'w-full mb-2',
+          label: 'label label-base',
+        }}
         raiseState={setDeleteInputs}
         stateValue={deleteInputs.email}
       />
-      <GeneralCheck
+      <GeneralCheckbox
         id="delete-confirm"
         name={ST8_KEYS.confirm}
         label="Delete my account forever!"
+        styles={{
+          div: 'flex items-center space-x-2',
+          input: 'w-4 h-4 accent-red-500 rounded',
+          label: 'text-gray-800 text-md font-bold',
+        }}
         raiseState={setDeleteInputs}
       />
       <SubmitButton
         title="Delete"
         id="delete-submit-button"
-        btnStyle="btn-red block mt-4 ml-auto"
+        style="btn-red btn-sm block ml-auto mt-2"
         disabled={disableButton(deleteInputs)}
       />
     </form>

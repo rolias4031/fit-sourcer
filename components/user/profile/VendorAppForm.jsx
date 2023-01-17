@@ -10,11 +10,11 @@ function VendorAppForm({ onSubmit }) {
     description: '',
   });
   function submitHandler(event) {
-    event.preventDefault()
-    onSubmit(formValues)
+    event.preventDefault();
+    onSubmit(formValues);
   }
   return (
-    <form onSubmit={submitHandler} className="form-style-basic p-5">
+    <form onSubmit={submitHandler} className="form-base p-3">
       <TextInputState
         name="name"
         id="name-input-vendor-form"
@@ -22,9 +22,11 @@ function VendorAppForm({ onSubmit }) {
         placeholder="Get this right... you can't change it!"
         stateValue={formValues.name}
         raiseState={setFormValues}
-        inputStyle="text-input text-input-style-basic w-full"
-        labelStyle="input-label-basic"
-        divStyle="w-full my-2"
+        styles={{
+          input: 'input input-base w-full',
+          div: 'w-full mb-2',
+          label: 'label label-base',
+        }}
       />
       <TextInputState
         name="description"
@@ -32,14 +34,16 @@ function VendorAppForm({ onSubmit }) {
         placeholder="Describe your company in a sentence or two"
         stateValue={formValues.description}
         raiseState={setFormValues}
-        inputStyle="text-input text-input-style-basic w-full"
-        labelStyle="input-label-basic"
-        divStyle="w-full my-2"
+        styles={{
+          input: 'input input-base w-full',
+          div: 'w-full mb-2',
+          label: 'label label-base',
+        }}
       />
       <SubmitButton
         title="Send App"
         id="submit-vendor-app"
-        btnStyle="btn btn-blue mt-4 block ml-auto"
+        style="btn-sm btn-blue block ml-auto"
         disabled={disableButton(formValues)}
       />
     </form>

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import GeneralLabel from './GeneralLabel';
 
-function GeneralCheck({ label, id, name, checkStyle, raiseState }) {
+function GeneralCheckbox({ label, id, name, styles, raiseState }) {
   function clickHandler(event) {
     const { checked } = event.target;
     raiseState((prevState) => {
@@ -10,36 +11,34 @@ function GeneralCheck({ label, id, name, checkStyle, raiseState }) {
     });
   }
 
-  const checkClass = `align-middle mr-3 w-4 h-4 bg-gray-100 text-blue-600 rounded ${checkStyle}`;
   return (
-    <div className="mt-3">
+    <div className={styles.div}>
       <input
         onClick={clickHandler}
-        className={checkClass}
+        className={styles.input}
         type="checkbox"
         id={id}
         name={name}
       />
-      <label
-        className="text-gray-700 text-md align-middle font-bold"
-        htmlFor={id}
-      >
-        {label}
-      </label>
+    <GeneralLabel id={id} name={name} label={label} style={styles.label} />
     </div>
   );
 }
 
-GeneralCheck.propTypes = {
+GeneralCheckbox.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
-  checkStyle: PropTypes.string,
+  styles: PropTypes.exact({
+    div: PropTypes.string,
+    input: PropTypes.string,
+    label: PropTypes.string,
+  }),
 };
 
-GeneralCheck.defaultProps = {
+GeneralCheckbox.defaultProps = {
   checkStyle: '',
 };
 
-export default GeneralCheck;
+export default GeneralCheckbox;

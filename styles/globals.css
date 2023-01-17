@@ -96,6 +96,14 @@ a {
     @apply bg-gray-600
   }
 
+  .form-base {
+    @apply rounded border border-gray-200 bg-gray-50;
+  }
+
+  .form-tight {
+    @apply p-2 space-x-2;
+  }
+
   .icon-sm {
     @apply w-4 h-4
   }
@@ -156,14 +164,6 @@ a {
     @apply p-2 text-sm bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
   }
 
-  .form-style-basic {
-    @apply rounded-md border border-gray-200 bg-gray-50;
-  }
-
-  .form-tight {
-    @apply p-2 space-x-2
-  }
-  
   .main-header-text {
     @apply font-bold text-3xl;
   }
