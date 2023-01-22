@@ -16,10 +16,10 @@ function ManageGarmentsList({ allGarments }) {
   ));
 
   return (
-    <div className="mx-auto w-full border flex flex-row">
+    <div className="mx-auto w-full lg:w-3/4 border flex flex-row">
       <div
         className={`border border-red-500 m-5 ${
-          id ? 'basis-1/2' : 'basis-full'
+          id ? 'basis-2/3' : 'basis-full'
         }`}
       >
         {allGarmentsList}

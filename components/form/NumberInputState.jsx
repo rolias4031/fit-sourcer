@@ -22,18 +22,12 @@ function NumberInputState({
   function changeHandler(event) {
     raiseState((prevState) => ({ ...prevState, [name]: event.target.value }));
   }
-  const inputClass = `${styles.input} focus:outline-none focus:shadow-outline`;
   return (
     <div className={styles.div}>
-      <GeneralLabel
-        id={id}
-        name={name}
-        label={label}
-        style={styles.label}
-      />
+      <GeneralLabel id={id} name={name} label={label} style={styles.label} />
       <input
         onChange={changeHandler}
-        className={inputClass}
+        className={`${styles.input} focus:outline-none focus:shadow-outline`}
         id={id}
         name={name}
         type="number"

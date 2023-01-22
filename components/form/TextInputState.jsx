@@ -18,6 +18,7 @@ function TextInputState({
   styles,
   curState,
   raiseState,
+  disabled,
 }) {
   function changeHandler(event) {
     event.preventDefault();
@@ -35,6 +36,7 @@ function TextInputState({
         name={name}
         value={curState}
         placeholder={placeholder}
+        disabled={disabled}
       />
     </div>
   );
@@ -52,16 +54,18 @@ TextInputState.propTypes = {
   }),
   curState: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 TextInputState.defaultProps = {
   label: null,
   placeholder: null,
   styles: PropTypes.exact({
-    div: '',
-    input: '',
-    label: '',
+    div: null,
+    input: null,
+    label: null,
   }),
+  disabled: false
 };
 
 export default TextInputState;

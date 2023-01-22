@@ -121,7 +121,7 @@ a {
   }
 
   .input {
-    @apply py-2 px-3;
+    @apply py-1 px-2 text-sm;
   }
 
   .input-sm {
@@ -134,6 +134,10 @@ a {
   
   .input-base {
     @apply text-gray-700 appearance-none border rounded leading-tight;
+  }
+
+  .input-base:disabled {
+    @apply text-gray-500 appearance-none border rounded leading-tight;
   }
 
   .label {

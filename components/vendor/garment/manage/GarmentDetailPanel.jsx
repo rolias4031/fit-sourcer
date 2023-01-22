@@ -19,13 +19,13 @@ function GarmentDetailPanel({ garmentId }) {
   }
 
   return (
-    <div className="m-5 basis-1/2">
+    <div className="m-5 basis-1/3">
       <div className="flex">
         <GarmentDetailButtons editMode={editMode} setEditMode={setEditMode} />
       </div>
       <GarmentDetailCard
         garment={data.garment}
-        styles={{ wrapper: 'border border-blue-500 w-full' }}
+        styles={{ wrapper: 'border border-blue-500 w-full space-y-5' }}
         editMode={editMode}
       />
     </div>

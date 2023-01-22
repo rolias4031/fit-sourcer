@@ -17,8 +17,6 @@ function GarmentDetailCard({ garment, styles, editMode }) {
     measValues,
     setMeasValues,
   } = useExistingGarment(garment);
-  const { garmentType } = garment;
-  const { measModel } = GARMENT_TYPES.get(garmentType);
 
   console.log(garment);
 
@@ -28,11 +26,9 @@ function GarmentDetailCard({ garment, styles, editMode }) {
       id={val}
       name={val}
       styles={{
-        input: `${
-          editMode ? 'input-sm input-base' : 'bg-white label-sm label-base'
-        }`,
-        label: 'label-sm label-base',
-        div: 'flex',
+        input: 'input input-base basis-1/2',
+        label: 'label label-base',
+        div: 'flex space-x-3 justify-between items-center',
       }}
       curState={infoValues[val]}
       raiseState={setInfoValues}
@@ -46,11 +42,9 @@ function GarmentDetailCard({ garment, styles, editMode }) {
       id={val}
       name={val}
       styles={{
-        input: `${
-          editMode ? 'input-sm input-base' : 'bg-white label-sm label-base'
-        }`,
-        label: 'label-sm label-base',
-        div: 'flex',
+        input: `input input-base basis-1/2`,
+        label: 'label label-base',
+        div: 'flex justify-between items-center',
       }}
       curState={measValues[val]}
       raiseState={setMeasValues}
@@ -60,8 +54,15 @@ function GarmentDetailCard({ garment, styles, editMode }) {
 
   return (
     <div className={styles.wrapper}>
-      <div>{infoInputs}</div>
-      <div>{measInputs}</div>
+      <div className="w-full flex flex-col space-y-1">
+        <p className="text-lg font-bold">Info</p>
+        {infoInputs}
+      </div>
+
+      <div className="w-full flex flex-col space-y-1">
+        <p className="text-lg font-bold">Measurements</p>
+        {measInputs}
+      </div>
     </div>
   );
 }
