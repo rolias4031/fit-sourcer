@@ -12,14 +12,12 @@ const symbolMap = new Map([
 
 function StatusSymbols({ status }) {
   const [alive, setAlive] = useState(false);
-
-  console.log({ status, alive });
-
+  
   useEffect(() => {
     if (status === 'idle') {
       setAlive(false);
     } else if (status === 'loading') {
-      setAlive(true)
+      setAlive(true);
     } else if (status === 'success') {
       setAlive(true);
       const id = setTimeout(() => {
@@ -30,11 +28,7 @@ function StatusSymbols({ status }) {
   }, [status]);
 
   const symbol = alive && (
-    <div
-      className={
-        'fixed bg-white rounded-full shadow-md shadow-gray-500 bottom-0 right-0 m-3 p-2'
-      }
-    >
+    <div className="fixed bg-white rounded-full shadow-md shadow-gray-500 bottom-0 right-0 m-3 p-2">
       {symbolMap.get(status)}
     </div>
   );

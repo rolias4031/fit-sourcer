@@ -20,33 +20,31 @@ function ProfileDock() {
     const userMsmntMap = useFilterProfileMeasurements(profile);
 
     return (
-      <>
-        <div className="flex">
-          <div className="flex flex-col basis-1/4 h-screen p-3 place-items-end border-r">
-            <ProfileTabs
-              stateValue={curTab}
-              raiseState={setCurTab}
-              tabOptions={tabs}
-            />
-          </div>
-          <div className="basis-full px-10 py-5">
-            {curTab === 'measurements' ? (
-              <div className='flex flex-col gap-3 w-min'>
-                <EditBodyDock userMsmntMap={userMsmntMap} />
-              </div>
-            ) : curTab === 'manage' ? (
-              <>
-                <div className="my-5">
-                  <VendorAppDock />
-                </div>
-                <div className="my-5">
-                  <DeleteUserDock />
-                </div>
-              </>
-            ) : null}
-          </div>
+      <div className="flex">
+        <div className="flex flex-col basis-1/4 h-screen p-3 place-items-end border-r">
+          <ProfileTabs
+            stateValue={curTab}
+            raiseState={setCurTab}
+            tabOptions={tabs}
+          />
         </div>
-      </>
+        <div className="basis-full px-10 py-5">
+          {curTab === 'measurements' ? (
+            <div className="flex flex-col gap-3 w-min">
+              <EditBodyDock userMsmntMap={userMsmntMap} />
+            </div>
+          ) : curTab === 'manage' ? (
+            <>
+              <div className="my-5">
+                <VendorAppDock />
+              </div>
+              <div className="my-5">
+                <DeleteUserDock />
+              </div>
+            </>
+          ) : null}
+        </div>
+      </div>
     );
   }
 
