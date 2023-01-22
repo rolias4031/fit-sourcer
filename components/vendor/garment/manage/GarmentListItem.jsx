@@ -12,7 +12,6 @@ function GarmentListItem({ info }) {
           {info.name}
         </p>
       </Link>
-
       <p className="text-gray-500">{info.description}</p>
       <p className="text-gray-300">{info.modelNumber}</p>
     </div>

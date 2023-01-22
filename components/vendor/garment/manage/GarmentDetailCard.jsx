@@ -2,29 +2,66 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fullLowerBodyGarment } from '../../../../lib/types';
 import { GARMENT_TYPES } from '../../../../lib/constants';
-import GarmentNumTag from './GarmentNumTag';
 import NumberInputState from '../../../form/NumberInputState';
+import TextInputState from '../../../form/TextInputState';
+import { useExistingGarment } from '../../../../lib/vendor/hooks';
 
 // press an edit button and inputs take place of displays.
 
 function GarmentDetailCard({ garment, styles, editMode }) {
+  const {
+    images,
+    setImages,
+    infoValues,
+    setInfoValues,
+    measValues,
+    setMeasValues,
+  } = useExistingGarment(garment);
   const { garmentType } = garment;
-  const garmentMeta = GARMENT_TYPES.get(garmentType);
+  const { measModel } = GARMENT_TYPES.get(garmentType);
 
-  // const garmentNums = Object.keys(garment[garmentMeta.numsModel]).map((msmnt) => {
-  //   console.log(msmnt)
-  //   return <NumberInputState key={msmnt} id={`${msmnt}-edit-garment`} name={msmnt} inputStyle={editMode ? 'input-sm input-base' : 'bg-white'} labelStyle="label-sm label-base" divStyle="" stateValue raiseState={} disabled={!editMode}/>
-  // })
-  // console.log({garmentNums});
+  console.log(garment);
 
-  // console.log(garment);
+  const infoInputs = Object.keys(infoValues).map((val) => (
+    <TextInputState
+      key={val}
+      id={val}
+      name={val}
+      styles={{
+        input: `${
+          editMode ? 'input-sm input-base' : 'bg-white label-sm label-base'
+        }`,
+        label: 'label-sm label-base',
+        div: 'flex',
+      }}
+      curState={infoValues[val]}
+      raiseState={setInfoValues}
+      disabled={!editMode}
+    />
+  ));
+
+  const measInputs = Object.keys(measValues).map((val) => (
+    <NumberInputState
+      key={val}
+      id={val}
+      name={val}
+      styles={{
+        input: `${
+          editMode ? 'input-sm input-base' : 'bg-white label-sm label-base'
+        }`,
+        label: 'label-sm label-base',
+        div: 'flex',
+      }}
+      curState={measValues[val]}
+      raiseState={setMeasValues}
+      disabled={!editMode}
+    />
+  ));
 
   return (
     <div className={styles.wrapper}>
-      <p>{garment.name}</p>
-      <p>{garment.description}</p>
-      <p>{garment.modelNumber}</p>
-      <input className="border p-1 disabled:bg-white" type="number" />
+      <div>{infoInputs}</div>
+      <div>{measInputs}</div>
     </div>
   );
 }
@@ -34,6 +71,7 @@ GarmentDetailCard.propTypes = {
   styles: PropTypes.shape({
     wrapper: PropTypes.string,
   }),
+  editMode: PropTypes.bool.isRequired,
 };
 
 GarmentDetailCard.defaultProps = {

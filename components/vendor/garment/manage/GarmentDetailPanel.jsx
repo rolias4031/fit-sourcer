@@ -7,19 +7,19 @@ import GarmentDetailCard from './GarmentDetailCard';
 import GarmentDetailButtons from './GarmentDetailButtons';
 
 function GarmentDetailPanel({ garmentId }) {
-  const { data, isLoading, isError } = useGetGarmentDetail(garmentId);
+  const { data, status } = useGetGarmentDetail(garmentId);
   const [editMode, setEditMode] = useState(false);
 
-  if (isLoading) {
+  if (status === 'loading') {
     return <IsLoading />;
   }
 
-  if (isError) {
+  if (status === 'error') {
     return <IsError />;
   }
 
   return (
-    <div className="m-5">
+    <div className="m-5 basis-1/2">
       <div className="flex">
         <GarmentDetailButtons editMode={editMode} setEditMode={setEditMode} />
       </div>

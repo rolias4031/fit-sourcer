@@ -16,7 +16,7 @@ function TextInputState({
   label,
   placeholder,
   styles,
-  stateValue,
+  curState,
   raiseState,
 }) {
   function changeHandler(event) {
@@ -33,7 +33,7 @@ function TextInputState({
         type="text"
         id={id}
         name={name}
-        value={stateValue}
+        value={curState}
         placeholder={placeholder}
       />
     </div>
@@ -42,6 +42,7 @@ function TextInputState({
 
 TextInputState.propTypes = {
   name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
   styles: PropTypes.exact({
@@ -49,16 +50,18 @@ TextInputState.propTypes = {
     input: PropTypes.string,
     label: PropTypes.string,
   }),
-  stateValue: PropTypes.string.isRequired,
+  curState: PropTypes.string.isRequired,
   raiseState: PropTypes.func.isRequired,
 };
 
 TextInputState.defaultProps = {
   label: null,
   placeholder: null,
-  inputStyle: null,
-  labelStyle: null,
-  divStyle: null,
+  styles: PropTypes.exact({
+    div: '',
+    input: '',
+    label: '',
+  }),
 };
 
 export default TextInputState;

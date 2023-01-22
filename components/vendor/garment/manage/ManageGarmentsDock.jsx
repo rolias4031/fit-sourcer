@@ -5,13 +5,13 @@ import IsError from '../../../util/IsError'
 import { useAllVendorGarments } from '../../../../lib/vendor/hooks';
 
 function ManageGarmentsDock() {
-  const { vendorData, allGarments, isLoading, isError } = useAllVendorGarments();
+  const { vendorData, allGarments, status } = useAllVendorGarments();
 
-  if (isLoading) {
+  if (status === 'loading') {
     return <IsLoading />;
   }
 
-  if (isError) {
+  if (status === 'error') {
     return <IsError />
   }
 
