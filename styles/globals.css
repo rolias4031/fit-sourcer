@@ -133,11 +133,11 @@ a {
   }
   
   .input-base {
-    @apply text-gray-700 appearance-none border rounded leading-tight;
+    @apply text-gray-800 appearance-none border rounded leading-tight;
   }
 
   .input-base:disabled {
-    @apply text-gray-500 appearance-none border rounded leading-tight;
+    @apply text-gray-500 bg-gray-50 appearance-none border rounded leading-tight;
   }
 
   .label {
@@ -161,7 +161,11 @@ a {
   }
 
   .select-input-base {
-    @apply bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
+    @apply text-gray-800 bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
+  }
+
+  .select-input-base:disabled {
+    @apply bg-gray-50 bg-clip-padding bg-no-repeat border rounded transition ease-in-out
   }
 
   .select-input-basic {

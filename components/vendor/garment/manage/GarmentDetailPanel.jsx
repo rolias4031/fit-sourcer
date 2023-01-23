@@ -19,7 +19,7 @@ function GarmentDetailPanel({ garmentId }) {
   }
 
   return (
-    <div className="m-5 basis-1/3">
+    <div className="m-5 basis-1/2">
       <div className="flex">
         <GarmentDetailButtons editMode={editMode} setEditMode={setEditMode} />
       </div>

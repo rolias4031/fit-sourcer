@@ -7,8 +7,8 @@ import {
 } from '../../../../lib/constants';
 import GarmentInfoInput from './GarmentInfoInput';
 import GarmentNumsInput from './GarmentNumsInput';
-import SelectInput from '../../../form/SelectInput'
-import GeneralButton from '../../../form/GeneralButton'
+import SelectInput from '../../../form/SelectInput';
+import GeneralButton from '../../../form/GeneralButton';
 import Alert from '../../../alert/Alert';
 import {
   useFullGarmentDetails,
@@ -16,8 +16,8 @@ import {
 } from '../../../../lib/vendor/hooks';
 import { useAlerts } from '../../../../lib/hooks';
 import { useSimpleMutation } from '../../../../lib/vendor/mutations';
-import StatusSymbols from '../../../util/StatusSymbols';
-import ImageUpload from '../../../form/ImageUpload'
+import StatusSymbols from '../../../alert/StatusSymbols';
+import ImageUpload from '../../../form/ImageUpload';
 import UploadedImageTag from './UploadedImageTag';
 
 function CreateGarmentForm({ id, formClass, onRemove }) {
@@ -90,7 +90,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
           <SelectInput
             id="selet-garment-type"
             stateValue={infoValues.garmentType}
-            raiseState={setGarmentType}
+            raiseState={setInfoValues}
             optionsArr={GARMENT_TYPES_KEYS}
             name="Garment Type"
             labelStyle="label-sm label-base block"
@@ -100,11 +100,11 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
           <SelectInput
             id="select-garment-sex"
             stateValue={infoValues.sex}
-            raiseState={setGarmentSex}
+            raiseState={setInfoValues}
             optionsArr={GARMENT_SEX_TYPES}
             name="Garment Sex"
             labelStyle="label-sm label-base block"
-            selectStyle="select-input-sm select-input-base w-40"
+            selectStyle="input select-input-base w-40"
             divStyle="flex-1"
           />
           <div className="flex flex-row items-center space-x-3">

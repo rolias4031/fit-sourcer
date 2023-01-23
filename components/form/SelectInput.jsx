@@ -1,19 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createLabel, genId } from '../../lib/util-client'
+import { createLabel, genId } from '../../lib/util-client';
 import GeneralLabel from './GeneralLabel';
 
 function SelectInput({
   id,
   name,
   label,
-  labelStyle,
-  selectStyle,
-  divStyle,
+  styles,
   optionsArr,
   raiseState,
-  stateValue
+  curState,
+  disabled,
 }) {
   // pass down a list of keys to .map() the options
   const selectOptions = optionsArr.map((val) => {
@@ -26,19 +25,25 @@ function SelectInput({
   });
 
   function changeHandler(event) {
-    console.log(event.target.value)
-    raiseState(event.target.value);
+    console.log(event.target.value);
+    raiseState((prevState) => ({ ...prevState, [name]: event.target.value }));
   }
 
   return (
-    <div className={divStyle}>
-      <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
+    <div className={styles.div}>
+      <GeneralLabel
+        id={id}
+        name={name}
+        label={label}
+        style={styles.label}
+      />
       <select
         onChange={changeHandler}
         name={name}
         id={id}
-        className={selectStyle}
-        value={stateValue}
+        className={styles.select}
+        value={curState}
+        disabled={disabled}
       >
         {selectOptions}
       </select>
@@ -51,18 +56,20 @@ SelectInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   optionsArr: PropTypes.arrayOf(PropTypes.string).isRequired,
-  divStyle: PropTypes.string,
-  selectStyle: PropTypes.string,
-  labelStyle: PropTypes.string,
+  styles: PropTypes.exact({
+    div: PropTypes.string,
+    label: PropTypes.string,
+    select: PropTypes.string,
+  }),
   raiseState: PropTypes.func.isRequired,
-  stateValue: PropTypes.string.isRequired
+  curState: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 SelectInput.defaultProps = {
-  selectStyle: null,
-  labelStyle: null,
-  divStyle: null,
+  styles: { div: null, label: null, select: null },
   label: null,
+  disabled: false
 };
 
 export default SelectInput;
