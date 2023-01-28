@@ -21,8 +21,12 @@ import ImageUpload from '../../../form/ImageUpload';
 import UploadedImageTag from './UploadedImageTag';
 
 function CreateGarmentForm({ id, formClass, onRemove }) {
-  const { mutate: saveGarment, isLoading, isSuccess } = useSimpleMutation();
-  const { uploadGarmentImage, isLoading: isUploadLoading } =
+  const {
+    mutate: saveGarment,
+    status: saveGarmentStatus,
+    isSuccess,
+  } = useSimpleMutation();
+  const { uploadGarmentImage, status: uploadGarmentStatus } =
     useUploadGarmentImage();
 
   const { alerts, resetAlerts, createAlerts, handleForeignAlert } = useAlerts();
@@ -33,8 +37,6 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     setMeasValues,
     images,
     setImages,
-    setGarmentType,
-    setGarmentSex,
     garmentDetailsIncomplete,
   } = useFullGarmentDetails();
 
@@ -52,7 +54,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
 
   const saveHandler = useCallback(() => {
     // get image urls from images
-    const imageUrls = images.map((image) => image.uploadUrl);
+    const imageUrls = images.map((image) => image.hostedUrl);
     const config = {
       url: `${baseUrl}/api/vendor/garment/create`,
       method: 'POST',
@@ -73,7 +75,8 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
       onSuccess: (data) => {
         setImages((prev) => {
           const thisImage = image;
-          thisImage.uploadUrl = data;
+          thisImage.hostedUrl = data;
+          console.log(thisImage.hostedUrl);
           return [...prev, thisImage];
         });
       },
@@ -89,44 +92,53 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
         <div className="flex flex-row px-1">
           <SelectInput
             id="selet-garment-type"
-            stateValue={infoValues.garmentType}
+            curState={infoValues.garmentType}
             raiseState={setInfoValues}
             optionsArr={GARMENT_TYPES_KEYS}
             name="Garment Type"
-            labelStyle="label-sm label-base block"
-            selectStyle="select-input-sm select-input-base w-40"
-            divStyle="mr-2"
+            styles={{
+              label: 'label-sm label-base block',
+              select: 'input-sm select-input-base w-40',
+              div: 'mr-2',
+            }}
           />
           <SelectInput
             id="select-garment-sex"
-            stateValue={infoValues.sex}
+            curState={infoValues.sex}
             raiseState={setInfoValues}
             optionsArr={GARMENT_SEX_TYPES}
             name="Garment Sex"
-            labelStyle="label-sm label-base block"
-            selectStyle="input select-input-base w-40"
-            divStyle="flex-1"
+            styles={{
+              label: 'label-sm label-base block',
+              select: 'input-sm select-input-base w-40',
+              div: 'flex-1',
+            }}
           />
           <div className="flex flex-row items-center space-x-3">
-            {!isLoading ? (
+            {saveGarmentStatus !== 'loading' ? (
               <>
                 <GeneralButton
                   name={!isSuccess ? 'Save' : 'Saved!'}
                   id="save-garment-btn"
-                  btnStyle={`btn-sm hover-child ${
-                    !isSuccess ? 'btn-blue' : 'btn-gray'
-                  }`}
+                  styles={{
+                    button: `btn-sm hover-child ${
+                      !isSuccess ? 'btn-blue' : 'btn-gray'
+                    }`,
+                  }}
                   onClick={saveHandler}
                   disabled={garmentDetailsIncomplete()}
                 />
                 <GeneralButton
                   name="Remove"
+                  styles={{
+                    button: 'btn-sm btn-red hover-child',
+                  }}
                   btnStyle="btn-sm btn-red hover-child"
                   onClick={onRemove}
                 />
               </>
             ) : (
-              <StatusSymbols loading={isLoading} success={isSuccess} />
+              <StatusSymbols status={saveGarmentStatus} />
             )}
           </div>
         </div>
@@ -144,10 +156,12 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
           <ImageUpload
             name="garmentImages"
             label="Images"
+            styles={{
+              label: 'label-sm label-base',
+              input: 'btn-sm btn-blue w-fit mt-1',
+              div: 'flex flex-col',
+            }}
             id="garment-image-upload"
-            divStyle="flex flex-col"
-            inputStyle="btn-sm btn-blue w-fit mt-1"
-            labelStyle="label-sm label-base"
             raiseState={setImages}
             contState={images}
             onUpload={uploadHandler}
@@ -156,7 +170,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
             {renderUploadedImageTags()}
           </div>
           <div className="flex flex-row items-center ml-auto">
-            <StatusSymbols loading={isUploadLoading} />
+            <StatusSymbols status={uploadGarmentStatus} />
           </div>
         </div>
       </form>

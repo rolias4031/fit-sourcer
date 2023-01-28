@@ -8,10 +8,12 @@ function GarmentNumsInput({ stateValues, raiseState, contStyle }) {
       key={key}
       id={`create-garment-${key}`}
       name={key}
-      labelStyle="label-sm label-base block"
-      inputStyle="input-sm input-base w-full"
-      divStyle="basis-1/6 px-1 my-1"
-      stateValue={stateValues[key]}
+      styles={{
+        label: "label-sm label-base block",
+        input: "input-sm input-base w-full",
+        div: "basis-1/6 px-1 my-1",
+      }}
+      curState={stateValues[key]}
       raiseState={raiseState}
     />
   ));

@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/20/solid';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import GeneralButton from '../../../form/GeneralButton'
+import GeneralButton from '../../../form/GeneralButton';
 import { APP_URLS } from '../../../../lib/constants';
 
 function GarmentDetailButtons({ editMode, setEditMode }) {
@@ -17,14 +17,14 @@ function GarmentDetailButtons({ editMode, setEditMode }) {
       {editMode ? (
         <>
           <GeneralButton
-            btnStyle="btn-sm btn-gray"
+            styles={{ button: 'btn-sm btn-gray' }}
             name="save"
             icon={<DocumentCheckIcon className="icon-sm" />}
             id="save-garment-detail"
             onClick={() => setEditMode(false)}
           />
           <GeneralButton
-            btnStyle="btn-sm btn-gray ml-2"
+            styles={{ button: 'btn-sm btn-gray ml-2' }}
             name="cancel"
             icon={<XMarkIcon className="icon-sm" />}
             id="cancel-save-garment-detail"
@@ -33,7 +33,7 @@ function GarmentDetailButtons({ editMode, setEditMode }) {
         </>
       ) : (
         <GeneralButton
-          btnStyle="btn-sm btn-gray"
+          styles={{ button: 'btn-sm btn-gray' }}
           name="edit"
           icon={<PencilSquareIcon className="icon-sm" />}
           id="edit-garment-detail"

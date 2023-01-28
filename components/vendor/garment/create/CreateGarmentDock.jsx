@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { useCallback, useState } from 'react';
-import GeneralButton from '../../../form/GeneralButton'
+import GeneralButton from '../../../form/GeneralButton';
 import CreateGarmentForm from './CreateGarmentForm';
 import { genId } from '../../../../lib/util-client';
 
@@ -9,7 +9,7 @@ function CreateGarmentDock() {
     <CreateGarmentForm
       key={formId}
       id={formId}
-      formClass="form-style-basic xl:w-1/2 lg:w-3/4 w-5/6 mx-auto mb-5 p-3 flex flex-col hover-parent"
+      formClass="form-base xl:w-1/2 lg:w-3/4 w-5/6 mx-auto mb-5 p-3 flex flex-col hover-parent"
       onRemove={() => modFormsHandler(formId, 'subtract')}
     />
   );
@@ -39,14 +39,14 @@ function CreateGarmentDock() {
       <div className="xl:w-1/2 lg:w-3/4 w-5/6 mx-auto m-5 flex">
         <GeneralButton
           name="Save All Garments"
-          btnStyle="btn-sm btn-blue block"
+          styles={{ button: 'btn-sm btn-blue block' }}
         />
       </div>
       {garmentForms}
       <div className="xl:w-1/2 lg:w-3/4 w-5/6 mx-auto mb-28">
         <GeneralButton
           name="+ Form"
-          btnStyle="btn-sm btn-gray block ml-auto"
+          styles={{ button: 'btn-sm btn-gray block ml-auto' }}
           onClick={(_) => modFormsHandler(_, 'add')}
         />
       </div>

@@ -1,7 +1,8 @@
 import React from 'react';
+import Image from 'next/image'
 import PropTypes from 'prop-types';
 import { fullLowerBodyGarment } from '../../../../lib/types';
-import { GARMENT_SEX_TYPES, GARMENT_TYPES } from '../../../../lib/constants';
+import { GARMENT_SEX_TYPES } from '../../../../lib/constants';
 import NumberInputState from '../../../form/NumberInputState';
 import TextInputState from '../../../form/TextInputState';
 import { useExistingGarment } from '../../../../lib/vendor/hooks';
@@ -21,25 +22,6 @@ function GarmentDetailCard({ garment, styles, editMode }) {
 
   console.log(garment);
 
-  const infoInputs = Object.keys(infoValues).map(
-    (val) =>
-      val !== 'description' && (
-        <TextInputState
-          key={val}
-          id={val}
-          name={val}
-          styles={{
-            input: 'input input-base',
-            label: 'label label-base',
-            div: 'flex flex-col',
-          }}
-          curState={infoValues[val]}
-          raiseState={setInfoValues}
-          disabled={!editMode}
-        />
-      ),
-  );
-
   const measInputs = Object.keys(measValues).map((val) => (
     <NumberInputState
       key={val}
@@ -55,6 +37,8 @@ function GarmentDetailCard({ garment, styles, editMode }) {
       disabled={!editMode}
     />
   ));
+
+  const imageElements = images.map((i) => <Image key={i.url} src={i.url} height="200" width="200"/>)
 
   return (
     <div className={styles.wrapper}>
@@ -132,10 +116,13 @@ function GarmentDetailCard({ garment, styles, editMode }) {
             disabled={!editMode}
           />
       </div>
-
       <div className="w-full flex flex-col space-y-1">
         <p className="text-lg font-bold">Measurements</p>
         {measInputs}
+      </div>
+      <Image src="https://fitsourcer-files.s3.amazonaws.com/04dcdf9d-1b40-4596-a231-112bd4ee5281.jpeg" width="500" height="500"/>
+      <div>
+        {imageElements}
       </div>
     </div>
   );

@@ -12,33 +12,39 @@ function GarmentInfoInput({ stateValues, raiseState, divStyle }) {
     <div className={divStyle}>
       <TextInputState
         raiseState={raiseState}
-        stateValue={stateValues.name}
+        curState={stateValues.name}
         id="create-garment-name"
         name="name"
         label="Garment Name"
-        inputStyle={inputStyle}
-        labelStyle={labelStyle}
-        divStyle={inputDivStyle}
+        styles={{
+          input: inputStyle,
+          label: labelStyle,
+          div: inputDivStyle,
+        }}
         placeholder="Name of the garment"
       />
       <TextInputState
         raiseState={raiseState}
-        stateValue={stateValues.description}
+        curState={stateValues.description}
         id="create-garment-description"
         name="description"
-        inputStyle={inputStyle}
-        labelStyle={labelStyle}
-        divStyle={inputDivStyle}
+        styles={{
+          input: inputStyle,
+          label: labelStyle,
+          div: inputDivStyle,
+        }}
         placeholder="A brief description of the garment"
       />
       <TextInputState
         raiseState={raiseState}
-        stateValue={stateValues.modelNumber}
+        curState={stateValues.modelNumber}
         id="create-garment-modelNumber"
         name="modelNumber"
-        inputStyle={inputStyle}
-        labelStyle={labelStyle}
-        divStyle={inputDivStyle}
+        styles={{
+          input: inputStyle,
+          label: labelStyle,
+          div: inputDivStyle,
+        }}
         placeholder="Model, SKU, or Serial Number"
       />
     </div>

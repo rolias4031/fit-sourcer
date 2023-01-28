@@ -1,7 +1,7 @@
 import { getAuth } from '@clerk/nextjs/server';
 import S3 from 'aws-sdk/clients/s3';
 import { randomUUID } from 'crypto';
-import { ERRORS } from '../../../lib/constants';
+import { ERRORS, s3BucketBaseUrl } from '../../../lib/constants';
 
 const s3 = new S3({
   apiVersion: '2006-03-01',
@@ -18,9 +18,11 @@ export default async function handler(req, res) {
       message: ERRORS.UNAUTHORIZED,
     });
   }
+  console.log(req.body.inputs);
   try {
     const { ext } = req.body.inputs;
     const key = `${randomUUID()}.${ext}`;
+    const hostedUrl = `${s3BucketBaseUrl}/${key}`
     const s3Params = {
       Bucket: process.env.BUCKET,
       Key: key,
@@ -31,6 +33,7 @@ export default async function handler(req, res) {
     return res.status(200).json({
       message: 'Success',
       uploadUrl,
+      hostedUrl,
       key
     });
   } catch (error) {

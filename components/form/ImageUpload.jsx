@@ -8,9 +8,7 @@ function ImageUpload({
   name,
   id,
   label,
-  labelStyle,
-  inputStyle,
-  divStyle,
+  styles,
   contState,
   onUpload,
 }) {
@@ -31,13 +29,13 @@ function ImageUpload({
   });
 
   return (
-    <div className={divStyle}>
-      <GeneralLabel id={id} name={name} label={label} labelStyle={labelStyle} />
+    <div className={styles.div}>
+      <GeneralLabel id={id} name={name} label={label} style={styles.label} />
       <GeneralButton
         name="upload image"
         icon={<CloudArrowUpIcon className="h-5 w-5" />}
         id={id}
-        btnStyle={inputStyle}
+        styles={{ button: styles.input }}
         onClick={clickHandler}
       />
       <input
@@ -56,18 +54,22 @@ ImageUpload.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  labelStyle: PropTypes.string,
-  inputStyle: PropTypes.string,
-  divStyle: PropTypes.string,
+  styles: PropTypes.exact({
+    input: PropTypes.string,
+    label: PropTypes.string,
+    div: PropTypes.string,
+  }),
   contState: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   onUpload: PropTypes.func.isRequired,
 };
 
 ImageUpload.defaultProps = {
   label: null,
-  labelStyle: null,
-  inputStyle: null,
-  divStyle: null,
+  styles: {
+    input: '',
+    label: '',
+    div: '',
+  },
 };
 
 export default ImageUpload;

@@ -168,10 +168,6 @@ a {
     @apply bg-gray-50 bg-clip-padding bg-no-repeat border rounded transition ease-in-out
   }
 
-  .select-input-basic {
-    @apply p-2 text-sm bg-clip-padding bg-no-repeat border rounded transition ease-in-out;
-  }
-
   .main-header-text {
     @apply font-bold text-3xl;
   }
