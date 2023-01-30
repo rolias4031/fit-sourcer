@@ -4,15 +4,15 @@ import TextInputState from '../../../form/TextInputState';
 
 /* stores name, vendor, description */
 
-function GarmentInfoInput({ stateValues, raiseState, divStyle }) {
+function GarmentInfoInput({ infoState, raiseInfo, styles }) {
   const inputStyle = 'input-sm input-base w-full';
   const labelStyle = 'label-sm label-base block';
   const inputDivStyle = 'my-1 px-1';
   return (
-    <div className={divStyle}>
+    <div className={styles.div}>
       <TextInputState
-        raiseState={raiseState}
-        curState={stateValues.name}
+        raiseState={raiseInfo}
+        curState={infoState.name}
         id="create-garment-name"
         name="name"
         label="Garment Name"
@@ -24,8 +24,8 @@ function GarmentInfoInput({ stateValues, raiseState, divStyle }) {
         placeholder="Name of the garment"
       />
       <TextInputState
-        raiseState={raiseState}
-        curState={stateValues.description}
+        raiseState={raiseInfo}
+        curState={infoState.description}
         id="create-garment-description"
         name="description"
         styles={{
@@ -36,8 +36,8 @@ function GarmentInfoInput({ stateValues, raiseState, divStyle }) {
         placeholder="A brief description of the garment"
       />
       <TextInputState
-        raiseState={raiseState}
-        curState={stateValues.modelNumber}
+        raiseState={raiseInfo}
+        curState={infoState.modelNumber}
         id="create-garment-modelNumber"
         name="modelNumber"
         styles={{
@@ -52,13 +52,17 @@ function GarmentInfoInput({ stateValues, raiseState, divStyle }) {
 }
 
 GarmentInfoInput.propTypes = {
-  stateValues: PropTypes.objectOf(PropTypes.string).isRequired,
-  raiseState: PropTypes.func.isRequired,
-  divStyle: PropTypes.string,
+  infoState: PropTypes.objectOf(PropTypes.string).isRequired,
+  raiseInfo: PropTypes.func.isRequired,
+  styles: PropTypes.exact({
+    div: PropTypes.string,
+  }),
 };
 
 GarmentInfoInput.defaultProps = {
-  divStyle: null
+  styles: {
+    div: '',
+  },
 };
 
 export default GarmentInfoInput;

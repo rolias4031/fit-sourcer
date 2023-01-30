@@ -143,13 +143,21 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
           </div>
         </div>
         <GarmentInfoInput
-          stateValues={infoValues}
-          raiseState={setInfoValues}
-          divStyle="w-full"
+          infoState={infoValues}
+          raiseInfo={setInfoValues}
+          styles={{
+            div: 'w-full',
+          }}
         />
         <GarmentNumsInput
-          stateValues={measValues}
-          raiseState={setMeasValues}
+          measState={measValues}
+          raiseMeas={setMeasValues}
+          styles={{
+            input: `input input-base basis-auto`,
+            label: 'label-sm label-base basis-1/2',
+            div: 'flex justify-between items-center w-1/3 space-y-1',
+            container: 'px-1',
+          }}
           contStyle="flex flex-row flex-wrap justify-start"
         />
         <div className="flex flex-row pt-2 border-t mt-2 px-1">

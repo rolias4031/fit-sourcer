@@ -1,12 +1,13 @@
 import React from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { fullLowerBodyGarment } from '../../../../lib/types';
-import { GARMENT_SEX_TYPES } from '../../../../lib/constants';
-import NumberInputState from '../../../form/NumberInputState';
+import { baseUrl, GARMENT_SEX_TYPES, METHODS } from '../../../../lib/constants';
 import TextInputState from '../../../form/TextInputState';
 import { useExistingGarment } from '../../../../lib/vendor/hooks';
 import SelectInput from '../../../form/SelectInput';
+import GarmentNumsInput from '../create/GarmentNumsInput';
+import { useDeleteGarment } from '../../../../lib/vendor/mutations';
 
 // press an edit button and inputs take place of displays.
 
@@ -20,25 +21,13 @@ function GarmentDetailCard({ garment, styles, editMode }) {
     setMeasValues,
   } = useExistingGarment(garment);
 
+
+
   console.log(garment);
 
-  const measInputs = Object.keys(measValues).map((val) => (
-    <NumberInputState
-      key={val}
-      id={val}
-      name={val}
-      styles={{
-        input: `input input-base basis-1/3`,
-        label: 'label label-base',
-        div: 'flex justify-between items-center',
-      }}
-      curState={measValues[val]}
-      raiseState={setMeasValues}
-      disabled={!editMode}
-    />
+  const imageElements = images.map((i) => (
+    <Image key={i.url} src={i.url} height="200" width="200" />
   ));
-
-  const imageElements = images.map((i) => <Image key={i.url} src={i.url} height="200" width="200"/>)
 
   return (
     <div className={styles.wrapper}>
@@ -103,27 +92,34 @@ function GarmentDetailCard({ garment, styles, editMode }) {
           />
         </div>
         <TextInputState
-            key="infoValue-description"
-            id="infoValues-description"
-            name="description"
-            styles={{
-              input: 'input input-base',
-              label: 'label label-base',
-              div: 'flex flex-col',
-            }}
-            curState={infoValues.description}
-            raiseState={setInfoValues}
-            disabled={!editMode}
-          />
+          key="infoValue-description"
+          id="infoValues-description"
+          name="description"
+          styles={{
+            input: 'input input-base',
+            label: 'label label-base',
+            div: 'flex flex-col',
+          }}
+          curState={infoValues.description}
+          raiseState={setInfoValues}
+          disabled={!editMode}
+        />
       </div>
       <div className="w-full flex flex-col space-y-1">
         <p className="text-lg font-bold">Measurements</p>
-        {measInputs}
+        <GarmentNumsInput
+          measState={measValues}
+          raiseMeas={setMeasValues}
+          styles={{
+            input: `input input-base basis-1/3`,
+            label: 'label label-base',
+            div: 'flex justify-between items-center space-y-1',
+            container: '',
+          }}
+          disabled={!editMode}
+        />
       </div>
-      <Image src="https://fitsourcer-files.s3.amazonaws.com/04dcdf9d-1b40-4596-a231-112bd4ee5281.jpeg" width="500" height="500"/>
-      <div>
-        {imageElements}
-      </div>
+      <div>{imageElements}</div>
     </div>
   );
 }

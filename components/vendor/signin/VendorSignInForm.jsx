@@ -22,13 +22,15 @@ function VendorSignInForm({ onSubmit, contState, raiseState }) {
           label: 'label label-base',
           div: '',
         }}
-        stateValue={contState.email}
+        curState={contState.email}
         raiseState={raiseState}
       />
       <SubmitButton
         title="Send Email Code"
         id="signin-submit"
-        style="btn-sm btn-blue my-2 block ml-auto"
+        styles={{
+          button: 'btn-sm btn-blue my-2 block ml-auto',
+        }}
         disabled={disableButton(contState)}
       />
     </form>

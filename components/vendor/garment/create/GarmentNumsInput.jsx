@@ -2,31 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumberInputState from '../../../form/NumberInputState'
 
-function GarmentNumsInput({ stateValues, raiseState, contStyle }) {
-  const formInputElements = Object.keys(stateValues).map((key) => (
+function GarmentNumsInput({ measState, raiseMeas, styles, disabled }) {
+  const formInputElements = Object.keys(measState).map((key) => (
     <NumberInputState
       key={key}
       id={`create-garment-${key}`}
       name={key}
       styles={{
-        label: "label-sm label-base block",
-        input: "input-sm input-base w-full",
-        div: "basis-1/6 px-1 my-1",
+        label: styles.label,
+        input: styles.input,
+        div: styles.div,
       }}
-      curState={stateValues[key]}
-      raiseState={raiseState}
+      curState={measState[key]}
+      raiseState={raiseMeas}
+      disabled={disabled}
     />
   ));
-  return <div className={contStyle}>{formInputElements}</div>;
+  return <div className={styles.container}>{formInputElements}</div>;
 }
 
 GarmentNumsInput.propTypes = {
-  raiseState: PropTypes.func.isRequired,
-  stateValues: PropTypes.objectOf(PropTypes.string).isRequired,
-  contStyle: PropTypes.string,
+  raiseMeas: PropTypes.func.isRequired,
+  measState: PropTypes.objectOf(PropTypes.string).isRequired,
+  styles: PropTypes.exact({
+    label: PropTypes.string,
+    input: PropTypes.string,
+    div: PropTypes.string,
+    container: PropTypes.string,
+  }),
+  disabled: PropTypes.bool,
 }
 
 GarmentNumsInput.defaultProps = {
-  contStyle: null
+  styles: {
+    label: '',
+    input: '',
+    div: '',
+    container: '',
+  },
+  disabled: false
 }
 export default GarmentNumsInput;

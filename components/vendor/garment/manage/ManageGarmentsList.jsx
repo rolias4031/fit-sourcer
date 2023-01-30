@@ -22,7 +22,7 @@ function ManageGarmentsList({ allGarments }) {
           id ? 'basis-1/2' : 'basis-full'
         }`}
       >
-        {allGarmentsList}
+        {allGarmentsList.length > 0 ? allGarmentsList : <div>No garments</div>}
       </div>
       {id && <GarmentDetailPanel garmentId={id} />}
     </div>
