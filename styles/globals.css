@@ -79,7 +79,7 @@ a {
   .btn-gray {
     @apply bg-gray-500 text-white;
   }
-  
+
   .btn-gray:hover {
     @apply bg-gray-800;
   }

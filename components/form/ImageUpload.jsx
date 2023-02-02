@@ -9,8 +9,9 @@ function ImageUpload({
   id,
   label,
   styles,
-  contState,
+  curImages,
   onUpload,
+  disabled
 }) {
   const inputRef = useRef(null);
 
@@ -22,9 +23,9 @@ function ImageUpload({
   const uploadHandler = useCallback((event) => {
     const { files } = event.target;
     if (files.length === 0) return;
-    if (contState.length >= 3) return;
-    const nameExists = contState.find((image) => image.name === files[0].name);
-    if (nameExists) return;
+    if (curImages.length >= 3) return;
+    // const nameExists = curImages.find((image) => image.name === files[0].name);
+    // if (nameExists) return;
     onUpload(event.target.files[0]);
   });
 
@@ -37,6 +38,7 @@ function ImageUpload({
         id={id}
         styles={{ button: styles.input }}
         onClick={clickHandler}
+        disabled={disabled}
       />
       <input
         onChange={uploadHandler}
@@ -45,6 +47,7 @@ function ImageUpload({
         className="hidden"
         type="file"
         accept="image/jpeg image/png"
+        disabled={disabled}
       />
     </div>
   );
@@ -59,8 +62,9 @@ ImageUpload.propTypes = {
     label: PropTypes.string,
     div: PropTypes.string,
   }),
-  contState: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  curImages: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   onUpload: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 ImageUpload.defaultProps = {
@@ -70,6 +74,7 @@ ImageUpload.defaultProps = {
     label: '',
     div: '',
   },
+  disabled: false
 };
 
 export default ImageUpload;

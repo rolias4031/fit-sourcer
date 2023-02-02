@@ -2,12 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { fullLowerBodyGarment } from '../../../../lib/types';
-import { baseUrl, GARMENT_SEX_TYPES, METHODS } from '../../../../lib/constants';
+import { GARMENT_SEX_TYPES } from '../../../../lib/constants';
 import TextInputState from '../../../form/TextInputState';
 import { useExistingGarment } from '../../../../lib/vendor/hooks';
 import SelectInput from '../../../form/SelectInput';
 import GarmentNumsInput from '../create/GarmentNumsInput';
-import { useDeleteGarment } from '../../../../lib/vendor/mutations';
+import GarmentImagesInput from './GarmentImagesInput';
 
 // press an edit button and inputs take place of displays.
 
@@ -21,13 +21,7 @@ function GarmentDetailCard({ garment, styles, editMode }) {
     setMeasValues,
   } = useExistingGarment(garment);
 
-
-
   console.log(garment);
-
-  const imageElements = images.map((i) => (
-    <Image key={i.url} src={i.url} height="200" width="200" />
-  ));
 
   return (
     <div className={styles.wrapper}>
@@ -119,7 +113,13 @@ function GarmentDetailCard({ garment, styles, editMode }) {
           disabled={!editMode}
         />
       </div>
-      <div>{imageElements}</div>
+      <div>
+        <GarmentImagesInput
+          curImages={images}
+          raiseImages={setImages}
+          disabled={!editMode}
+        />
+      </div>
     </div>
   );
 }

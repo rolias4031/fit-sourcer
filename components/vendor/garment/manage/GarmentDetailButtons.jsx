@@ -12,7 +12,7 @@ import GeneralButton from '../../../form/GeneralButton';
 import { APP_URLS } from '../../../../lib/constants';
 import ButtonWithConfirm from '../../../form/ButtonWithConfirm';
 
-function GarmentDetailButtons({ editMode, setEditMode, onDelete }) {
+function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave }) {
   const router = useRouter();
   return (
     <>
@@ -24,7 +24,7 @@ function GarmentDetailButtons({ editMode, setEditMode, onDelete }) {
               name="save"
               icon={<DocumentCheckIcon className="icon-sm" />}
               id="save-garment-detail"
-              onClick={() => setEditMode(false)}
+              onClick={() => onSave(false)}
             />
             <GeneralButton
               styles={{ button: 'btn-sm btn-gray ml-2' }}
@@ -72,6 +72,7 @@ GarmentDetailButtons.propTypes = {
   editMode: PropTypes.bool.isRequired,
   setEditMode: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default GarmentDetailButtons;

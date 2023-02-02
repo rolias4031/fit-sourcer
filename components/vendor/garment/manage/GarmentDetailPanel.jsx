@@ -7,29 +7,41 @@ import IsLoading from '../../../util/IsLoading';
 import IsError from '../../../util/IsError';
 import GarmentDetailCard from './GarmentDetailCard';
 import GarmentDetailButtons from './GarmentDetailButtons';
-import { useDeleteGarment } from '../../../../lib/vendor/mutations';
-import { baseUrl, METHODS } from '../../../../lib/constants';
-import StatusSymbols from '../../../alert/StatusSymbols'
+import { useDeleteGarment, useEditGarment } from '../../../../lib/vendor/mutations';
+import { APP_URLS, baseUrl, METHODS } from '../../../../lib/constants';
+import StatusSymbols from '../../../alert/StatusSymbols';
 
 function GarmentDetailPanel({ garmentId }) {
   const { data, status } = useGetGarmentDetail(garmentId);
   const { mutate: deleteGarment, status: deleteStatus } = useDeleteGarment();
+  const { mutate: editGarment, status: editStatus } = useEditGarment()
   const [editMode, setEditMode] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const deleteHandler = () => {
-    deleteGarment({
-      url: `${baseUrl}/api/vendor/garment/delete`,
-      method: METHODS.DELETE,
-      body: {
-        garmentId,
+    deleteGarment(
+      {
+        url: `${baseUrl}/api/vendor/garment/delete`,
+        method: METHODS.DELETE,
+        body: {
+          garmentId,
+        },
       },
-    }, {
-      onSuccess: () => {
-        router.push('/vendor/manage')
-      }
-    });
+      {
+        onSuccess: () => {
+          router.push(APP_URLS.vendorManage, undefined, { shallow: true });
+        },
+      },
+    );
   };
+
+  const editHandler = (formValues) => {
+    editGarment({
+      url: `${baseUrl}/api/vendor/garment/edit`,
+      method: 'PUT',
+      body: formValues
+    })
+  }
 
   if (status === 'loading') {
     return <IsLoading />;
@@ -42,14 +54,19 @@ function GarmentDetailPanel({ garmentId }) {
   return (
     <div className="m-5 basis-1/2">
       <div className="flex">
-        <GarmentDetailButtons editMode={editMode} setEditMode={setEditMode} onDelete={deleteHandler}/>
+        <GarmentDetailButtons
+          editMode={editMode}
+          setEditMode={setEditMode}
+          onDelete={deleteHandler}
+          onSave={editHandler}
+        />
       </div>
       <GarmentDetailCard
         garment={data.garment}
         styles={{ wrapper: 'border border-blue-500 w-full space-y-5' }}
         editMode={editMode}
       />
-      <StatusSymbols status={deleteStatus}/>
+      <StatusSymbols status={deleteStatus} />
     </div>
   );
 }
