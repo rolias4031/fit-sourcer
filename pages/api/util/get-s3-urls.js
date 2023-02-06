@@ -1,45 +1,44 @@
 import { getAuth } from '@clerk/nextjs/server';
-import S3 from 'aws-sdk/clients/s3';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
+import s3Client from '../../../lib/s3Client';
+
 import { ERRORS, s3BucketBaseUrl } from '../../../lib/constants';
 
-const s3 = new S3({
-  apiVersion: '2006-03-01',
-  accessKeyId: process.env.ACCESS_KEY,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  region: process.env.REGION,
-  signatureVersion: 'v4',
-});
-
 export default async function handler(req, res) {
-  const { userId, sessionId } = getAuth(req);
+  const { sessionId } = getAuth(req);
   if (!sessionId) {
     return res.status(403).json({
       message: ERRORS.UNAUTHORIZED,
     });
   }
-  console.log(req.body.inputs);
+
+  const { ext } = req.body.inputs;
+  const key = `${randomUUID()}.${ext}`;
+  const hostedUrl = `${s3BucketBaseUrl}/${key}`;
+
+  const params = {
+    Bucket: process.env.BUCKET,
+    Key: key,
+    ContentType: `image/${ext}`,
+  };
+
   try {
-    const { ext } = req.body.inputs;
-    const key = `${randomUUID()}.${ext}`;
-    const hostedUrl = `${s3BucketBaseUrl}/${key}`
-    const s3Params = {
-      Bucket: process.env.BUCKET,
-      Key: key,
-      Expires: 60,
-      ContentType: `image/${ext}`,
-    };
-    const uploadUrl = await s3.getSignedUrl('putObject', s3Params);
+    const command = new PutObjectCommand(params);
+    const uploadUrl = await getSignedUrl(s3Client, command, {
+      expiresIn: 60,
+    });
     return res.status(200).json({
       message: 'Success',
       uploadUrl,
       hostedUrl,
-      key
+      key,
     });
-  } catch (error) {
+  } catch (err) {
+    console.log(err);
     return res.status(500).json({
-      message: 'something went wrong',
-      errors: 'test error',
+      errors: 'error happened',
     });
   }
 }
