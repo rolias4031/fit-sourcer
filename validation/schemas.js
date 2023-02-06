@@ -2,7 +2,10 @@
 import { z } from 'zod';
 import { BODY_MODELS_OBJ } from '../lib/constants';
 
-export const imageUrlSchema = z.string().url().array()
+export const imagesSchema = z.object({
+  url: z.string().url(),
+  key: z.string().max(400)
+}).array()
 
 export const createUserSchema = z.object({
   email: z.string().trim().email(),

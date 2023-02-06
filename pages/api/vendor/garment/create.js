@@ -10,7 +10,7 @@ import {
   garmentInfoSchema,
   garmentSchemaMap,
 } from '../../../../validation/vendor/garmentSchemas';
-import { imageUrlSchema } from '../../../../validation/schemas';
+import { imagesSchema } from '../../../../validation/schemas';
 
 export default async function handler(req, res) {
   // check session & user is vendor
@@ -26,7 +26,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: ERRORS.METHOD_NOT_ALLOWED });
   }
   // validate infoValues
-  const { infoValues, measValues, imageUrls } = req.body.inputs;
+  const { infoValues, measValues, imageValues } = req.body;
+  console.log(req.body);
   const infoValid = garmentInfoSchema.safeParse(infoValues);
   console.log({ infoValid });
   if (!infoValid.success) {
@@ -50,9 +51,9 @@ export default async function handler(req, res) {
   }
 
   // validate imageUrls
-  const imageUrlsValid = imageUrlSchema.safeParse(imageUrls);
-  if (!imageUrlsValid.success) {
-    const errors = extractValidationErrors(imageUrlsValid.error.issues);
+  const imagesValid = imagesSchema.safeParse(imageValues);
+  if (!imagesValid.success) {
+    const errors = extractValidationErrors(imagesValid.error.issues);
     return res.status(400).json({
       message: `${ERRORS.VALIDATION_FAILED}`,
       errors,
@@ -71,7 +72,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const images = imageUrls.map((url) => ({ url }));
+  const images = imageValues.map((val) => ({ url: val.url, key: val.key }));
 
   // create new garment
   const newGarment = await prisma.garment.create({

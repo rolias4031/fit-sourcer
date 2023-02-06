@@ -12,10 +12,9 @@ import GeneralButton from '../../../form/GeneralButton';
 import Alert from '../../../alert/Alert';
 import {
   useFullGarmentDetails,
-  useUploadGarmentImage,
 } from '../../../../lib/vendor/hooks';
 import { useAlerts } from '../../../../lib/hooks';
-import { useSimpleMutation } from '../../../../lib/vendor/mutations';
+import { useSaveGarment, useUploadGarmentImage } from '../../../../lib/vendor/mutations';
 import StatusSymbols from '../../../alert/StatusSymbols';
 import ImageUpload from '../../../form/ImageUpload';
 import UploadedImageTag from './UploadedImageTag';
@@ -25,7 +24,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     mutate: saveGarment,
     status: saveGarmentStatus,
     isSuccess,
-  } = useSimpleMutation();
+  } = useSaveGarment();
   const { uploadGarmentImage, status: uploadGarmentStatus } =
     useUploadGarmentImage();
 
@@ -54,11 +53,12 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
 
   const saveHandler = useCallback(() => {
     // get image urls from images
-    const imageUrls = images.map((image) => image.hostedUrl);
+    console.log(images);
+    const imageValues = images.map((image) => ({ url: image.url, key: image.key }));
     const config = {
       url: `${baseUrl}/api/vendor/garment/create`,
       method: 'POST',
-      inputs: { infoValues, measValues, imageUrls },
+      body: { infoValues, measValues, imageValues },
     };
     saveGarment(config, {
       onError: (data) => {
@@ -74,9 +74,11 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     uploadGarmentImage(image, {
       onSuccess: (data) => {
         setImages((prev) => {
+          console.log(data);
           const thisImage = image;
-          thisImage.hostedUrl = data;
-          console.log(thisImage.hostedUrl);
+          thisImage.url = data.url;
+          thisImage.key = data.key
+          console.log({thisImage})
           return [...prev, thisImage];
         });
       },
@@ -170,8 +172,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
               div: 'flex flex-col',
             }}
             id="garment-image-upload"
-            raiseState={setImages}
-            contState={images}
+            curImages={images}
             onUpload={uploadHandler}
           />
           <div className="flex flex-row flex-wrap ml-3 space-y-1 items-end">

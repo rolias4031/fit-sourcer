@@ -1,14 +1,18 @@
-import Image from 'next/image';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useAlerts } from '../../../../lib/hooks';
-import { useUploadGarmentImage } from '../../../../lib/vendor/mutations';
+import {
+  useDeleteS3Object,
+  useUploadGarmentImage,
+} from '../../../../lib/vendor/mutations';
 import ImageEditTag from '../../../form/ImageEditTag';
 import ImageUpload from '../../../form/ImageUpload';
+import { baseUrl } from '../../../../lib/constants';
 
 function GarmentImagesInput({ curImages, raiseImages, disabled }) {
   const { alerts, createAlerts, resetAlerts, handleForeignAlert } = useAlerts();
   const { uploadGarmentImage, status } = useUploadGarmentImage();
+  const { mutate: deleteImage, status: deleteStatus } = useDeleteS3Object();
 
   const uploadHandler = async (image) => {
     uploadGarmentImage(image, {
@@ -26,15 +30,32 @@ function GarmentImagesInput({ curImages, raiseImages, disabled }) {
     });
   };
 
-  const removeImageHandler = (imageUrl) => {
-    console.log(curImages)
-    console.log(imageUrl);
-    const newImages = curImages.filter((image) => image.url !== imageUrl)
-    raiseImages(newImages)
-  }
+  const removeImageHandler = (imageToDelete) => {
+    console.log(curImages);
+    console.log('removeImageHandler', { imageToDelete });
+    deleteImage(
+      {
+        url: `${baseUrl}/api/util/delete-s3-object`,
+        method: 'DELETE',
+        body: { key: imageToDelete.key },
+      },
+      {
+        onSuccess: () => {
+          raiseImages(
+            curImages.filter((image) => image.url !== imageToDelete.url),
+          );
+        },
+      },
+    );
+  };
 
   const imageTags = curImages.map((i) => (
-    <ImageEditTag url={i.url} key={i.url} onRemoveImage={removeImageHandler} disabled={disabled}/>
+    <ImageEditTag
+      imageInfo={{ url: i.url, key: i.key }}
+      key={i.url}
+      onRemoveImage={removeImageHandler}
+      disabled={disabled}
+    />
   ));
   return (
     <div>
@@ -50,9 +71,7 @@ function GarmentImagesInput({ curImages, raiseImages, disabled }) {
         }}
         disabled={disabled}
       />
-      <div className='flex space-x-3'>
-        {imageTags}
-      </div>
+      <div className="flex space-x-3">{imageTags}</div>
     </div>
   );
 }
@@ -62,6 +81,7 @@ GarmentImagesInput.propTypes = {
     PropTypes.exact({
       id: PropTypes.string,
       url: PropTypes.string,
+      key: PropTypes.string,
       garmentId: PropTypes.string,
     }),
   ).isRequired,

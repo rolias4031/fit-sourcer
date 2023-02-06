@@ -105,6 +105,7 @@ model GarmentImage {
   garment   Garment @relation(fields: [garmentId], references: [id], onDelete: Cascade)
   garmentId String
   url       String  @db.Text()
+  key       String  @unique @db.VarChar(400)
 }
 
 enum GarmentSex {
