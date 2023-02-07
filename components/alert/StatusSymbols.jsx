@@ -18,7 +18,7 @@ function StatusSymbols({ status }) {
       setAlive(false);
     } else if (status === 'loading') {
       setAlive(true);
-    } else if (status === 'success') {
+    } else if (status === 'success' || status === 'error') {
       setAlive(true);
       const id = setTimeout(() => {
         setAlive(false);

@@ -14,7 +14,7 @@ function CreateGarmentDock() {
     />
   );
 
-  const [garmentForms, setGarmentForms] = useState([createForm('1')]);
+  const [garmentForms, setGarmentForms] = useState(() => [createForm('1')]);
 
   const modFormsHandler = useCallback((formId, op) => {
     setGarmentForms((prev) => {

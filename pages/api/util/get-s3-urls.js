@@ -3,7 +3,6 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
 import s3Client from '../../../lib/s3Client';
-
 import { ERRORS, s3BucketBaseUrl } from '../../../lib/constants';
 
 export default async function handler(req, res) {

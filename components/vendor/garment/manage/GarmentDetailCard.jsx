@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { fullLowerBodyGarment } from '../../../../lib/types';
 import { GARMENT_SEX_TYPES } from '../../../../lib/constants';
@@ -20,8 +19,6 @@ function GarmentDetailCard({ garment, styles, editMode }) {
     measValues,
     setMeasValues,
   } = useExistingGarment(garment);
-
-  console.log(garment);
 
   return (
     <div className={styles.wrapper}>

@@ -16,7 +16,6 @@ function ManageGarmentsDock() {
   }
 
   if (vendorData) {
-    console.log(vendorData);
     return (
       <ManageGarmentsList
         allGarments={allGarments}

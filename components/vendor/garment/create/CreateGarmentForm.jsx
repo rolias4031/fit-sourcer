@@ -10,14 +10,17 @@ import GarmentNumsInput from './GarmentNumsInput';
 import SelectInput from '../../../form/SelectInput';
 import GeneralButton from '../../../form/GeneralButton';
 import Alert from '../../../alert/Alert';
-import {
-  useFullGarmentDetails,
-} from '../../../../lib/vendor/hooks';
+import { useFullGarmentDetails } from '../../../../lib/vendor/hooks';
 import { useAlerts } from '../../../../lib/hooks';
-import { useSaveGarment, useUploadGarmentImage } from '../../../../lib/vendor/mutations';
+import {
+  useDeleteGarmentImage,
+  useSaveGarment,
+  useUploadGarmentImage,
+} from '../../../../lib/vendor/mutations';
 import StatusSymbols from '../../../alert/StatusSymbols';
 import ImageUpload from '../../../form/ImageUpload';
 import UploadedImageTag from './UploadedImageTag';
+import ImageEditTag from '../../../form/ImageEditTag';
 
 function CreateGarmentForm({ id, formClass, onRemove }) {
   const {
@@ -27,6 +30,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
   } = useSaveGarment();
   const { uploadGarmentImage, status: uploadGarmentStatus } =
     useUploadGarmentImage();
+  const { mutate: deleteImage } = useDeleteGarmentImage();
 
   const { alerts, resetAlerts, createAlerts, handleForeignAlert } = useAlerts();
   const {
@@ -39,22 +43,36 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     garmentDetailsIncomplete,
   } = useFullGarmentDetails();
 
+  const removeImageHandler = (imageToDelete) => {
+    console.log(imageToDelete);
+    deleteImage(imageToDelete, {
+      onSuccess: () => {
+        setImages((prev) => {
+          const imageToRemove = prev.find(
+            (image) => image.name === imageToDelete.name,
+          );
+          const copy = [...prev];
+          copy.splice(prev.indexOf(imageToRemove), 1);
+          return copy;
+        });
+      },
+    });
+  };
+
   const renderUploadedImageTags = () =>
-    images.map((image) => (
-      <UploadedImageTag
-        styles={{
-          div: 'flex flex-row w-fit shrink-0 items-center text-xs text-gray-500 bg-white rounded-sm py-1 px-2 mx-1 border border-gray-200',
-        }}
-        key={image.name}
-        imageName={image.name}
-        onRemove={setImages}
+    images.map((i) => (
+      <ImageEditTag
+        imageInfo={{ url: i.url, key: i.key }}
+        key={i.url}
+        onRemoveImage={removeImageHandler}
       />
     ));
 
   const saveHandler = useCallback(() => {
-    // get image urls from images
-    console.log(images);
-    const imageValues = images.map((image) => ({ url: image.url, key: image.key }));
+    const imageValues = images.map((image) => ({
+      url: image.url,
+      key: image.key,
+    }));
     const config = {
       url: `${baseUrl}/api/vendor/garment/create`,
       method: 'POST',
@@ -74,11 +92,9 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     uploadGarmentImage(image, {
       onSuccess: (data) => {
         setImages((prev) => {
-          console.log(data);
           const thisImage = image;
           thisImage.url = data.url;
-          thisImage.key = data.key
-          console.log({thisImage})
+          thisImage.key = data.key;
           return [...prev, thisImage];
         });
       },

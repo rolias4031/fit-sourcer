@@ -2,25 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useAlerts } from '../../../../lib/hooks';
 import {
-  useDeleteS3Object,
+  useDeleteGarmentImage,
   useUploadGarmentImage,
 } from '../../../../lib/vendor/mutations';
 import ImageEditTag from '../../../form/ImageEditTag';
 import ImageUpload from '../../../form/ImageUpload';
+import StatusSymbols from '../../../alert/StatusSymbols';
 import { baseUrl } from '../../../../lib/constants';
 
 function GarmentImagesInput({ curImages, raiseImages, disabled }) {
   const { alerts, createAlerts, resetAlerts, handleForeignAlert } = useAlerts();
   const { uploadGarmentImage, status } = useUploadGarmentImage();
-  const { mutate: deleteImage, status: deleteStatus } = useDeleteS3Object();
+  const { mutate: deleteImage, status: deleteStatus } = useDeleteGarmentImage();
 
   const uploadHandler = async (image) => {
     uploadGarmentImage(image, {
       onSuccess: (data) => {
         raiseImages((prev) => {
           const thisImage = image;
-          thisImage.url = data;
-          console.log(thisImage.url);
+          thisImage.url = data.url;
+          thisImage.key = data.key;
+          console.log('uploadHandler', thisImage.url);
           return [...prev, thisImage];
         });
       },
@@ -31,22 +33,14 @@ function GarmentImagesInput({ curImages, raiseImages, disabled }) {
   };
 
   const removeImageHandler = (imageToDelete) => {
-    console.log(curImages);
-    console.log('removeImageHandler', { imageToDelete });
-    deleteImage(
-      {
-        url: `${baseUrl}/api/util/delete-s3-object`,
-        method: 'DELETE',
-        body: { key: imageToDelete.key },
+    console.log('removeImageHandler', { imageToDelete, curImages });
+    deleteImage(imageToDelete, {
+      onSuccess: () => {
+        raiseImages(
+          curImages.filter((image) => image.url !== imageToDelete.url),
+        );
       },
-      {
-        onSuccess: () => {
-          raiseImages(
-            curImages.filter((image) => image.url !== imageToDelete.url),
-          );
-        },
-      },
-    );
+    });
   };
 
   const imageTags = curImages.map((i) => (
@@ -72,6 +66,7 @@ function GarmentImagesInput({ curImages, raiseImages, disabled }) {
         disabled={disabled}
       />
       <div className="flex space-x-3">{imageTags}</div>
+      <StatusSymbols status={deleteStatus} />
     </div>
   );
 }
@@ -86,6 +81,11 @@ GarmentImagesInput.propTypes = {
     }),
   ).isRequired,
   raiseImages: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
+
+GarmentImagesInput.defaultProps = {
+  disabled: false,
 };
 
 export default GarmentImagesInput;
