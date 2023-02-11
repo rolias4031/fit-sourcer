@@ -16,18 +16,18 @@ export const garmentInfoSchema = z
   })
   .strict();
 
-const garmentNumDef = z.number().gte(NUM_MIN).lte(NUM_MAX);
+const garmentMeasDef = z.number().gte(NUM_MIN).lte(NUM_MAX);
 export const shortSchema = z.object({
-  waist: garmentNumDef,
-  hip: garmentNumDef,
-  seat: garmentNumDef,
-  thigh: garmentNumDef,
-  inseam: garmentNumDef,
-  outseam: garmentNumDef,
-  legOpening: garmentNumDef,
+  waist: garmentMeasDef,
+  hip: garmentMeasDef,
+  seat: garmentMeasDef,
+  thigh: garmentMeasDef,
+  inseam: garmentMeasDef,
+  outseam: garmentMeasDef,
+  legOpening: garmentMeasDef,
 });
 export const pantSchema = shortSchema.extend({
-  calf: garmentNumDef,
+  calf: garmentMeasDef,
 });
 
 export const garmentSchemaMap = new Map([

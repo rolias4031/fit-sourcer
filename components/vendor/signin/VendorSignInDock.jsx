@@ -28,7 +28,7 @@ function SignInDock() {
       ) : (
         <>
           <VendorSignInForm
-            onSubmit={() => sendSignInCode(formValues)}
+            onSubmit={() => sendSignInCode(formValues.email)}
             contState={formValues}
             raiseState={setFormValues}
           />

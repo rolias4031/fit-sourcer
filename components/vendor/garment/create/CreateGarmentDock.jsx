@@ -27,8 +27,8 @@ function CreateGarmentDock() {
         );
         newForms = [...prev];
         newForms.splice(prev.indexOf(deleteThis), 1);
-      } else {
-        newForms = prev;
+      } else if (op === 'subtract' && prev.length === 1) {
+        newForms = [createForm(genId())];
       }
       return newForms;
     });

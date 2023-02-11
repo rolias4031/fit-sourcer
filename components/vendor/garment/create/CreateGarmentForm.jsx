@@ -19,7 +19,6 @@ import {
 } from '../../../../lib/vendor/mutations';
 import StatusSymbols from '../../../alert/StatusSymbols';
 import ImageUpload from '../../../form/ImageUpload';
-import UploadedImageTag from './UploadedImageTag';
 import ImageEditTag from '../../../form/ImageEditTag';
 
 function CreateGarmentForm({ id, formClass, onRemove }) {
@@ -44,7 +43,6 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
   } = useFullGarmentDetails();
 
   const removeImageHandler = (imageToDelete) => {
-    console.log(imageToDelete);
     deleteImage(imageToDelete, {
       onSuccess: () => {
         setImages((prev) => {
@@ -113,7 +111,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
             curState={infoValues.garmentType}
             raiseState={setInfoValues}
             optionsArr={GARMENT_TYPES_KEYS}
-            name="Garment Type"
+            name="garmentType"
             styles={{
               label: 'label-sm label-base block',
               select: 'input-sm select-input-base w-40',
@@ -121,11 +119,12 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
             }}
           />
           <SelectInput
+            label="Garment Sex"
             id="select-garment-sex"
             curState={infoValues.sex}
             raiseState={setInfoValues}
             optionsArr={GARMENT_SEX_TYPES}
-            name="Garment Sex"
+            name="sex"
             styles={{
               label: 'label-sm label-base block',
               select: 'input-sm select-input-base w-40',

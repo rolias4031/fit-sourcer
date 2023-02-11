@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   // if role === VENDOR, then use Clerk's API to get the primary email address id, which we need for the frontend signin flow.
   const thisUser = await prisma.user.findUnique({
     where: {
-      email: req.body.inputs.email,
+      email: req.body.email,
     },
     select: {
       id: true,
@@ -38,15 +38,12 @@ export default async function handler(req, res) {
   let emailAddressId;
   try {
     const response = await fetch(url, fetchOptions);
-    console.log({ response });
     const result = await response.json();
-    console.log(result);
     if (response.status !== 200 && response.status !== 201) {
       throw new Error(result.message);
     }
     emailAddressId = result.primary_email_address_id
   } catch (error) {
-    console.log(error);
   }
   return res.status(200).json({
     message: 'success',
