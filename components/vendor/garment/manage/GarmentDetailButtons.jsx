@@ -11,23 +11,24 @@ import { useRouter } from 'next/router';
 import GeneralButton from '../../../form/GeneralButton';
 import { APP_URLS } from '../../../../lib/constants';
 import ButtonWithConfirm from '../../../form/ButtonWithConfirm';
+import FullStatus from '../../../alert/FullStatus';
 
-function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave }) {
+function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave, onSaveStatus }) {
   const router = useRouter();
   return (
     <>
-      <div className='flex space-x-3'>
+      <div className='flex items-center w-full'>
         {editMode ? (
           <>
             <GeneralButton
-              styles={{ button: 'btn-sm btn-gray' }}
+              styles={{ button: 'btn-sm btn-gray mr-2' }}
               name="save"
               icon={<DocumentCheckIcon className="icon-sm" />}
               id="save-garment-detail"
               onClick={() => onSave(false)}
             />
             <GeneralButton
-              styles={{ button: 'btn-sm btn-gray ml-2' }}
+              styles={{ button: 'btn-sm btn-gray mr-2' }}
               name="cancel"
               icon={<XMarkIcon className="icon-sm" />}
               id="cancel-save-garment-detail"
@@ -43,6 +44,7 @@ function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave }) {
               onClick={onDelete}
               message="Are you sure you want to delete this garment?"
             />
+            <FullStatus status={onSaveStatus} aliveTime={0} styles={{div: 'ml-auto mr-2'}}/>
           </>
         ) : (
           <GeneralButton
@@ -73,6 +75,7 @@ GarmentDetailButtons.propTypes = {
   setEditMode: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
+  onSaveStatus: PropTypes.string,
 };
 
 export default GarmentDetailButtons;

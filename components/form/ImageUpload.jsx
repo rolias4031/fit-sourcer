@@ -1,8 +1,9 @@
 import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { CloudArrowUpIcon } from '@heroicons/react/20/solid';
-import GeneralLabel from './GeneralLabel'
-import GeneralButton from './GeneralButton'
+import GeneralLabel from './GeneralLabel';
+import GeneralButton from './GeneralButton';
+import LoadingSymbol from '../util/LoadingSymbol';
 
 function ImageUpload({
   name,
@@ -11,7 +12,9 @@ function ImageUpload({
   styles,
   curImages,
   onUpload,
-  disabled
+  disabled,
+  hideLabel,
+  isLoading,
 }) {
   const inputRef = useRef(null);
 
@@ -31,10 +34,18 @@ function ImageUpload({
 
   return (
     <div className={styles.div}>
-      <GeneralLabel id={id} name={name} label={label} style={styles.label} />
+      {!hideLabel ? (
+        <GeneralLabel id={id} name={name} label={label} style={styles.label} />
+      ) : null}
       <GeneralButton
         name="upload image"
-        icon={<CloudArrowUpIcon className="h-5 w-5" />}
+        icon={
+          isLoading ? (
+            <LoadingSymbol />
+          ) : (
+            <CloudArrowUpIcon className="h-5 w-5" />
+          )
+        }
         id={id}
         styles={{ button: styles.input }}
         onClick={clickHandler}
@@ -65,6 +76,7 @@ ImageUpload.propTypes = {
   curImages: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   onUpload: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  hideLabel: PropTypes.bool,
 };
 
 ImageUpload.defaultProps = {
@@ -74,7 +86,8 @@ ImageUpload.defaultProps = {
     label: '',
     div: '',
   },
-  disabled: false
+  disabled: false,
+  hideLabel: false,
 };
 
 export default ImageUpload;

@@ -2,16 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CheckIcon } from '@heroicons/react/24/solid';
 
-function SuccessSymbol({ style }) {
-  return <CheckIcon className={style ? style : 'w-6 h-6 text-emerald-500'} />;
+function SuccessSymbol({ styles }) {
+  return <CheckIcon className={`${styles.icon} text-emerald-500`} />;
 }
 
 SuccessSymbol.propTypes = {
-  style: PropTypes.string,
+  styles: PropTypes.exact({
+    icon: PropTypes.string
+  })
 };
 
 SuccessSymbol.defaultProps = {
-  style: null,
+  styles: {
+    icon: 'w-5 h-5'
+  },
 };
 
 export default SuccessSymbol;

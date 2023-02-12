@@ -1,18 +1,19 @@
+/* eslint-disable consistent-return */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoadingSymbol from '../util/LoadingSymbol';
 import SuccessSymbol from '../util/SuccessSymbol';
 import ErrorSymbol from '../util/ErrorSymbol';
 
-const symbolMap = new Map([
+export const symbolMap = new Map([
   ['loading', <LoadingSymbol />],
   ['success', <SuccessSymbol />],
   ['error', <ErrorSymbol />],
 ]);
 
-function StatusSymbols({ status }) {
+function FullStatus({ status, aliveTime, styles }) {
   const [alive, setAlive] = useState(false);
-  
+
   useEffect(() => {
     if (status === 'idle') {
       setAlive(false);
@@ -20,28 +21,36 @@ function StatusSymbols({ status }) {
       setAlive(true);
     } else if (status === 'success' || status === 'error') {
       setAlive(true);
-      const id = setTimeout(() => {
-        setAlive(false);
-      }, [3000]);
-      return () => clearTimeout(id);
+      if (aliveTime > 0) {
+        const id = setTimeout(() => {
+          setAlive(false);
+        }, [aliveTime]);
+        return () => clearTimeout(id);
+      }
     }
   }, [status]);
 
   const symbol = alive && (
-    <div className="fixed bg-white rounded-full shadow-md shadow-gray-500 bottom-0 right-0 m-3 p-2">
-      {symbolMap.get(status)}
-    </div>
+    <div className={styles.div}>{symbolMap.get(status)}</div>
   );
 
   return symbol;
 }
 
-StatusSymbols.propTypes = {
+FullStatus.propTypes = {
   status: PropTypes.string.isRequired,
+  aliveTime: PropTypes.number,
+  styles: PropTypes.exact({
+    div: PropTypes.string,
+  }),
 };
 
-StatusSymbols.defaultProps = {
+FullStatus.defaultProps = {
   status: 'idle',
+  aliveTime: 3000,
+  styles: {
+    div: '',
+  },
 };
 
-export default StatusSymbols;
+export default FullStatus;

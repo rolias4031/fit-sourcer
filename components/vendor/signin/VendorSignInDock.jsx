@@ -1,7 +1,7 @@
 import React from 'react';
 import VendorSignInForm from './VendorSignInForm';
 import EmailCodeInput from './EmailCodeInput';
-import StatusSymbols from '../../alert/StatusSymbols';
+import FullStatus from '../../alert/FullStatus';
 import { useVendorSignIn } from '../../../lib/hooks';
 import Alert from '../../alert/Alert';
 
@@ -23,7 +23,7 @@ function SignInDock() {
       {isCodeInput ? (
         <>
           <EmailCodeInput onAuth={attemptSignIn} onResend={sendSignInCode} />
-          <StatusSymbols status={attemptStatus} />
+          <FullStatus status={attemptStatus} />
         </>
       ) : (
         <>
@@ -32,7 +32,7 @@ function SignInDock() {
             contState={formValues}
             raiseState={setFormValues}
           />
-          <StatusSymbols status={codeStatus} />
+          <FullStatus status={codeStatus} />
         </>
       )}
       <Alert alerts={alerts} onReset={resetAlerts} />

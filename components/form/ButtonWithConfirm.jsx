@@ -23,6 +23,7 @@ function ButtonWithConfirm({ name, id, icon, styles, message, onClick }) {
           onConfirm={onClick}
         />
       )}
+
     </>
   );
 }

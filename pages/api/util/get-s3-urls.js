@@ -12,9 +12,9 @@ export default async function handler(req, res) {
       message: ERRORS.UNAUTHORIZED,
     });
   }
-
+  const dateString = Date.now().toString().slice(5);
   const { ext } = req.body.inputs;
-  const key = `${randomUUID()}.${ext}`;
+  const key = `${randomUUID()}-${dateString}.${ext}`;
   const hostedUrl = `${s3BucketBaseUrl}/${key}`;
 
   const params = {
@@ -35,9 +35,8 @@ export default async function handler(req, res) {
       key,
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
-      errors: 'error happened',
+      errors: ERRORS.UKNOWN_AWS,
     });
   }
 }

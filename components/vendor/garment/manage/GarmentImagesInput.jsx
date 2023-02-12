@@ -7,22 +7,22 @@ import {
 } from '../../../../lib/vendor/mutations';
 import ImageEditTag from '../../../form/ImageEditTag';
 import ImageUpload from '../../../form/ImageUpload';
-import StatusSymbols from '../../../alert/StatusSymbols';
-import { baseUrl } from '../../../../lib/constants';
+import { calcLoading } from '../../../../lib/util-client';
 
 function GarmentImagesInput({ curImages, raiseImages, disabled }) {
   const { alerts, createAlerts, resetAlerts, handleForeignAlert } = useAlerts();
-  const { uploadGarmentImage, status } = useUploadGarmentImage();
-  const { mutate: deleteImage, status: deleteStatus } = useDeleteGarmentImage();
+  const { mutate: uploadImage, status: uploadImageStatus } =
+    useUploadGarmentImage();
+  const { mutate: deleteImage, status: deleteImageStatus } =
+    useDeleteGarmentImage();
 
   const uploadHandler = async (image) => {
-    uploadGarmentImage(image, {
+    uploadImage(image, {
       onSuccess: (data) => {
         raiseImages((prev) => {
           const thisImage = image;
           thisImage.url = data.url;
           thisImage.key = data.key;
-          console.log('uploadHandler', thisImage.url);
           return [...prev, thisImage];
         });
       },
@@ -33,7 +33,6 @@ function GarmentImagesInput({ curImages, raiseImages, disabled }) {
   };
 
   const removeImageHandler = (imageToDelete) => {
-    console.log('removeImageHandler', { imageToDelete, curImages });
     deleteImage(imageToDelete, {
       onSuccess: () => {
         raiseImages(
@@ -52,21 +51,21 @@ function GarmentImagesInput({ curImages, raiseImages, disabled }) {
     />
   ));
   return (
-    <div>
+    <div className="">
       <ImageUpload
-        name="changeGarmentImages"
+        name="images"
         id="manage-garment-images"
         curImages={curImages}
         onUpload={uploadHandler}
         styles={{
-          label: 'label label-base',
-          input: 'btn-sm btn-blue w-fit mt-1',
           div: 'flex flex-col',
+          label: 'text-lg font-bold w-fit',
+          input: 'btn-sm btn-blue w-fit mt-1',
         }}
         disabled={disabled}
+        isLoading={calcLoading([uploadImageStatus, deleteImageStatus])}
       />
-      <div className="flex space-x-3">{imageTags}</div>
-      <StatusSymbols status={deleteStatus} />
+      <div className="flex space-x-3 mt-2 mb-5">{imageTags}</div>
     </div>
   );
 }

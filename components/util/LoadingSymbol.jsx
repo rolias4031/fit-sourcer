@@ -2,16 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
-function LoadingSymbol({ style }) {
-  return <ArrowPathIcon className={style ? style : 'w-6 h-6 animate-spin'} />;
+function LoadingSymbol({ styles }) {
+  const animation = 'animate-spin'
+  return <ArrowPathIcon className={`${styles.icon} ${animation}`} />;
 }
 
 LoadingSymbol.propTypes = {
-  style: PropTypes.string,
+  styles: PropTypes.exact({
+    icon: PropTypes.string,
+  }),
 };
 
 LoadingSymbol.defaultProps = {
-  style: null,
+  styles: {
+    icon: 'w-5 h-5',
+  },
 };
 
 export default LoadingSymbol;

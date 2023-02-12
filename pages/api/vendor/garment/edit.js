@@ -11,6 +11,7 @@ import {
   garmentSchemaMap,
 } from '../../../../validation/vendor/garmentSchemas';
 import { imagesSchema } from '../../../../validation/schemas';
+import { Prisma } from '@prisma/client';
 
 export default async function handler(req, res) {
   // check session & user is vendor
@@ -55,23 +56,32 @@ export default async function handler(req, res) {
       errors,
     });
   }
-
-  await prisma.garment.update({
-    where: {
-      id: garmentId,
-    },
-    data: {
-      ...infoValues,
-      [measModel]: {
-        update: {
-          ...measValues
-        }
+  try {
+    await prisma.garment.update({
+      where: {
+        id: garmentId,
       },
-      images: {
-        create: newImages
+      data: {
+        ...infoValues,
+        [measModel]: {
+          update: {
+            ...measValues
+          }
+        },
+        images: {
+          create: newImages
+        },
       },
-    },
-  });
+    });
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(err)
+      return res.status(500).json({
+        errors: ERRORS.UKNOWN_PRISMA
+      })
+    }
+  }
+  
 
   return res.status(200).json({
     message: 'success',

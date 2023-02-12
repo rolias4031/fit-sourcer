@@ -17,9 +17,10 @@ import {
   useSaveGarment,
   useUploadGarmentImage,
 } from '../../../../lib/vendor/mutations';
-import StatusSymbols from '../../../alert/StatusSymbols';
+import FullStatus from '../../../alert/FullStatus';
 import ImageUpload from '../../../form/ImageUpload';
 import ImageEditTag from '../../../form/ImageEditTag';
+import { calcLoading } from '../../../../lib/util-client';
 
 function CreateGarmentForm({ id, formClass, onRemove }) {
   const {
@@ -27,9 +28,10 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
     status: saveGarmentStatus,
     isSuccess,
   } = useSaveGarment();
-  const { uploadGarmentImage, status: uploadGarmentStatus } =
+  const { mutate: uploadImage, status: uploadImageStatus } =
     useUploadGarmentImage();
-  const { mutate: deleteImage } = useDeleteGarmentImage();
+  const { mutate: deleteImage, status: deleteImageStatus } =
+    useDeleteGarmentImage();
 
   const { alerts, resetAlerts, createAlerts, handleForeignAlert } = useAlerts();
   const {
@@ -87,7 +89,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
   });
 
   const uploadHandler = useCallback(async (image) => {
-    uploadGarmentImage(image, {
+    uploadImage(image, {
       onSuccess: (data) => {
         setImages((prev) => {
           const thisImage = image;
@@ -155,7 +157,7 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
                 />
               </>
             ) : (
-              <StatusSymbols status={saveGarmentStatus} />
+              <FullStatus status={saveGarmentStatus} />
             )}
           </div>
         </div>
@@ -182,19 +184,17 @@ function CreateGarmentForm({ id, formClass, onRemove }) {
             name="garmentImages"
             label="Images"
             styles={{
-              label: 'label-sm label-base',
+              label: 'text-lg font-bold',
               input: 'btn-sm btn-blue w-fit mt-1',
               div: 'flex flex-col',
             }}
             id="garment-image-upload"
+            isLoading={calcLoading([uploadImageStatus, deleteImageStatus])}
             curImages={images}
             onUpload={uploadHandler}
           />
           <div className="flex flex-row flex-wrap ml-3 space-y-1 items-end">
             {renderUploadedImageTags()}
-          </div>
-          <div className="flex flex-row items-center ml-auto">
-            <StatusSymbols status={uploadGarmentStatus} />
           </div>
         </div>
       </form>

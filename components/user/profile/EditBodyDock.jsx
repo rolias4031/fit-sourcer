@@ -6,7 +6,7 @@ import Alert from '../../alert/Alert';
 import { useEditBody } from '../../../lib/mutations';
 import BodyFormLabel from './BodyFormLabel';
 import { baseUrl } from '../../../lib/constants';
-import StatusSymbols from '../../alert/StatusSymbols';
+import FullStatus from '../../alert/FullStatus';
 
 /*
 * container holds logic for updating, editing, etc for EditLowerBodyForm
@@ -50,7 +50,7 @@ function EditBodyDock({ userMsmntMap }) {
   return (
     <>
       {bodyForms}
-      <StatusSymbols status={status} />
+      <FullStatus status={status} />
       <Alert alerts={alerts} onReset={resetAlerts} isModal />
     </>
   );

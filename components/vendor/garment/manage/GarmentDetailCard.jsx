@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { fullLowerBodyGarment } from '../../../../lib/types';
-import { APP_URLS, GARMENT_SEX_TYPES } from '../../../../lib/constants';
+import { GARMENT_SEX_TYPES } from '../../../../lib/constants';
 import TextInputState from '../../../form/TextInputState';
-import { useExistingGarment } from '../../../../lib/vendor/hooks';
+import {
+  useExistingGarment,
+  useManageGarmentMutations,
+} from '../../../../lib/vendor/hooks';
 import SelectInput from '../../../form/SelectInput';
 import GarmentNumsInput from '../create/GarmentNumsInput';
 import GarmentImagesInput from './GarmentImagesInput';
 import GarmentDetailButtons from './GarmentDetailButtons';
-import {
-  useDeleteGarmentMutation,
-  useEditGarment,
-} from '../../../../lib/vendor/mutations';
 
 function GarmentDetailCard({ garment, styles }) {
   const [editMode, setEditMode] = useState(false);
@@ -25,8 +23,8 @@ function GarmentDetailCard({ garment, styles }) {
     setMeasValues,
   } = useExistingGarment(garment);
 
-  const { deleteGarmentHandler, deleteStatus } = useDeleteGarmentMutation();
-  const { editGarmentHandler, editStatus } = useEditGarment();
+  const { deleteGarment, editGarment, deleteStatus, editStatus } =
+    useManageGarmentMutations();
 
   return (
     <>
@@ -34,15 +32,16 @@ function GarmentDetailCard({ garment, styles }) {
         <GarmentDetailButtons
           editMode={editMode}
           setEditMode={setEditMode}
-          onDelete={() => deleteGarmentHandler(garment.id)}
+          onDelete={() => deleteGarment(garment.id)}
           onSave={() =>
-            editGarmentHandler({
+            editGarment({
               garmentId: garment.id,
               infoValues,
               measValues,
               imageValues: images,
             })
           }
+          onSaveStatus={editStatus}
         />
       </div>
       <div className={styles.wrapper}>

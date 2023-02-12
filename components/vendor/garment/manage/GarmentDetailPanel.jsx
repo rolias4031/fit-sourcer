@@ -4,7 +4,7 @@ import { useGetGarmentDetail } from '../../../../lib/vendor/queries';
 import IsLoading from '../../../util/IsLoading';
 import IsError from '../../../util/IsError';
 import GarmentDetailCard from './GarmentDetailCard';
-import StatusSymbols from '../../../alert/StatusSymbols';
+import FullStatus from '../../../alert/FullStatus';
 
 function GarmentDetailPanel({ garmentId }) {
   const { data, status } = useGetGarmentDetail(garmentId);
