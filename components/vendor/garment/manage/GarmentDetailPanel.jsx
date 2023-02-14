@@ -4,6 +4,7 @@ import { useGetGarmentDetail } from '../../../../lib/vendor/queries';
 import IsLoading from '../../../util/IsLoading';
 import IsError from '../../../util/IsError';
 import GarmentDetailCard from './GarmentDetailCard';
+import FormController from '../../../form/FormController';
 
 function GarmentDetailPanel({ garmentId }) {
   const { data, status } = useGetGarmentDetail(garmentId);
@@ -17,13 +18,18 @@ function GarmentDetailPanel({ garmentId }) {
   }
 
   return (
-    <div className="my-5 p-4 basis-1/2">
-      <GarmentDetailCard
-        key={data.garment.id}
-        garment={data.garment}
-        styles={{ wrapper: 'w-full space-y-5' }}
-      />
-    </div>
+    <FormController>
+      {({ dynamicKey, resetFormHandler }) => (
+        <div className="my-5 p-4 basis-1/2">
+          <GarmentDetailCard
+            key={`${data.garment.id}${dynamicKey}`}
+            garment={data.garment}
+            styles={{ wrapper: 'w-full space-y-5' }}
+            onCancelChanges={resetFormHandler}
+          />
+        </div>
+      )}
+    </FormController>
   );
 }
 

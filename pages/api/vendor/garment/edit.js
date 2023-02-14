@@ -11,7 +11,6 @@ import {
   garmentSchemaMap,
 } from '../../../../validation/vendor/garmentSchemas';
 import { imagesSchema } from '../../../../validation/schemas';
-import { Prisma } from '@prisma/client';
 
 export default async function handler(req, res) {
   // check session & user is vendor
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
 
   const infoValid = garmentInfoSchema.safeParse(infoValues);
   if (!infoValid.success) {
-    const errors = extractValidationErrors(infoValid.errors.issues);
+    const errors = extractValidationErrors(infoValid.error.issues);
     return res.status(400).json({
       message: `${ERRORS.VALIDATION_FAILED}`,
       errors,

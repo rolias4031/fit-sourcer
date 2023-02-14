@@ -13,11 +13,18 @@ import { APP_URLS } from '../../../../lib/constants';
 import ButtonWithConfirm from '../../../form/ButtonWithConfirm';
 import FullStatus from '../../../alert/FullStatus';
 
-function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave, onSaveStatus }) {
+function GarmentDetailButtons({
+  editMode,
+  setEditMode,
+  onDelete,
+  onSave,
+  onSaveStatus,
+  onCancelChanges,
+}) {
   const router = useRouter();
   return (
     <>
-      <div className='flex items-center w-full'>
+      <div className="flex items-center w-full">
         {editMode ? (
           <>
             <GeneralButton
@@ -32,7 +39,10 @@ function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave, onSaveS
               name="cancel"
               icon={<XMarkIcon className="icon-sm" />}
               id="cancel-save-garment-detail"
-              onClick={() => setEditMode(false)}
+              onClick={() => {
+                onCancelChanges();
+                setEditMode(false);
+              }}
             />
             <ButtonWithConfirm
               styles={{
@@ -44,7 +54,11 @@ function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave, onSaveS
               onClick={onDelete}
               message="Are you sure you want to delete this garment?"
             />
-            <FullStatus status={onSaveStatus} aliveTime={0} styles={{div: 'ml-auto mr-2'}}/>
+            <FullStatus
+              status={onSaveStatus}
+              aliveTime={0}
+              styles={{ div: 'ml-auto mr-2' }}
+            />
           </>
         ) : (
           <GeneralButton

@@ -24,7 +24,7 @@ function ManageGarmentsList({ allGarments }) {
 
   return (
     <div className="mx-auto w-full lg:w-3/4 flex flex-row">
-      <div className={`my-5 p-4 ${id ? 'basis-1/2 border-r' : 'basis-full'}`}>
+      <div className={`my-5 p-4 ${id ? 'basis-1/2 border-r' : 'basis-full'} overflow-hidden`}>
         {allGarmentsList.length > 0 ? allGarmentsList : <div>No garments</div>}
       </div>
       {id && <GarmentDetailPanel garmentId={id} />}

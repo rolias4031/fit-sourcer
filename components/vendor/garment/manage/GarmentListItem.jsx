@@ -8,13 +8,15 @@ function GarmentListItem({ info, selected }) {
   return (
     <Link href={{ pathname: 'manage', query: { id: info.id } }} shallow>
       <div
-        className={`p-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
+        className={`p-2 mb-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
           selected ? 'bg-gray-100' : null
         }`}
       >
         <p className="text-lg">{info.name}</p>
-        <p className="text-sm text-gray-800 ml-3">{info.description}</p>
-        <p className="text-sm text-gray-800 ml-3">Model No. {info.modelNumber}</p>
+        <p className="text-sm text-gray-800 ml-3 overflow-hidden truncate">{info.description}</p>
+        <p className="text-sm text-gray-500 ml-3 font-mono">
+          {info.modelNumber}
+        </p>
       </div>
     </Link>
   );

@@ -10,11 +10,11 @@ PageContainer.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  contStyle: PropTypes.string,
+  style: PropTypes.string,
 };
 
 PageContainer.defaultProps = {
-  contStyle: '',
+  style: '',
 };
 
 export default PageContainer;

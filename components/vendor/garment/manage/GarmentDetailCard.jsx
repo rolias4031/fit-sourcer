@@ -12,9 +12,12 @@ import GarmentNumsInput from '../create/GarmentNumsInput';
 import GarmentImagesInput from './GarmentImagesInput';
 import GarmentDetailButtons from './GarmentDetailButtons';
 import { createLabel } from '../../../../lib/util-client';
+import { useAlerts } from '../../../../lib/hooks';
+import Alert from '../../../alert/Alert';
 
-function GarmentDetailCard({ garment, styles }) {
+function GarmentDetailCard({ garment, styles, onCancelChanges }) {
   const [editMode, setEditMode] = useState(false);
+  const { alerts, createAlerts, resetAlerts } = useAlerts();
   const {
     images,
     setImages,
@@ -27,6 +30,22 @@ function GarmentDetailCard({ garment, styles }) {
   const { deleteGarment, editGarment, editStatus } =
     useManageGarmentMutations();
 
+  const editHandler = () => {
+    editGarment(
+      {
+        garmentId: garment.id,
+        infoValues,
+        measValues,
+        imageValues: images,
+      },
+      {
+        onError: (data) => {
+          createAlerts(data.errors);
+        },
+      },
+    );
+  };
+
   return (
     <>
       <div className="flex mb-2">
@@ -34,15 +53,9 @@ function GarmentDetailCard({ garment, styles }) {
           editMode={editMode}
           setEditMode={setEditMode}
           onDelete={() => deleteGarment(garment.id)}
-          onSave={() =>
-            editGarment({
-              garmentId: garment.id,
-              infoValues,
-              measValues,
-              imageValues: images,
-            })
-          }
+          onSave={editHandler}
           onSaveStatus={editStatus}
+          onCancelChanges={onCancelChanges}
         />
       </div>
       <div className={styles.wrapper}>
@@ -50,7 +63,7 @@ function GarmentDetailCard({ garment, styles }) {
           <p className="text-lg font-bold">Info</p>
           <div className="flex space-x-2">
             <TextInputState
-              key="infoValues-name"
+              key={`infoValues-name${editMode}`}
               id="infoValues-name"
               name="name"
               styles={{
@@ -154,6 +167,7 @@ function GarmentDetailCard({ garment, styles }) {
             disabled={!editMode}
           />
         </div>
+        <Alert alerts={alerts} onReset={resetAlerts} isModal/>
       </div>
     </>
   );
@@ -164,12 +178,14 @@ GarmentDetailCard.propTypes = {
   styles: PropTypes.shape({
     wrapper: PropTypes.string,
   }),
+  onCancelChanges: PropTypes.func,
 };
 
 GarmentDetailCard.defaultProps = {
   styles: {
     wrapper: '',
   },
+  onCancelChanges: () => {},
 };
 
 export default GarmentDetailCard;

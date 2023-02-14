@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AlertMessage from './AlertMessage';
 
-function Alert({ status, alerts, onReset, isModal }) {
+function Alert({ alerts, onReset, isModal }) {
   let alertContent = null
   if (alerts.length > 0) {
-    console.log({alerts});
     alertContent = alerts.map((alert) => (
       <AlertMessage
         key={`${alert.message}-${alert.timeStamp}`}

@@ -9,8 +9,7 @@ function AlertMessage({ alert, onReset, isModal, lifespanInMs }) {
     };
   }, [alert.timeStamp]);
 
-  const messageColor = alert.isError ? 'alert-error' : 'alert-success';
-  const alertClass = `text-center text-sm text-white`;
+  const alertClass = `text-center text-xs text-white`;
   const backgroundColor = alert.isError
     ? 'bg-red-400'
     : 'bg-emerald-400';
