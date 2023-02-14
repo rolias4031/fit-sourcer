@@ -11,6 +11,7 @@ import SelectInput from '../../../form/SelectInput';
 import GarmentNumsInput from '../create/GarmentNumsInput';
 import GarmentImagesInput from './GarmentImagesInput';
 import GarmentDetailButtons from './GarmentDetailButtons';
+import { createLabel } from '../../../../lib/util-client';
 
 function GarmentDetailCard({ garment, styles }) {
   const [editMode, setEditMode] = useState(false);
@@ -23,12 +24,12 @@ function GarmentDetailCard({ garment, styles }) {
     setMeasValues,
   } = useExistingGarment(garment);
 
-  const { deleteGarment, editGarment, deleteStatus, editStatus } =
+  const { deleteGarment, editGarment, editStatus } =
     useManageGarmentMutations();
 
   return (
     <>
-      <div className="flex">
+      <div className="flex mb-2">
         <GarmentDetailButtons
           editMode={editMode}
           setEditMode={setEditMode}
@@ -100,7 +101,7 @@ function GarmentDetailCard({ garment, styles }) {
                 label: 'label label-base',
                 div: 'flex flex-col basis-1/2',
               }}
-              curState={infoValues.garmentType}
+              curState={createLabel(infoValues.garmentType)}
               raiseState={setInfoValues}
               disabled
             />
@@ -115,6 +116,19 @@ function GarmentDetailCard({ garment, styles }) {
               div: 'flex flex-col',
             }}
             curState={infoValues.description}
+            raiseState={setInfoValues}
+            disabled={!editMode}
+          />
+          <TextInputState
+            key="infoValue-link"
+            id="infoValues-link"
+            name="link"
+            styles={{
+              input: 'input input-base',
+              label: 'label label-base',
+              div: 'flex flex-col',
+            }}
+            curState={infoValues.link}
             raiseState={setInfoValues}
             disabled={!editMode}
           />

@@ -79,6 +79,7 @@ model Garment {
   name                         String                        @unique
   description                  String                        @db.Text()
   modelNumber                  String
+  link                         String
   images                       GarmentImage[]
   garmentType                  GarmentType
   sex                          GarmentSex                    @default(unisex)

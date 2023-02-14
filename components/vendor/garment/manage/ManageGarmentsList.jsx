@@ -11,17 +11,20 @@ function ManageGarmentsList({ allGarments }) {
   const router = useRouter();
   const { id } = router.query;
 
-  const allGarmentsList = allGarments.map((garment) => (
-    <GarmentListItem key={`${garment.id}${garment.updatedAt}`} info={garment} />
-  ));
+  const allGarmentsList = allGarments.map((garment) => {
+    const selected = garment.id === id;
+    return (
+      <GarmentListItem
+        key={`${garment.id}${garment.updatedAt}`}
+        info={garment}
+        selected={selected}
+      />
+    );
+  });
 
   return (
-    <div className="mx-auto w-full lg:w-3/4 border flex flex-row">
-      <div
-        className={`border border-red-500 m-5 ${
-          id ? 'basis-1/2' : 'basis-full'
-        }`}
-      >
+    <div className="mx-auto w-full lg:w-3/4 flex flex-row">
+      <div className={`my-5 p-4 ${id ? 'basis-1/2 border-r' : 'basis-full'}`}>
         {allGarmentsList.length > 0 ? allGarmentsList : <div>No garments</div>}
       </div>
       {id && <GarmentDetailPanel garmentId={id} />}

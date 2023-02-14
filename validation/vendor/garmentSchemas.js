@@ -12,7 +12,8 @@ export const garmentInfoSchema = z
     description: z.string().trim().min(1).max(100),
     modelNumber: z.string().trim().min(1).max(100),
     sex: z.enum(GARMENT_SEX_TYPES),
-    garmentType: z.enum(GARMENT_TYPES_KEYS)
+    garmentType: z.enum(GARMENT_TYPES_KEYS),
+    link: z.string().url()
   })
   .strict();
 

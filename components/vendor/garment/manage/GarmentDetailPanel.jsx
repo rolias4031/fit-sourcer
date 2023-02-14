@@ -4,7 +4,6 @@ import { useGetGarmentDetail } from '../../../../lib/vendor/queries';
 import IsLoading from '../../../util/IsLoading';
 import IsError from '../../../util/IsError';
 import GarmentDetailCard from './GarmentDetailCard';
-import FullStatus from '../../../alert/FullStatus';
 
 function GarmentDetailPanel({ garmentId }) {
   const { data, status } = useGetGarmentDetail(garmentId);
@@ -18,19 +17,11 @@ function GarmentDetailPanel({ garmentId }) {
   }
 
   return (
-    <div className="m-5 basis-1/2">
-      {/* <div className="flex">
-        <GarmentDetailButtons
-          editMode={editMode}
-          setEditMode={setEditMode}
-          onDelete={deleteHandler}
-          onSave={editHandler}
-        />
-      </div> */}
+    <div className="my-5 p-4 basis-1/2">
       <GarmentDetailCard
         key={data.garment.id}
         garment={data.garment}
-        styles={{ wrapper: 'border border-blue-500 w-full space-y-5' }}
+        styles={{ wrapper: 'w-full space-y-5' }}
       />
     </div>
   );

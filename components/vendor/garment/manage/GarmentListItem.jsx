@@ -4,17 +4,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-function GarmentListItem({ info }) {
+function GarmentListItem({ info, selected }) {
   return (
-    <div className="my-3 flex space-x-3 mx-3 border">
-      <Link href={{ pathname: 'manage', query: { id: info.id } }} shallow>
-        <p className="cursor-pointer">
-          {info.name}
-        </p>
-      </Link>
-      <p className="text-gray-500">{info.description}</p>
-      <p className="text-gray-300">{info.modelNumber}</p>
-    </div>
+    <Link href={{ pathname: 'manage', query: { id: info.id } }} shallow>
+      <div
+        className={`p-2 rounded-sm cursor-pointer hover:bg-gray-100 ${
+          selected ? 'bg-gray-100' : null
+        }`}
+      >
+        <p className="text-lg">{info.name}</p>
+        <p className="text-sm text-gray-800 ml-3">{info.description}</p>
+        <p className="text-sm text-gray-800 ml-3">Model No. {info.modelNumber}</p>
+      </div>
+    </Link>
   );
 }
 
@@ -25,6 +27,11 @@ GarmentListItem.propTypes = {
     modelNumber: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
+  selected: PropTypes.bool,
+};
+
+GarmentListItem.defaultProps = {
+  selected: false,
 };
 
 export default GarmentListItem;

@@ -47,6 +47,18 @@ function GarmentInfoInput({ infoState, raiseInfo, styles }) {
         }}
         placeholder="Model, SKU, or Serial Number"
       />
+      <TextInputState
+        raiseState={raiseInfo}
+        curState={infoState.link}
+        id="create-garment-link"
+        name="link"
+        styles={{
+          input: inputStyle,
+          label: labelStyle,
+          div: inputDivStyle,
+        }}
+        placeholder="Link to the item on your shop"
+      />
     </div>
   );
 }

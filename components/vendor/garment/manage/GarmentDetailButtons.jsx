@@ -56,7 +56,6 @@ function GarmentDetailButtons({ editMode, setEditMode, onDelete, onSave, onSaveS
           />
         )}
       </div>
-
       <GeneralButton
         styles={{ button: 'btn-sm btn-gray ml-auto' }}
         name="close"
@@ -75,7 +74,7 @@ GarmentDetailButtons.propTypes = {
   setEditMode: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  onSaveStatus: PropTypes.string,
+  onSaveStatus: PropTypes.string.isRequired,
 };
 
 export default GarmentDetailButtons;
