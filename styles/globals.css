@@ -111,6 +111,10 @@ a {
   .icon {
     @apply w-5 h-5
   }
+
+  .icon-lg {
+    @apply w-7 h-7
+  }
   
   .hover-parent:hover .hover-child {
     @apply transition ease-in-out opacity-100 visible

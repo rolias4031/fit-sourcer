@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import GarmentListItem from './GarmentListItem';
 import GarmentDetailPanel from './GarmentDetailPanel';
+import SearchBar from './SearchBar';
+import { useSearchVendorGarments } from '../../../../lib/vendor/hooks';
 
 // shallow route to garment page, appears alongside list to the right with its own query that gets details.
 // trick is finding how to make the back button collapse the detail. use a query string to encode the id, no id means no detail
 
 function ManageGarmentsList({ allGarments }) {
+  const { searchStr, setSearchStr, filteredGarmentsList } =
+    useSearchVendorGarments(allGarments);
   const router = useRouter();
   const { id } = router.query;
 
-  const allGarmentsList = allGarments.map((garment) => {
+  const garmentComponents = filteredGarmentsList.map((garment) => {
     const selected = garment.id === id;
     return (
       <GarmentListItem
@@ -24,8 +28,21 @@ function ManageGarmentsList({ allGarments }) {
 
   return (
     <div className="mx-auto w-full lg:w-3/4 flex flex-row">
-      <div className={`my-5 p-4 ${id ? 'basis-1/2 border-r' : 'basis-full'} overflow-hidden`}>
-        {allGarmentsList.length > 0 ? allGarmentsList : <div>No garments</div>}
+      <div
+        className={`my-5 p-4 ${
+          id ? 'basis-1/2 border-r' : 'basis-full'
+        } overflow-hidden`}
+      >
+        <SearchBar
+          curState={searchStr}
+          raiseState={setSearchStr}
+          styles={{ div: 'my-2', input: 'input-lg input-base w-full' }}
+        />
+        {garmentComponents.length > 0 ? (
+          garmentComponents
+        ) : (
+          <div>No garments</div>
+        )}
       </div>
       {id && <GarmentDetailPanel garmentId={id} />}
     </div>
