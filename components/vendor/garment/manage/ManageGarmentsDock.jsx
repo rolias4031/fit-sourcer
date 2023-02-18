@@ -1,26 +1,27 @@
 import React from 'react';
-import ManageGarmentsList from './ManageGarmentsList';
+import ManageGarments from './ManageGarments';
 import IsLoading from '../../../util/IsLoading';
-import IsError from '../../../util/IsError'
-import { useAllVendorGarments } from '../../../../lib/vendor/hooks';
+import IsError from '../../../util/IsError';
+import { useGetVendorProfile } from '../../../../lib/vendor/queries';
+import PageFrame from '../../../structure/PageFrame';
 
 function ManageGarmentsDock() {
-  const { vendorData, allGarments, status } = useAllVendorGarments();
+  const { data, status } = useGetVendorProfile();
+
+  if (data) {
+    return (
+      <PageFrame>
+        <ManageGarments allGarments={data.vendor.vendorProfile.garments} />
+      </PageFrame>
+    );
+  }
 
   if (status === 'loading') {
     return <IsLoading />;
   }
 
   if (status === 'error') {
-    return <IsError />
-  }
-
-  if (vendorData) {
-    return (
-      <ManageGarmentsList
-        allGarments={allGarments}
-      />
-    );
+    return <IsError />;
   }
 }
 

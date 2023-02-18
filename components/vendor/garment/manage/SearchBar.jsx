@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 function SearchBar({ curState, raiseState, styles }) {
   const changeHandler = (event) => {
-    console.log(event);
     raiseState(event.target.value);
   };
   return (

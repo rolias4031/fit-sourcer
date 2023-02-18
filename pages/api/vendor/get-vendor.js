@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     });
   }
 
-  // user -> vendorProfile -> lowerBodyGarments + images + measurements
   const vendor = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
     },
   });
 
-  console.log(vendor)
+  console.log('api/vendor/get-vendor', { vendor, garments: vendor.vendorProfile.garments },)
 
   return res.status(200).json({
     message: 'Garments Fetched',

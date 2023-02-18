@@ -6,7 +6,7 @@ import IsError from '../../../util/IsError';
 import GarmentDetailCard from './GarmentDetailCard';
 import FormController from '../../../form/FormController';
 
-function GarmentDetailPanel({ garmentId }) {
+function GarmentDetailPanel({ garmentId, styles }) {
   const { data, status } = useGetGarmentDetail(garmentId);
 
   if (status === 'loading') {
@@ -20,7 +20,7 @@ function GarmentDetailPanel({ garmentId }) {
   return (
     <FormController>
       {({ dynamicKey, resetFormHandler }) => (
-        <div className="my-5 p-4 basis-1/2">
+        <div className={styles.div}>
           <GarmentDetailCard
             key={`${data.garment.id}${dynamicKey}`}
             garment={data.garment}
@@ -35,6 +35,15 @@ function GarmentDetailPanel({ garmentId }) {
 
 GarmentDetailPanel.propTypes = {
   garmentId: PropTypes.string.isRequired,
+  styles: PropTypes.exact({
+    div: PropTypes.string,
+  }),
+};
+
+GarmentDetailPanel.defaultProps = {
+  styles: {
+    div: null,
+  },
 };
 
 export default GarmentDetailPanel;

@@ -1,55 +1,62 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import GarmentListItem from './GarmentListItem';
 import GarmentDetailPanel from './GarmentDetailPanel';
 import SearchBar from './SearchBar';
-import { useSearchVendorGarments } from '../../../../lib/vendor/hooks';
+import { useFilterVendorGarments } from '../../../../lib/vendor/hooks';
+import GarmentStats from './GarmentStats';
+import GarmentsList from './GarmentsList';
 
 // shallow route to garment page, appears alongside list to the right with its own query that gets details.
 // trick is finding how to make the back button collapse the detail. use a query string to encode the id, no id means no detail
 
-function ManageGarmentsList({ allGarments }) {
-  const { searchStr, setSearchStr, filteredGarmentsList } =
-    useSearchVendorGarments(allGarments);
+function ManageGarments({ allGarments }) {
+  const { searchStr, setSearchStr, filter, setFilter, filteredGarmentsList } =
+    useFilterVendorGarments(allGarments);
   const router = useRouter();
   const { id } = router.query;
 
-  const garmentComponents = filteredGarmentsList.map((garment) => {
-    const selected = garment.id === id;
-    return (
-      <GarmentListItem
-        key={`${garment.id}${garment.updatedAt}`}
-        info={garment}
-        selected={selected}
-      />
-    );
-  });
-
   return (
-    <div className="mx-auto w-full lg:w-3/4 flex flex-row">
+    <div className='flex py-5'>
       <div
-        className={`my-5 p-4 ${
+        className={`p-4 flex flex-col space-y-5 ${
           id ? 'basis-1/2 border-r' : 'basis-full'
         } overflow-hidden`}
       >
         <SearchBar
           curState={searchStr}
           raiseState={setSearchStr}
-          styles={{ div: 'my-2', input: 'input-lg input-base w-full' }}
+          styles={{ div: '', input: 'input-lg input-base w-full' }}
         />
-        {garmentComponents.length > 0 ? (
-          garmentComponents
+        {allGarments.length > 0 ? (
+          <>
+            <GarmentStats
+              garments={allGarments}
+              styles={{ div: 'flex space-x-5 items-center' }}
+              raiseFilter={setFilter}
+              curFilter={filter}
+            />
+            <GarmentsList
+              garments={filteredGarmentsList}
+              selectedGarmentId={id}
+              styles={{ div: 'flex flex-col space-y-3' }}
+            />
+          </>
         ) : (
           <div>No garments</div>
         )}
       </div>
-      {id && <GarmentDetailPanel garmentId={id} />}
+      {id ? (
+        <GarmentDetailPanel
+          garmentId={id}
+          styles={{ div: 'p-4 basis-1/2' }}
+        />
+      ) : null}
     </div>
   );
 }
 
-ManageGarmentsList.propTypes = {
+ManageGarments.propTypes = {
   allGarments: PropTypes.arrayOf(
     PropTypes.shape({
       calf: PropTypes.string,
@@ -66,4 +73,4 @@ ManageGarmentsList.propTypes = {
   ).isRequired,
 };
 
-export default ManageGarmentsList;
+export default ManageGarments;
